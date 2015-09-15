@@ -184,8 +184,6 @@ public class PlayerWolfShadow : MonoBehaviour
 		Vector3 currentPosition = transform.position;
 		
 		if(Input.GetMouseButton(0)){
-			
-			
 			targetPos = Camera.main.ScreenToWorldPoint( Input.mousePosition );
 			
 			moveDirection = targetPos - currentPosition;
