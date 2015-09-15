@@ -17,6 +17,8 @@ public class FollowPlayer : MonoBehaviour
 	float runSpeed = 12f;
 	float staySpeed = 0f;
 
+	bool isFollowing;
+	bool willFollow;
 	public bool isTriggering;
 	public bool isTriggeringDen;
 
@@ -78,45 +80,30 @@ public class FollowPlayer : MonoBehaviour
 		}
 		else if ((followPlayerWolfGO.transform.position.x > transform.position.x) && (!isTriggering)) 
 		{
-			//WolfSpirit Howls
 			LostWolfAnim.SetInteger ("LostWolfAnimState", 3);
-			//rb2DenemyWolf.MovePosition (Vector2.MoveTowards (gameObject.transform.parent.gameObject.transform.position, target.gameObject.transform.parent.gameObject.transform.position, speed * Time.deltaTime));
 			WolfSpiritFaceRight();
 		} else if ((followPlayerWolfGO.transform.position.x < transform.position.x) && (!isTriggering)) 
 		{
-			//anim.SetTrigger("walkLeft");
-			//WolfSpirit Howls
 			LostWolfAnim.SetInteger ("LostWolfAnimState", 3);
-			//rb2DenemyWolf.MovePosition (Vector2.MoveTowards (gameObject.transform.parent.gameObject.transform.position, target.gameObject.transform.parent.gameObject.transform.position, speed * Time.deltaTime));
 			WolfSpiritFaceLeft();
 		} 
-		//}//end is triggering false
-		//else if (isTriggering == true) {
 		else if ((followPlayerWolfGO.transform.position.x > transform.position.x) && (isTriggering)) 
 		{
-			//anim.SetTrigger("walk");
-
-			//LostWolfAnim.SetInteger ("LostWolfAnimState", 1);
-
-			//	LostWolfAnim.SetInteger ("LostWolfAnimState", 7);
-
-
-			//rb2DenemyWolf.MovePosition (Vector2.MoveTowards (gameObject.transform.parent.gameObject.transform.position, target.gameObject.transform.parent.gameObject.transform.position, speed * Time.deltaTime));
 			WolfSpiritFaceRight();
 		} else if ((followPlayerWolfGO.transform.position.x < transform.position.x) && (isTriggering)) 
 		{
-			//anim.SetTrigger("walkLeft");
-			//LostWolfAnim.SetInteger ("LostWolfAnimState", 1);
-			//rb2DenemyWolf.MovePosition (Vector2.MoveTowards (gameObject.transform.parent.gameObject.transform.position, target.gameObject.transform.parent.gameObject.transform.position, speed * Time.deltaTime));
 			WolfSpiritFaceLeft();
 		} else if ((followPlayerWolfGO.transform.position.x == transform.position.x) && (isTriggering)) 
 		{
-			//anim.SetTrigger("walk");
 			LostWolfAnim.SetInteger ("LostWolfAnimState", 0);
-			//rb2DenemyWolf.MovePosition (Vector2.MoveTowards (gameObject.transform.parent.gameObject.transform.position, target.gameObject.transform.parent.gameObject.transform.position, speed * Time.deltaTime));
-			//WolfSpiritFaceRight();
-			//WolfSpiritFaceLeft();
-		}  
+		}
+
+		if (isFollowing) {
+			rb2DLostWolf.transform.position = Vector3.MoveTowards(rb2DLostWolf.transform.position, followPlayerWolfGO.transform.position, speed * Time.deltaTime);
+			if(rb2DLostWolf.transform.position == followPlayerWolfGO.transform.position){
+				rb2DLostWolf.transform.position = followPlayerWolfGO.transform.position;
+			}
+		}
 	}//end update
 
 	void OnEnable()
@@ -150,23 +137,23 @@ public class FollowPlayer : MonoBehaviour
 		}
 	}
 
+	void OnTriggerEnter2D(Collider2D target){
+		if (target.gameObject.tag == "HowlAttract") {
+			isFollowing = true;
+		}
+	}
 
+	/*
 	void OnTriggerEnter2D(Collider2D target)
 	{
-		//isTriggering = true;
 		if(target.gameObject.tag == "HowlAttract" && target.gameObject.tag == "WolfDen")
 		{
 			rb2DLostWolf.MovePosition (Vector2.MoveTowards (LostWolfGO.transform.position, wolfDenArt.transform.position, speed * Time.deltaTime));
-
-
 		} else if (target.gameObject.tag == "HowlAttract") 
 		{
 			isTriggering = true;
-
 			speed = runSpeed;
 			rb2DLostWolf.MovePosition (Vector2.MoveTowards (LostWolfGO.transform.position, followPlayerWolfGO.transform.position, speed * Time.deltaTime));
-			//followPlayerWolfGO.GetComponent<AudioSource> ().Play ();
-			//wolfDenAnim.SetInteger ("DenAnimState", 1);		
 		} else if (target.gameObject.tag == "WolfDen")
 		{
 			isTriggering = true;
@@ -184,44 +171,34 @@ public class FollowPlayer : MonoBehaviour
 			rb2DLostWolf.MovePosition (Vector2.MoveTowards (LostWolfGO.transform.position, followPlayerWolfGO.transform.position, speed * Time.deltaTime));
 		}//end if target howl attract
 	}//end on trigger stay
-	
+
 	void OnTriggerExit2D(Collider2D target)
 	{
-		//readyToAttack = false;
-		//attacking = false;
-		//LostWolfAnim.SetInteger ("LostWolfAnimState", 0);
 		wolfDenAnim.SetInteger ("DenAnimState", 0);
 		isTriggering = false;
 		if ((followPlayerWolfGO.transform.position.x > transform.position.x) && (!isTriggering))
 		{
-			//anim.SetTrigger("walk");
 			LostWolfAnim.SetInteger ("LostWolfAnimState", 3);
-			//rb2DenemyWolf.MovePosition (Vector2.MoveTowards (gameObject.transform.parent.gameObject.transform.position, target.gameObject.transform.parent.gameObject.transform.position, speed * Time.deltaTime));
 			WolfSpiritFaceRight();
 		} else if ((followPlayerWolfGO.transform.position.x < transform.position.x) && (!isTriggering)) 
 		{
-			//anim.SetTrigger("walkLeft");
 			LostWolfAnim.SetInteger ("LostWolfAnimState", 3);
-			//rb2DenemyWolf.MovePosition (Vector2.MoveTowards (gameObject.transform.parent.gameObject.transform.position, target.gameObject.transform.parent.gameObject.transform.position, speed * Time.deltaTime));
 			WolfSpiritFaceLeft();
 		} 
 		else if (isTriggering == true) 
 		{
 			 if ((PlayerWolfGO.transform.position.x > transform.position.x) && (isTriggering))
 			{
-				//anim.SetTrigger("walk");
-				//LostWolfAnim.SetInteger ("LostWolfAnimState", 1);
-				//rb2DenemyWolf.MovePosition (Vector2.MoveTowards (gameObject.transform.parent.gameObject.transform.position, target.gameObject.transform.parent.gameObject.transform.position, speed * Time.deltaTime));
 				WolfSpiritFaceRight();
 			} else if ((PlayerWolfGO.transform.position.x < transform.position.x) && (isTriggering)) 
 			{
-				//anim.SetTrigger("walkLeft");
-				//LostWolfAnim.SetInteger ("LostWolfAnimState", 1);
-				//rb2DenemyWolf.MovePosition (Vector2.MoveTowards (gameObject.transform.parent.gameObject.transform.position, target.gameObject.transform.parent.gameObject.transform.position, speed * Time.deltaTime));
 				WolfSpiritFaceLeft();
 			} 
 		} //end is triggering true
 	}//end onTriggerExit
+	*/
+
+	//IEnumerator WalkToPlayerWolf(){}
 
 	void HowlEnd()
 	{
@@ -242,10 +219,6 @@ public class FollowPlayer : MonoBehaviour
 	void GameEnd()
 	{
 		Application.LoadLevel ("Howl Title Screen");
-		//isTriggeringDen = false;
-		//wolfDenAnim.SetInteger ("DenAnimState", 0);
-		//Destroy(this.gameObject);
-		//PlayerWolfCollider.enabled = true;
 	}
 
 	void WolfSpiritFaceRight()
