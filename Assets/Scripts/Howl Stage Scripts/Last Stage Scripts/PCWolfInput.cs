@@ -185,12 +185,12 @@ public class PCWolfInput : MonoBehaviour
 				walking = false;
 			} else
 			{
-			anim.SetInteger ("AnimState", 2);
-			speed = moveSpeed;
-			transform.position += Vector3.right * speed * Time.deltaTime;
-			running = false;
-			walking = true;
-			//WolfRun();
+				anim.SetInteger ("AnimState", 2);
+				speed = moveSpeed;
+				transform.position += Vector3.right * speed * Time.deltaTime;
+				running = false;
+				walking = true;
+				//WolfRun();
 			}
 		} 
 		if (Input.GetKey(KeyCode.UpArrow)|| Input.GetKey(KeyCode.W))
@@ -204,10 +204,12 @@ public class PCWolfInput : MonoBehaviour
 				walking = false;
 			} else
 			{
-			anim.SetInteger ("AnimState", 2);
-			speed = moveSpeed;
-			transform.position += Vector3.up * speed * Time.deltaTime;
-			//WolfRun();
+				anim.SetInteger ("AnimState", 2);
+				speed = moveSpeed;
+				transform.position += Vector3.up * speed * Time.deltaTime;
+				running = false;
+				walking = true;
+				//WolfRun();
 			}
 		} 
 		if (Input.GetKey(KeyCode.DownArrow)|| Input.GetKey(KeyCode.S))
@@ -221,10 +223,12 @@ public class PCWolfInput : MonoBehaviour
 				walking = false;
 			} else
 			{
-			anim.SetInteger ("AnimState", 2);
-			speed = moveSpeed;
-			transform.position += Vector3.down * speed * Time.deltaTime;
-			//WolfRun();
+				anim.SetInteger ("AnimState", 2);
+				speed = moveSpeed;
+				transform.position += Vector3.down * speed * Time.deltaTime;
+				running = false;
+				walking = true;
+				//WolfRun();
 			}
 		} 
 		if (Input.GetKeyUp (KeyCode.UpArrow)||
