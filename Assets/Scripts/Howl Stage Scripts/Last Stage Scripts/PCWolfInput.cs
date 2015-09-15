@@ -24,6 +24,8 @@ public class PCWolfInput : MonoBehaviour
 	public GameObject HowlAttract;
 	public GameObject MainCam;
 	public CircleCollider2D HowlAttractCollider;
+	public float HowlRadiusMax;
+	public float HowlRadiusRate;
 	
 	public bool walking;
 	public bool running;
@@ -61,6 +63,8 @@ public class PCWolfInput : MonoBehaviour
 		rb2DplayerWolf = playerWolf.GetComponent<Rigidbody2D>();
 		HowlAttract = GameObject.Find("HowlAttract");
 		HowlAttractCollider = HowlAttract.GetComponent <CircleCollider2D> ();
+
+		HowlAttractCollider.radius = 0f;
 		
 		//restartTimer -= Time.deltaTime;
 
@@ -76,7 +80,7 @@ public class PCWolfInput : MonoBehaviour
 	
 	// Update is called once per frame
 	//Using fixed update instead for rigidbody use
-	void FixedUpdate () 
+	void Update () 
 	{
 		//#if UNITY_EDITOR || UNITY_WEBPLAYER
 		//Debug.Log("Unity Editor");
@@ -152,6 +156,7 @@ public class PCWolfInput : MonoBehaviour
 
 		//arrow keys controls
 		if (Input.GetKey (KeyCode.LeftArrow)|| Input.GetKey(KeyCode.A)) {
+			WolfMoveToLeft();
 			if (Input.GetKey (KeyCode.LeftShift))
 			{
 				anim.SetInteger("AnimState", 7);
@@ -166,11 +171,11 @@ public class PCWolfInput : MonoBehaviour
 				transform.position += Vector3.left * speed * Time.deltaTime;
 				running = false;
 				walking = true;
-				WolfMoveToLeft();
 				//WolfRun();
 			}
 		} 
 		if (Input.GetKey (KeyCode.RightArrow)|| Input.GetKey(KeyCode.D)) {
+			WolfMoveToRight();
 			if (Input.GetKey (KeyCode.LeftShift))
 			{
 				anim.SetInteger("AnimState", 7);
@@ -180,13 +185,12 @@ public class PCWolfInput : MonoBehaviour
 				walking = false;
 			} else
 			{
-			anim.SetInteger ("AnimState", 2);
-			speed = moveSpeed;
-			transform.position += Vector3.right * speed * Time.deltaTime;
-			running = false;
-			walking = true;
-			WolfMoveToRight();
-			//WolfRun();
+				anim.SetInteger ("AnimState", 2);
+				speed = moveSpeed;
+				transform.position += Vector3.right * speed * Time.deltaTime;
+				running = false;
+				walking = true;
+				//WolfRun();
 			}
 		} 
 		if (Input.GetKey(KeyCode.UpArrow)|| Input.GetKey(KeyCode.W))
@@ -200,10 +204,12 @@ public class PCWolfInput : MonoBehaviour
 				walking = false;
 			} else
 			{
-			anim.SetInteger ("AnimState", 2);
-			speed = moveSpeed;
-			transform.position += Vector3.up * speed * Time.deltaTime;
-			//WolfRun();
+				anim.SetInteger ("AnimState", 2);
+				speed = moveSpeed;
+				transform.position += Vector3.up * speed * Time.deltaTime;
+				running = false;
+				walking = true;
+				//WolfRun();
 			}
 		} 
 		if (Input.GetKey(KeyCode.DownArrow)|| Input.GetKey(KeyCode.S))
@@ -217,10 +223,12 @@ public class PCWolfInput : MonoBehaviour
 				walking = false;
 			} else
 			{
-			anim.SetInteger ("AnimState", 2);
-			speed = moveSpeed;
-			transform.position += Vector3.down * speed * Time.deltaTime;
-			//WolfRun();
+				anim.SetInteger ("AnimState", 2);
+				speed = moveSpeed;
+				transform.position += Vector3.down * speed * Time.deltaTime;
+				running = false;
+				walking = true;
+				//WolfRun();
 			}
 		} 
 		if (Input.GetKeyUp (KeyCode.UpArrow)||
@@ -238,62 +246,37 @@ public class PCWolfInput : MonoBehaviour
 			running = false;
 		}
 
-		if(Input.GetKey(KeyCode.Space))
+		if(Input.GetKeyUp(KeyCode.Space))
 		{
 			anim.SetInteger("AnimState", 5);
-			print ("Space bar pressed.");
+			howling = true;
 		}
 		
 		if(running)
 		{
 			RunSFX();
-			//Running right
-//			if (targetPoint.x > transform.position.x) 
-//			{
-//				anim.SetInteger ("AnimState", 7);
-//				//print ("running right!");
-//				WolfMoveToRight();
-//				
-//			} else if (targetPoint.x < transform.position.x) 
-//			{
-//				anim.SetInteger ("AnimState", 7);
-//				//print ("running left!");
-//				WolfMoveToLeft();
-//
-//			} else if (Input.touchCount < 0)
-//			{
-//				anim.SetInteger ("AnimState", 0);
-//			}
 		} else if(walking) 
 		{
 			WalkSFX();
-
-//			if (targetPoint.x > transform.position.x) 
-//			{
-//				anim.SetInteger ("AnimState", 2);
-//				//print ("walking right!");
-//				WolfMoveToRight();
-//
-//			} else if (targetPoint.x < transform.position.x) 
-//			{
-//				anim.SetInteger ("AnimState", 2);
-//				//print ("walking left!");
-//				WolfMoveToLeft();
-//				
-//			} else if (Input.touchCount < 0) 
-//			{
-//				anim.SetInteger ("AnimState", 0);
-//			}
 		} else
 		{
 			//doesn't work
 			StopSFX();
 			anim.SetInteger("AnimState", 0);
-			//print ("Player is idle!");
 		}
 		
 		//end of touchcount	
-		
+
+		if (howling) {
+			if (HowlAttractCollider.radius < HowlRadiusMax){
+				HowlAttractCollider.radius += HowlRadiusRate;
+			}
+			
+			if(HowlAttractCollider.radius >= HowlRadiusMax){
+				HowlAttractCollider.radius = 0f;
+				howling = false;
+			}
+		}
 	}//end of update. Now fixedUpdate
 	//Vector3 target = moveDirection * speed + currentPosition;
 	//transform.position = Vector3.Lerp( currentPosition, target, Time.deltaTime );
@@ -334,9 +317,6 @@ public class PCWolfInput : MonoBehaviour
 
 	void WolfMoveToRight()
 	{
-		//targetPoint = moveDirection * speed + currentPosition;
-		//transform.position = Vector3.Lerp( currentPosition, targetPoint, Time.deltaTime );
-		//If facing left, face right
 		if (playerWolf.transform.localScale.x < 0)
 		{
 			playerWolf.transform.localScale = new Vector3 (1, 1, 1);
@@ -345,9 +325,6 @@ public class PCWolfInput : MonoBehaviour
 
 	void WolfMoveToLeft()
 	{
-		//targetPoint = moveDirection * speed + currentPosition;
-		//transform.position = Vector3.Lerp( currentPosition, targetPoint, Time.deltaTime );
-		//If facing right, face left
 		if (playerWolf.transform.localScale.x > 0)
 		{
 			playerWolf.transform.localScale = new Vector3 (-1, 1, 1);	
