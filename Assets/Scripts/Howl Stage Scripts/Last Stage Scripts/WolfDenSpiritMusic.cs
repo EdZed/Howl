@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class WolfDenSpiritMusic : MonoBehaviour {
 	
@@ -13,6 +14,8 @@ public class WolfDenSpiritMusic : MonoBehaviour {
 	public GameObject lostWolf3Pos;
 	public GameObject lostWolf4Pos;
 	public GameObject lostWolf5Pos;
+
+	//public GameObject lostWolfSpawnPointsGO;
 
 	//wolf Den Music Layers
 	public GameObject musicLayer1;
@@ -41,6 +44,10 @@ public class WolfDenSpiritMusic : MonoBehaviour {
 	//snow particle Game Objects
 	public GameObject leftSide;
 	public GameObject rightSide;
+
+	//define a list
+	public static List<GameObject> spawnPoints = new List<GameObject>();
+	int spawnPointIndex;
 	
 	// Use this for initialization
 	void Start () {
@@ -50,6 +57,18 @@ public class WolfDenSpiritMusic : MonoBehaviour {
 		lostWolf3Pos = GameObject.Find ("LostWolf3Pos");
 		lostWolf4Pos = GameObject.Find ("LostWolf4Pos");
 		lostWolf5Pos = GameObject.Find ("LostWolf5Pos");
+		//lostWolfSpawnPointsGO = GameObject.Find ("LostWolfSpawnPoints");
+
+		//List of spawnPoints added
+		spawnPoints.Add (lostWolf2Pos);
+		spawnPoints.Add (lostWolf3Pos);
+		spawnPoints.Add (lostWolf4Pos);
+		spawnPoints.Add (lostWolf5Pos);
+		print ("Starting spawn points:" + spawnPoints.Count);
+		//spawnPointIndex = UnityEngine.Random.Range (0, spawnPoints.Count);
+		spawnPointIndex = Random.Range (0, spawnPoints.Count);
+		//print ("Starting spawn point index:" + spawnPoint);
+		print (spawnPoints [spawnPointIndex]);
 
 		//Wolf Den Music Layers
 //		musicLayer1 = GameObject.Find ("Music Layer 1");
@@ -110,7 +129,13 @@ public class WolfDenSpiritMusic : MonoBehaviour {
 
 				GameObject instance = Instantiate(Resources.Load("Lost Wolf Orange")) as GameObject;
 		
-				instance.transform.position = lostWolf2Pos.transform.position;
+				//instance.transform.position = lostWolf2Pos.transform.position;
+				instance.transform.position = spawnPoints[spawnPointIndex].transform.position;
+				GetSpawnPoint();
+				//spawnPoints.Remove(
+				//spawnPoints.Remove.r
+
+
 				//instance.transform.position = new Vector3(Random.Range(-10.0, 10.0), 0, Random.Range(-10.0, 10.0));
 			
 				sources[1].emissionRate = 120;
@@ -128,7 +153,9 @@ public class WolfDenSpiritMusic : MonoBehaviour {
 			{
 				GameObject instance = Instantiate(Resources.Load("Lost Wolf Purple")) as GameObject;
 
-				instance.transform.position = lostWolf3Pos.transform.position;
+				//instance.transform.position = lostWolf3Pos.transform.position;
+				instance.transform.position = spawnPoints[spawnPointIndex].transform.position;
+				GetSpawnPoint();
 
 				sources[1].emissionRate = 500;
 				spiritAnim [1].GetComponent<Animator> ().enabled = true;
@@ -142,7 +169,9 @@ public class WolfDenSpiritMusic : MonoBehaviour {
 
 				GameObject instance = Instantiate(Resources.Load("Lost Wolf L Blue")) as GameObject;
 
-				instance.transform.position = lostWolf4Pos.transform.position;
+				//instance.transform.position = lostWolf4Pos.transform.position;
+				instance.transform.position = spawnPoints[spawnPointIndex].transform.position;
+				GetSpawnPoint();
 				//Destroy(target.gameObject);
 				sources[1].emissionRate = 700;
 				sources[1].transform.localPosition = rightSide.transform.localPosition;
@@ -156,7 +185,10 @@ public class WolfDenSpiritMusic : MonoBehaviour {
 			{
 				GameObject instance = Instantiate(Resources.Load("Lost Wolf Red")) as GameObject;
 
-				instance.transform.position = lostWolf5Pos.transform.position;
+				//instance.transform.position = lostWolf5Pos.transform.position;
+
+				instance.transform.position = spawnPoints[spawnPointIndex].transform.position;
+				GetSpawnPoint();
 				//Destroy(target.gameObject);
 				sources[1].emissionRate = 900;
 				sources[1].transform.localPosition = leftSide.transform.localPosition;
@@ -176,5 +208,20 @@ public class WolfDenSpiritMusic : MonoBehaviour {
 			}
 		}//end target tag LostWolf
 	}//end on trigger enter
+
+	void GetSpawnPoint()
+	{
+		if (spawnPoints.Count == 1) 
+		{
+
+		} else {
+			//instance.transform.position = spawnPoints[spawnPointIndex].transform.position;
+			spawnPoints.RemoveAt (spawnPointIndex);
+			spawnPointIndex = Random.Range (0, spawnPoints.Count - 1);
+			print (spawnPoints [spawnPointIndex]);
+			print ("There are " + spawnPoints.Count + " spawn points left.");
+			//print ("Spawn point index left:" + spawnPointIndex);
+		}
+	}
 
 }//end whole class
