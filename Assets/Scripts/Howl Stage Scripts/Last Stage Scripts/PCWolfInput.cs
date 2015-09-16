@@ -155,29 +155,82 @@ public class PCWolfInput : MonoBehaviour
 //		}
 
 		//arrow keys controls
-		if (running) {
-			anim.SetInteger ("AnimState", 7);
-			RunSFX();
-		} else if (walking) {
-			anim.SetInteger ("AnimState", 2);
-			WalkSFX();
-		} else {
-			//doesn't work
-			anim.SetInteger ("AnimState", 0);
-			StopSFX();
-		}
-
-		if ((howling && !running) || (howling && !walking)) {
-			anim.SetInteger("AnimState", 6);
-			if (HowlAttractCollider.radius < HowlRadiusMax){
-				HowlAttractCollider.radius += HowlRadiusRate;
+		if (Input.GetKey (KeyCode.LeftArrow)|| Input.GetKey(KeyCode.A)) {
+			WolfMoveToLeft();
+			if (Input.GetKey (KeyCode.LeftShift))
+			{
+				anim.SetInteger("AnimState", 7);
+				speed = runSpeed;
+				transform.position += Vector3.left * speed * Time.deltaTime;
+				running = true;
+				walking = false;
+			} else
+			{
+				anim.SetInteger ("AnimState", 2);
+				speed = moveSpeed;
+				transform.position += Vector3.left * speed * Time.deltaTime;
+				running = false;
+				walking = true;
+				//WolfRun();
 			}
-			
-			if(HowlAttractCollider.radius >= HowlRadiusMax){
-				HowlAttractCollider.radius = 0f;
-				howling = false;
+		} 
+		if (Input.GetKey (KeyCode.RightArrow)|| Input.GetKey(KeyCode.D)) {
+			WolfMoveToRight();
+			if (Input.GetKey (KeyCode.LeftShift))
+			{
+				anim.SetInteger("AnimState", 7);
+				speed = runSpeed;
+				transform.position += Vector3.right * speed * Time.deltaTime;
+				running = true;
+				walking = false;
+			} else
+			{
+				anim.SetInteger ("AnimState", 2);
+				speed = moveSpeed;
+				transform.position += Vector3.right * speed * Time.deltaTime;
+				running = false;
+				walking = true;
+				//WolfRun();
 			}
-		}
+		} 
+		if (Input.GetKey(KeyCode.UpArrow)|| Input.GetKey(KeyCode.W))
+		{
+			if (Input.GetKey (KeyCode.LeftShift))
+			{
+				anim.SetInteger("AnimState", 7);
+				speed = runSpeed;
+				transform.position += Vector3.up * speed * Time.deltaTime;
+				running = true;
+				walking = false;
+			} else
+			{
+				anim.SetInteger ("AnimState", 2);
+				speed = moveSpeed;
+				transform.position += Vector3.up * speed * Time.deltaTime;
+				running = false;
+				walking = true;
+				//WolfRun();
+			}
+		} 
+		if (Input.GetKey(KeyCode.DownArrow)|| Input.GetKey(KeyCode.S))
+		{
+			if (Input.GetKey (KeyCode.LeftShift))
+			{
+				anim.SetInteger("AnimState", 7);
+				speed = runSpeed;
+				transform.position += Vector3.down * speed * Time.deltaTime;
+				running = true;
+				walking = false;
+			} else
+			{
+				anim.SetInteger ("AnimState", 2);
+				speed = moveSpeed;
+				transform.position += Vector3.down * speed * Time.deltaTime;
+				running = false;
+				walking = true;
+				//WolfRun();
+			}
+		} 
 		if (Input.GetKeyUp (KeyCode.UpArrow)||
 		    Input.GetKeyUp(KeyCode.DownArrow)||
 		    Input.GetKeyUp(KeyCode.LeftArrow)|| 
@@ -193,64 +246,37 @@ public class PCWolfInput : MonoBehaviour
 			running = false;
 		}
 
-		if(Input.GetKeyUp(KeyCode.Space)) {
+		if(Input.GetKeyUp(KeyCode.Space))
+		{
+			anim.SetInteger("AnimState", 5);
 			howling = true;
 		}
+		
+		if(running)
+		{
+			RunSFX();
+		} else if(walking) 
+		{
+			WalkSFX();
+		} else
+		{
+			//doesn't work
+			StopSFX();
+			anim.SetInteger("AnimState", 0);
+		}
+		
+		//end of touchcount	
 
-		if (Input.GetKey (KeyCode.LeftArrow)|| Input.GetKey(KeyCode.A)) {
-			WolfMoveToLeft();
-			if (Input.GetKey (KeyCode.LeftShift)) {
-				running = true;
-				walking = false;
-				speed = runSpeed;
-				transform.position += Vector3.left * speed * Time.deltaTime;
-			} else {
-				running = false;
-				walking = true;
-				speed = moveSpeed;
-				transform.position += Vector3.left * speed * Time.deltaTime;
+		if (howling) {
+			if (HowlAttractCollider.radius < HowlRadiusMax){
+				HowlAttractCollider.radius += HowlRadiusRate;
 			}
-		} 
-		if (Input.GetKey (KeyCode.RightArrow)|| Input.GetKey(KeyCode.D)) {
-			WolfMoveToRight();
-			if (Input.GetKey (KeyCode.LeftShift)) {
-				running = true;
-				walking = false;
-				speed = runSpeed;
-				transform.position += Vector3.right * speed * Time.deltaTime;
-			} else {
-				running = false;
-				walking = true;
-				speed = moveSpeed;
-				transform.position += Vector3.right * speed * Time.deltaTime;
+			
+			if(HowlAttractCollider.radius >= HowlRadiusMax){
+				HowlAttractCollider.radius = 0f;
+				howling = false;
 			}
-		} 
-		if (Input.GetKey(KeyCode.UpArrow)|| Input.GetKey(KeyCode.W)) {
-			if (Input.GetKey (KeyCode.LeftShift)) {
-				running = true;
-				walking = false;
-				speed = runSpeed;
-				transform.position += Vector3.up * speed * Time.deltaTime;
-			} else {
-				running = false;
-				walking = true;
-				speed = moveSpeed;
-				transform.position += Vector3.up * speed * Time.deltaTime;
-			}
-		} 
-		if (Input.GetKey(KeyCode.DownArrow)|| Input.GetKey(KeyCode.S)) {
-			if (Input.GetKey (KeyCode.LeftShift)) {
-				running = true;
-				walking = false;
-				speed = runSpeed;
-				transform.position += Vector3.down * speed * Time.deltaTime;
-			} else {
-				running = false;
-				walking = true;
-				speed = moveSpeed;
-				transform.position += Vector3.down * speed * Time.deltaTime;
-			}
-		} 
+		}
 	}//end of update. Now fixedUpdate
 	//Vector3 target = moveDirection * speed + currentPosition;
 	//transform.position = Vector3.Lerp( currentPosition, target, Time.deltaTime );
@@ -259,7 +285,8 @@ public class PCWolfInput : MonoBehaviour
 
 //}//end of update. Now fixedUpdate
 	
-	void WalkSFX() {
+	void WalkSFX()
+	{
 		if (!sources [0].isPlaying) 
 		{
 			//audio.Play ();
@@ -268,7 +295,8 @@ public class PCWolfInput : MonoBehaviour
 		}
 	}
 
-	void RunSFX() {
+	void RunSFX()
+	{
 		if (!sources [1].isPlaying) 
 		{
 			//audio.Play ();
@@ -277,7 +305,8 @@ public class PCWolfInput : MonoBehaviour
 		}
 	}
 
-	void StopSFX() {
+	void StopSFX()
+	{
 		//if (sources [1].isPlaying || sources [0].isPlaying) {
 		//audio.Play ();
 		sources[0].Stop();
@@ -286,14 +315,18 @@ public class PCWolfInput : MonoBehaviour
 		
 	}
 
-	void WolfMoveToRight() {
-		if (playerWolf.transform.localScale.x < 0) {
+	void WolfMoveToRight()
+	{
+		if (playerWolf.transform.localScale.x < 0)
+		{
 			playerWolf.transform.localScale = new Vector3 (1, 1, 1);
 		}
 	}
 
-	void WolfMoveToLeft() {
-		if (playerWolf.transform.localScale.x > 0) {
+	void WolfMoveToLeft()
+	{
+		if (playerWolf.transform.localScale.x > 0)
+		{
 			playerWolf.transform.localScale = new Vector3 (-1, 1, 1);	
 		}
 	}

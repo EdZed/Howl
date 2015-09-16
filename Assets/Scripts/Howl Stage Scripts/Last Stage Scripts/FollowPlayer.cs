@@ -19,6 +19,7 @@ public class FollowPlayer : MonoBehaviour
 
 	bool isFollowing = false;
 	bool isInDen = false;
+	public bool isTriggering;
 	public bool isTriggeringDen;
 
 	//Wolf Den Art
@@ -42,7 +43,8 @@ public class FollowPlayer : MonoBehaviour
 		speed = moveSpeed;
 		rb2DLostWolf = GetComponent<Rigidbody2D> ();
 		LostWolfAnim = GetComponent<Animator> ();
-		LostWolfAnim.SetInteger ("LostWolfAnimState", 2);
+		LostWolfAnim.SetInteger ("LostWolfAnimState", 0);
+		isTriggering = false;
 		isTriggeringDen = false;
 
 		//wolf Den
@@ -54,12 +56,14 @@ public class FollowPlayer : MonoBehaviour
 	}//end start
 	
 	// Update is called once per frame
-	void Update () {
-		if (isTriggeringDen) {
+	void Update () 
+	{
+		if (isTriggeringDen) 
+		{
 			speed = staySpeed;
 			//WolfSpirit disappears
 			LostWolfAnim.SetInteger ("LostWolfAnimState", 5);
-			//print ("Beam up Update!");
+			print ("Beam up Update!");
 		}
 	
 		if (isFollowing) {
@@ -95,10 +99,12 @@ public class FollowPlayer : MonoBehaviour
 
 	void OnTriggerEnter2D(Collider2D target){
 		if (target.gameObject.tag == "HowlAttract") {
+			isTriggering = true;
 			isFollowing = true;
 		} else if (target.gameObject.tag == "WolfDen") {
 			isFollowing = false;
 			isInDen = true;
+			isTriggering = true;
 			isTriggeringDen = true;
 		}
 	}
