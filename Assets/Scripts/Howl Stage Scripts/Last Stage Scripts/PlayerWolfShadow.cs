@@ -35,10 +35,9 @@ public class PlayerWolfShadow : MonoBehaviour
 	
 	// Update is called once per frame
 	//Using fixed update instead for rigidbody use
-	void FixedUpdate () 
+	void Update () 
 	{
 		#if UNITY_IOS
-
 
 		//float speed;
 		if (Input.touchCount > 0) 
@@ -182,125 +181,50 @@ public class PlayerWolfShadow : MonoBehaviour
 
 		#if UNITY_EDITOR || UNITY_WEBPLAYER || UNITY_STANDALONE
 		Vector3 currentPosition = transform.position;
-		
-		if(Input.GetMouseButton(0)){
-			targetPos = Camera.main.ScreenToWorldPoint( Input.mousePosition );
-			
-			moveDirection = targetPos - currentPosition;
-			moveDirection.z = 0; 
-			moveDirection.Normalize();
-			
-			
-			running = false;
-			walking = true;
-			speed = moveSpeed;
 
-		}//ends getmousebuttondown
-		
-		if(Input.GetMouseButton(1)){
-			targetPos = Camera.main.ScreenToWorldPoint( Input.mousePosition );
-			
-			moveDirection = targetPos - currentPosition;
-			moveDirection.z = 0; 
-			moveDirection.Normalize();
-			
+		if (playerWolf.GetComponent<PCWolfInput>().walking){
+			walking = true;
+			running = false;
+		} else if (playerWolf.GetComponent<PCWolfInput>().running){
 			running = true;
 			walking = false;
-			speed = runSpeed;
-			Debug.Log("DOUBLE TAP");
-		}
-		
-		if(Input.GetMouseButtonUp(0)||Input.GetMouseButtonUp(1)){
+		} else {
 			running = false;
 			walking = false;
-			
 		}
-		
-		if(running){
 
-			//sources[1].Play();
-			//sources[0].Stop();
-			//print ("Running!");
-			if (targetPoint.x > transform.position.x) 
-			{
-				//anim.SetTrigger("walk");
-				anim.SetInteger ("AnimState", 7);
-				//print ("running right!");
-				//rb2DplayerWolf.MovePosition (Vector2.MoveTowards (playerWolf.transform.position, targetPos, speed * Time.deltaTime));
-				
-				if (playerWolfShadow.transform.localScale.x < 0)
+		if(running){
+			anim.SetInteger ("AnimState", 7);
+			if (targetPoint.x > transform.position.x) {
+				if (playerWolfShadow.transform.localScale.x < 0){
 					playerWolfShadow.transform.localScale = new Vector3 (-1, 1, 1);
+				}
 				playerWolfShadow.transform.localRotation = Quaternion.Euler(58, 328, 0);
 				playerWolfShadow.transform.localPosition = new Vector3 (-0.43f, -0.52f, 1);
-				
-				
 			} else if (targetPoint.x < transform.position.x) {
-				//anim.SetTrigger("walkLeft");
-				anim.SetInteger ("AnimState", 7);
-				//print ("running left!");
-				//rb2DplayerWolf.MovePosition (Vector2.MoveTowards (playerWolf.transform.position, targetPos, speed * Time.deltaTime));
-				
 				if (playerWolfShadow.transform.localScale.x > 0){
 					playerWolfShadow.transform.localScale = new Vector3 (1, 1, 1);	
-					//playerWolfShadow.transform.localRotation = Quaternion.Euler(58, 328, 3);
 					playerWolfShadow.transform.localPosition = new Vector3 (-0.15f, -0.52f, 1);
 					playerWolfShadow.transform.localRotation = Quaternion.Euler(59.7f, 342, 354.65f);
 				}
-				
-			} else if (Input.touchCount < 0) {
-				anim.SetInteger ("AnimState", 0);
-				//anim.SetTrigger("stand");
-				//				anim.SetBool ("walk", false);
-				/*anim.SetInteger ("AnimState", 0);
-										print ("wolf stand!");
-										didnt work because touchcount > 0 not only in this if statement but in the previous one
-					 					*/
 			}
-		} else if(walking) {
-
-			//sources[1].Stop();
-			//sources[0].Play();
-			//print ("walking!");
-			if (targetPoint.x > transform.position.x) 
-			{
-				//anim.SetTrigger("walk");
-				anim.SetInteger ("AnimState", 2);
-				//print ("walking right!");
-				//rb2DplayerWolf.MovePosition (Vector2.MoveTowards (playerWolf.transform.position, targetPos, speed * Time.deltaTime));
-
-
-					if (playerWolfShadow.transform.localScale.x < 0)
-						playerWolfShadow.transform.localScale = new Vector3 (-1, 1, 1);
-					playerWolfShadow.transform.localPosition = new Vector3 (-0.43f, -0.52f, 1);
-					playerWolfShadow.transform.localRotation = Quaternion.Euler(58, 328, 0);
-
-				
+		} else if (walking) {
+			anim.SetInteger ("AnimState", 2);
+			if (targetPoint.x > transform.position.x) {
+				if (playerWolfShadow.transform.localScale.x < 0){
+					playerWolfShadow.transform.localScale = new Vector3 (-1, 1, 1);
+				}
+				playerWolfShadow.transform.localPosition = new Vector3 (-0.43f, -0.52f, 1);
+				playerWolfShadow.transform.localRotation = Quaternion.Euler(58, 328, 0);
 			} else if (targetPoint.x < transform.position.x) {
-				//anim.SetTrigger("walkLeft");
-				anim.SetInteger ("AnimState", 2);
-				//print ("walking left!");
-				//rb2DplayerWolf.MovePosition (Vector2.MoveTowards (playerWolf.transform.position, targetPos, speed * Time.deltaTime));
-				//#if UNITY_EDITOR || UNITY_WEBPLAYER
-					if (playerWolfShadow.transform.localScale.x > 0)
-						playerWolfShadow.transform.localScale = new Vector3 (1, 1, 1);	
-					playerWolfShadow.transform.localPosition = new Vector3 (-0.15f, -0.52f, 1);
-					playerWolfShadow.transform.localRotation = Quaternion.Euler(59.7f, 342, 354.65f);
-				
-			} else if (Input.touchCount < 0) {
-				anim.SetInteger ("AnimState", 0);
-				//anim.SetTrigger("stand");
-				//				anim.SetBool ("walk", false);
-				/*anim.SetInteger ("AnimState", 0);
-										print ("wolf stand!");
-										didnt work because touchcount > 0 not only in this if statement but in the previous one
-					 					*/
+				if (playerWolfShadow.transform.localScale.x > 0){
+					playerWolfShadow.transform.localScale = new Vector3 (1, 1, 1);	
+				}
+				playerWolfShadow.transform.localPosition = new Vector3 (-0.15f, -0.52f, 1);
+				playerWolfShadow.transform.localRotation = Quaternion.Euler(59.7f, 342, 354.65f);
 			}
-		} else{
-			//doesn't work
-
+		} else {
 			anim.SetInteger("AnimState", 0);
-			//sources[1].Stop();
-			//sources[0].Stop();
 		}
 
 		#endif
