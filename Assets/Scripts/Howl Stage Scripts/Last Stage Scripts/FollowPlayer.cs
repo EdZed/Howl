@@ -20,6 +20,7 @@ public class FollowPlayer : MonoBehaviour
 	bool isFollowing = false;
 	bool isInDen = false;
 	public bool isTriggeringDen;
+	//public bool redWolf;
 
 	//Wolf Den Art
 	public GameObject wolfDenArt;
@@ -29,6 +30,7 @@ public class FollowPlayer : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
+		//redWolf = false;
 		LostWolfAnim = gameObject.GetComponent<Animator> ();
 		LostWolfGO = this.gameObject;
 		LostWolfCollider = GetComponent <BoxCollider2D> ();
@@ -49,6 +51,11 @@ public class FollowPlayer : MonoBehaviour
 		wolfDenArt = GameObject.Find ("WolfDen");
 		wolfDenAnim = wolfDenArt.GetComponent<Animator> ();
 		wolfDenAnim.SetInteger ("DenAnimState", 0);
+//		if(LostWolfGO == GameObject.Find ("Lost Wolf Red"))
+//		{
+//			redWolf = true;
+//			print ("Red wolf detected!");
+//		}
 
 		//Vector3 randomPos = new Vector3(Random.Range(-10.0, 10.0), 0, Random.Range(-10.0, 10.0));
 	}//end start
@@ -56,10 +63,18 @@ public class FollowPlayer : MonoBehaviour
 	// Update is called once per frame
 	void Update () {
 		if (isTriggeringDen) {
+//			if(redWolf)
+//			{
+//				LostWolfAnim.SetInteger ("LostWolfAnimState", 6);
+//				//GameEnd();
+//				print ("red wolf disappear");
+//			}else
+//			{
 			speed = staySpeed;
 			//WolfSpirit disappears
 			LostWolfAnim.SetInteger ("LostWolfAnimState", 5);
 			//print ("Beam up Update!");
+			//}
 		}
 	
 		if (isFollowing) {
@@ -117,8 +132,12 @@ public class FollowPlayer : MonoBehaviour
 		PlayerWolfCollider.enabled = true;
 	}
 
-	void GameEnd(){
+	IEnumerator GameEnd(){
+		Debug.Log("Before Waiting 7 seconds");
+		yield return new WaitForSeconds(7);
+		Debug.Log("After Waiting 7 Seconds");
 		Application.LoadLevel ("Howl Title Screen");
+		Destroy(this.gameObject);
 	}
 
 	void WolfSpiritFaceRight(){
@@ -132,4 +151,16 @@ public class FollowPlayer : MonoBehaviour
 			gameObject.transform.localScale = new Vector3 (-1, 1, 1);	
 		}	
 	}
+	void OnEnable()
+	{
+		WolfDenSpiritMusic.RedWolfCollected += GameEnd;
+	}
+	
+	
+	void OnDisable()
+	{
+		WolfDenSpiritMusic.RedWolfCollected -= GameEnd;
+	}
+
+
 }//end whole class

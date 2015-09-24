@@ -48,6 +48,9 @@ public class WolfDenSpiritMusic : MonoBehaviour {
 	//define a list
 	public static List<GameObject> spawnPoints = new List<GameObject>();
 	int spawnPointIndex;
+
+	public delegate IEnumerator LastWolfCollected();
+	public static event LastWolfCollected RedWolfCollected;
 	
 	// Use this for initialization
 	void Start () {
@@ -110,7 +113,7 @@ public class WolfDenSpiritMusic : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
- 
+		
 	}
 	
 	void OnTriggerEnter2D(Collider2D target)
@@ -202,6 +205,10 @@ public class WolfDenSpiritMusic : MonoBehaviour {
 			{
 				sources[1].emissionRate = 1000;
 				rescuedWolvesCounter = 5;
+				if(RedWolfCollected != null)
+				{
+					RedWolfCollected();
+				}
 				//PlayerWolfRenderer.enabled = false;
 				//Application.LoadLevel ("Howl Title Screen");
 				//GameEnd();
