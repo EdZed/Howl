@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -26,6 +26,8 @@ public class PCWolfInput : MonoBehaviour
 	public CircleCollider2D HowlAttractCollider;
 	public float HowlRadiusMax;
 	public float HowlRadiusRate;
+	GameObject HowlSprite;
+	Vector3 HowlSpriteRate = Vector3.one * 0.066f;
 	
 	public bool walking;
 	public bool running;
@@ -61,11 +63,14 @@ public class PCWolfInput : MonoBehaviour
 		MainCam = GameObject.Find("Main Camera");
 		anim.SetInteger ("AnimState", 0);
 		rb2DplayerWolf = playerWolf.GetComponent<Rigidbody2D>();
-		HowlAttract = GameObject.Find("HowlAttract");
+		//HowlAttract = GameObject.Find("HowlAttract");
+		HowlAttract = transform.FindChild ("HowlAttract").gameObject;
 		HowlAttractCollider = HowlAttract.GetComponent <CircleCollider2D> ();
 
 		HowlAttractCollider.radius = 0f;
-		
+		HowlSprite = HowlAttract.transform.FindChild ("HowlSprite").gameObject;
+		HowlSprite.transform.localScale = Vector3.zero;
+
 		//restartTimer -= Time.deltaTime;
 
 		//#if UNITY_EDITOR || UNITY_WEBPLAYER
@@ -167,14 +172,24 @@ public class PCWolfInput : MonoBehaviour
 			StopSFX();
 		}
 
-		if ((howling && !running) || (howling && !walking)) {
-			anim.SetInteger("AnimState", 6);
+		//if ((howling && !running) || (howling && !walking)) {
+		if (howling) {
+			if(running){
+				anim.SetInteger("AnimState", 7);
+			} else if (walking) {
+				anim.SetInteger("AnimState", 2);
+			} else {
+				anim.SetInteger("AnimState", 6);
+			}
+
 			if (HowlAttractCollider.radius < HowlRadiusMax){
 				HowlAttractCollider.radius += HowlRadiusRate;
+				HowlSprite.transform.localScale += HowlSpriteRate;
 			}
 			
 			if(HowlAttractCollider.radius >= HowlRadiusMax){
 				HowlAttractCollider.radius = 0f;
+				HowlSprite.transform.localScale = Vector3.zero;
 				howling = false;
 			}
 		}
