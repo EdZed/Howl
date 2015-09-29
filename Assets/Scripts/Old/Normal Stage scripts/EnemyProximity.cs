@@ -10,8 +10,8 @@ public class EnemyProximity : MonoBehaviour {
 	public delegate void ActivateNearBear();
 	public static event ActivateNearBear TurnNearBearTrue;
 
-	public delegate void DeactivateNearBear();
-	public static event DeactivateNearBear TurnNearBearFalse;
+//	public delegate void DeactivateNearBear();
+//	public static event DeactivateNearBear TurnNearBearFalse;
 
 	// Use this for initialization
 	void Start () {
@@ -72,8 +72,8 @@ public class EnemyProximity : MonoBehaviour {
 		//readyToAttack = false;
 		//attacking = false;
 		animEnemy.SetInteger ("AnimState", 0);
-		if (TurnNearBearFalse != null){
-			TurnNearBearFalse();
-		}
+//		if (TurnNearBearFalse != null){
+//			TurnNearBearFalse();
+//		}
 	}
 }

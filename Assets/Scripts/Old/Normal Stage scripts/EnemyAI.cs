@@ -12,7 +12,7 @@ public class EnemyAI : MonoBehaviour {
 	public float speed;
 	//float attackSpeed = 100f;
 	float moveSpeed = 4f;
-	float attackSpeed = 35f;
+	float attackSpeed = 85f;
 	float stopSpeed = 0f;
 
 	private GameObject playerWolf;
@@ -47,17 +47,18 @@ public class EnemyAI : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(playerNearBear){
+		if (playerNearBear) {
 			//BearAttack();
 			//anim below activates BearAttack method
 			speed = stopSpeed;
 			speed = attackSpeed;
 			animEnemy.SetInteger ("AnimState", 3);
-			Debug.Log("Bear attacking player");
-		} else if(!playerNearBear){
-			BearPatrol();
-			Debug.Log("Bear walking");
-		}
+			Debug.Log ("Bear attacking player");
+		} else if (!playerNearBear) {
+			BearPatrol ();
+	
+			Debug.Log ("Bear walking");
+		} 
 	}
 
 	void OnEnable(){
@@ -80,7 +81,9 @@ public class EnemyAI : MonoBehaviour {
 
 	void BearAttack(){
 		//speed = attackSpeed;
-		rb2DenemyBear.MovePosition (Vector2.MoveTowards (gameObject.transform.position, playerWolf.transform.position, speed * Time.deltaTime));
+		//rb2DenemyBear.MovePosition (Vector2.MoveTowards (gameObject.transform.position, playerWolf.transform.position, speed * Time.deltaTime));
+		rb2DenemyBear.transform.position = Vector3.MoveTowards(rb2DenemyBear.transform.position, playerWolf.transform.position, speed * Time.deltaTime);
+
 		//readyToAttack = true;
 		//attacking = true;
 		//print ("attack true again!");
@@ -96,8 +99,9 @@ public class EnemyAI : MonoBehaviour {
 	void BearPatrol(){
 		animEnemy.SetInteger ("AnimState", 1);
 		//transform.position = Vector2.Lerp(transform.position,wayPoints[wayPoint].transform.position, Time.deltaTime);
-		rb2DenemyBear.transform.position = Vector3.MoveTowards(rb2DenemyBear.transform.position, wayPoints[wayPoint].transform.position, speed * Time.deltaTime);
 		speed = moveSpeed;
+		rb2DenemyBear.transform.position = Vector3.MoveTowards(rb2DenemyBear.transform.position, wayPoints[wayPoint].transform.position, speed * Time.deltaTime);
+
 		if(transform.position == wayPoints[wayPoint].transform.position){  
 			if(wayPoint == 1){
 				wayPoint=0;
@@ -108,6 +112,19 @@ public class EnemyAI : MonoBehaviour {
 				BearFaceRight();
 			}  
 		}
+
+		//if (wayPoint == 1) {
+		if (wayPoints[wayPoint].transform.position.x > rb2DenemyBear.transform.position.x) {
+			BearFaceRight ();
+
+		} else if (wayPoints[wayPoint].transform.position.x < rb2DenemyBear.transform.position.x) {
+			BearFaceLeft ();
+		}
+		//}
+
+//		if(wayPoint == 0){
+//			BearFaceLeft();
+//		}
 
 	}
 	
