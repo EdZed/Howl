@@ -7,6 +7,12 @@ public class EnemyProximity : MonoBehaviour {
 	//float speed;
 	//float attackSpeed = 200f;
 
+	public delegate void ActivateNearBear();
+	public static event ActivateNearBear TurnNearBearTrue;
+
+	public delegate void DeactivateNearBear();
+	public static event DeactivateNearBear TurnNearBearFalse;
+
 	// Use this for initialization
 	void Start () {
 		//animEnemy = GetComponent<Animator> ();
@@ -36,16 +42,23 @@ public class EnemyProximity : MonoBehaviour {
 			//Destroy(target.gameObject); 
 			//Destroy(target.transform.parent.gameObject); 
 
+			//sending event to EnemyAI
+			if (TurnNearBearTrue != null){
+				TurnNearBearTrue();
+			}
+
 			if (target.transform.parent.gameObject.transform.position.x > transform.position.x) 
 			{
 				//anim.SetTrigger("walk");
-				animEnemy.SetInteger ("AnimState", 3);
+
+				//being activated in EnemyAI script
+				//animEnemy.SetInteger ("AnimState", 3);
 				//rb2DenemyWolf.MovePosition (Vector2.MoveTowards (gameObject.transform.parent.gameObject.transform.position, target.gameObject.transform.parent.gameObject.transform.position, speed * Time.deltaTime));
 				if (gameObject.transform.parent.gameObject.transform.localScale.x < 0)
 					gameObject.transform.parent.gameObject.transform.localScale = new Vector3 (1, 1, 1);
 			} else if (target.transform.parent.gameObject.transform.position.x < transform.position.x) {
 				//anim.SetTrigger("walkLeft");
-				animEnemy.SetInteger ("AnimState", 3);
+				//animEnemy.SetInteger ("AnimState", 3);
 				//rb2DenemyWolf.MovePosition (Vector2.MoveTowards (gameObject.transform.parent.gameObject.transform.position, target.gameObject.transform.parent.gameObject.transform.position, speed * Time.deltaTime));
 				if (gameObject.transform.parent.gameObject.transform.localScale.x > 0)
 					gameObject.transform.parent.gameObject.transform.localScale = new Vector3 (-1, 1, 1);	
@@ -59,5 +72,8 @@ public class EnemyProximity : MonoBehaviour {
 		//readyToAttack = false;
 		//attacking = false;
 		animEnemy.SetInteger ("AnimState", 0);
+		if (TurnNearBearFalse != null){
+			TurnNearBearFalse();
+		}
 	}
 }
