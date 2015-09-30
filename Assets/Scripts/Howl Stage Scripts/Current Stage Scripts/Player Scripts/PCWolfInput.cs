@@ -23,14 +23,17 @@ public class PCWolfInput : MonoBehaviour
 	public GameObject playerWolf;
 	public GameObject HowlAttract;
 	public GameObject MainCam;
-	public CircleCollider2D HowlAttractCollider;
+	CircleCollider2D HowlAttractCollider;
 	public float HowlRadiusMax;
 	public float HowlRadiusRate;
 	GameObject HowlSprite;
 	Vector3 HowlSpriteRate = Vector3.one * 0.066f;
+	SpriteRenderer WolfSprRend;
 	
 	public bool walking;
 	public bool running;
+	public bool objMoving;
+	public bool canMove = true;
 
 	Vector3 currentPosition;
 
@@ -66,6 +69,7 @@ public class PCWolfInput : MonoBehaviour
 		//HowlAttract = GameObject.Find("HowlAttract");
 		HowlAttract = transform.FindChild ("HowlAttract").gameObject;
 		HowlAttractCollider = HowlAttract.GetComponent <CircleCollider2D> ();
+		WolfSprRend = GetComponent<SpriteRenderer> ();
 
 		HowlAttractCollider.radius = 0f;
 		HowlSprite = HowlAttract.transform.FindChild ("HowlSprite").gameObject;
@@ -211,61 +215,64 @@ public class PCWolfInput : MonoBehaviour
 		if(Input.GetKeyUp(KeyCode.Space)) {
 			howling = true;
 		}
+		if (canMove) {
+			if (Input.GetKey (KeyCode.LeftArrow) || Input.GetKey (KeyCode.A)) {
+				WolfMoveToLeft ();
+				if (Input.GetKey (KeyCode.LeftShift)) {
+					running = true;
+					walking = false;
+					speed = runSpeed;
+					transform.position += Vector3.left * speed * Time.deltaTime;
+				} else {
+					running = false;
+					walking = true;
+					speed = moveSpeed;
+					transform.position += Vector3.left * speed * Time.deltaTime;
+				}
+			} 
+			if (Input.GetKey (KeyCode.RightArrow) || Input.GetKey (KeyCode.D)) {
+				WolfMoveToRight ();
+				if (Input.GetKey (KeyCode.LeftShift)) {
+					running = true;
+					walking = false;
+					speed = runSpeed;
+					transform.position += Vector3.right * speed * Time.deltaTime;
+				} else {
+					running = false;
+					walking = true;
+					speed = moveSpeed;
+					transform.position += Vector3.right * speed * Time.deltaTime;
+				}
+			} 
+			if (Input.GetKey (KeyCode.UpArrow) || Input.GetKey (KeyCode.W)) {
+				if (Input.GetKey (KeyCode.LeftShift)) {
+					running = true;
+					walking = false;
+					speed = runSpeed;
+					transform.position += Vector3.up * speed * Time.deltaTime;
+				} else {
+					running = false;
+					walking = true;
+					speed = moveSpeed;
+					transform.position += Vector3.up * speed * Time.deltaTime;
+				}
+			} 
+			if (Input.GetKey (KeyCode.DownArrow) || Input.GetKey (KeyCode.S)) {
+				if (Input.GetKey (KeyCode.LeftShift)) {
+					running = true;
+					walking = false;
+					speed = runSpeed;
+					transform.position += Vector3.down * speed * Time.deltaTime;
+				} else {
+					running = false;
+					walking = true;
+					speed = moveSpeed;
+					transform.position += Vector3.down * speed * Time.deltaTime;
+				}
+			} 
+		}
 
-		if (Input.GetKey (KeyCode.LeftArrow)|| Input.GetKey(KeyCode.A)) {
-			WolfMoveToLeft();
-			if (Input.GetKey (KeyCode.LeftShift)) {
-				running = true;
-				walking = false;
-				speed = runSpeed;
-				transform.position += Vector3.left * speed * Time.deltaTime;
-			} else {
-				running = false;
-				walking = true;
-				speed = moveSpeed;
-				transform.position += Vector3.left * speed * Time.deltaTime;
-			}
-		} 
-		if (Input.GetKey (KeyCode.RightArrow)|| Input.GetKey(KeyCode.D)) {
-			WolfMoveToRight();
-			if (Input.GetKey (KeyCode.LeftShift)) {
-				running = true;
-				walking = false;
-				speed = runSpeed;
-				transform.position += Vector3.right * speed * Time.deltaTime;
-			} else {
-				running = false;
-				walking = true;
-				speed = moveSpeed;
-				transform.position += Vector3.right * speed * Time.deltaTime;
-			}
-		} 
-		if (Input.GetKey(KeyCode.UpArrow)|| Input.GetKey(KeyCode.W)) {
-			if (Input.GetKey (KeyCode.LeftShift)) {
-				running = true;
-				walking = false;
-				speed = runSpeed;
-				transform.position += Vector3.up * speed * Time.deltaTime;
-			} else {
-				running = false;
-				walking = true;
-				speed = moveSpeed;
-				transform.position += Vector3.up * speed * Time.deltaTime;
-			}
-		} 
-		if (Input.GetKey(KeyCode.DownArrow)|| Input.GetKey(KeyCode.S)) {
-			if (Input.GetKey (KeyCode.LeftShift)) {
-				running = true;
-				walking = false;
-				speed = runSpeed;
-				transform.position += Vector3.down * speed * Time.deltaTime;
-			} else {
-				running = false;
-				walking = true;
-				speed = moveSpeed;
-				transform.position += Vector3.down * speed * Time.deltaTime;
-			}
-		} 
+		Debug.Log (objMoving);
 	}//end of update. Now fixedUpdate
 	//Vector3 target = moveDirection * speed + currentPosition;
 	//transform.position = Vector3.Lerp( currentPosition, target, Time.deltaTime );
@@ -273,6 +280,25 @@ public class PCWolfInput : MonoBehaviour
 	//#endif
 
 //}//end of update. Now fixedUpdate
+
+	/*
+	void OnCollisionEnter2D(Collision2D myCol){
+		SpriteRenderer mySprRend = myCol.gameObject.GetComponent<SpriteRenderer> ();
+		MovableObject moveScript = myCol.gameObject.GetComponent<MovableObject>();
+
+		if (WolfSprRend.sortingOrder >= mySprRend.sortingOrder - 8 || WolfSprRend.sortingOrder <= mySprRend.sortingOrder + 8) {
+			//if(playerWolf.transform.position.y <= myCol.collider.bounds.max.y ){
+				if (moveScript.isMovable) {
+					objMoving = true;
+				}
+			//}
+		}
+	} 
+
+	void OnCollisionExit2D(Collision2D myCol) {
+		objMoving = false;
+	}
+	*/
 	
 	void WalkSFX() {
 		if (!sources [0].isPlaying) 
