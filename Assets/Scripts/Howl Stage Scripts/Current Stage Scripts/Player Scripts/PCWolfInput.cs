@@ -34,6 +34,15 @@ public class PCWolfInput : MonoBehaviour
 	public bool running;
 	public bool objMoving;
 	public bool canMove = true;
+	bool prepAttack = false;
+	public bool attacking;
+
+	float currTime;
+	public float atkBuildTime = 2f;
+	public float atkDist = 5f;
+	public float atkSpeed = 10f;
+	int atkDmg = 0;
+	Color startColor;
 
 	Vector3 currentPosition;
 
@@ -74,6 +83,7 @@ public class PCWolfInput : MonoBehaviour
 		HowlAttractCollider.radius = 0f;
 		HowlSprite = HowlAttract.transform.FindChild ("HowlSprite").gameObject;
 		HowlSprite.transform.localScale = Vector3.zero;
+		startColor = playerWolf.GetComponent<SpriteRenderer> ().color;
 
 		//restartTimer -= Time.deltaTime;
 
@@ -215,6 +225,51 @@ public class PCWolfInput : MonoBehaviour
 		if(Input.GetKeyUp(KeyCode.Space)) {
 			howling = true;
 		}
+		if (Input.GetKeyUp (KeyCode.LeftAlt)) {
+			if (prepAttack){
+				attacking = true;
+			} else {
+				currTime = Time.time;
+				prepAttack = true;
+				targetPos = playerWolf.transform.position;
+				if (playerWolf.transform.localScale.x < 0) {
+					targetPos.x -= atkDist;
+				} else if (playerWolf.transform.localScale.x > 0) {
+					targetPos.x += atkDist;
+				}
+			}
+		}
+
+		if (attacking) {
+			anim.SetInteger("AnimState", 5);
+			playerWolf.transform.position = Vector3.MoveTowards(playerWolf.transform.position, targetPos, atkSpeed * Time.deltaTime);
+		}
+		if (playerWolf.transform.position == targetPos) {
+			attacking = false;
+			targetPos = Vector3.zero;
+			anim.SetInteger("AnimState", 0);
+			Debug.Log("Attack for " + atkDmg + " damage!");
+			atkDmg = 0;
+			playerWolf.GetComponent<SpriteRenderer>().color = startColor;
+			canMove = true;
+			prepAttack = false;
+		}
+		
+		if (prepAttack) {
+			canMove = false;
+			if(Time.time >= currTime + atkBuildTime){
+				if (atkDmg >=5){
+					atkDmg = 5;
+				} else {
+					atkDmg++;
+				}
+				Color myOrgColor = playerWolf.GetComponent<SpriteRenderer>().color;
+				myOrgColor.r += 0.4f;
+				playerWolf.GetComponent<SpriteRenderer>().color = myOrgColor;
+				currTime = Time.time;
+			}
+		}
+
 		if (canMove) {
 			if (Input.GetKey (KeyCode.LeftArrow) || Input.GetKey (KeyCode.A)) {
 				WolfMoveToLeft ();
@@ -272,34 +327,13 @@ public class PCWolfInput : MonoBehaviour
 			} 
 		}
 
-		Debug.Log (objMoving);
 	}//end of update. Now fixedUpdate
 	//Vector3 target = moveDirection * speed + currentPosition;
 	//transform.position = Vector3.Lerp( currentPosition, target, Time.deltaTime );
 	
 	//#endif
 
-//}//end of update. Now fixedUpdate
-
-	/*
-	void OnCollisionEnter2D(Collision2D myCol){
-		SpriteRenderer mySprRend = myCol.gameObject.GetComponent<SpriteRenderer> ();
-		MovableObject moveScript = myCol.gameObject.GetComponent<MovableObject>();
-
-		if (WolfSprRend.sortingOrder >= mySprRend.sortingOrder - 8 || WolfSprRend.sortingOrder <= mySprRend.sortingOrder + 8) {
-			//if(playerWolf.transform.position.y <= myCol.collider.bounds.max.y ){
-				if (moveScript.isMovable) {
-					objMoving = true;
-				}
-			//}
-		}
-	} 
-
-	void OnCollisionExit2D(Collision2D myCol) {
-		objMoving = false;
-	}
-	*/
-	
+//}//end of update. Now fixedUpdate	
 	void WalkSFX() {
 		if (!sources [0].isPlaying) 
 		{
