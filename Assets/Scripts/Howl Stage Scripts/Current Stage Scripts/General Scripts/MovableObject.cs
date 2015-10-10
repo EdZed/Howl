@@ -15,7 +15,7 @@ public class MovableObject : MonoBehaviour {
 	void Start () {
 		this.gameObject.AddComponent<SpriteZOrder> ();
 		this.gameObject.tag = "Movable";
-		stopXMov = stopYMov = false;
+		//stopXMov = stopYMov = false;
 		myBox2D = this.gameObject.GetComponent<BoxCollider2D> ();
 		newOffset = new Vector2 (0f, (myBox2D.size.y / 2) * -1);
 		myBox2D.offset = newOffset;

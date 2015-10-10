@@ -15,6 +15,7 @@ public class WolfParticleToDen : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		transform.rotation = Quaternion.Euler( Mathf.Atan2(den.transform.position.y - transform.position.y, den.transform.position.x - transform.position.x) * Mathf.Rad2Deg,270, 270);
+		transform.LookAt (den.transform);
+
 	}
 }
