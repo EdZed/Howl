@@ -7,14 +7,16 @@ public class EnemyProximity : MonoBehaviour {
 	//float speed;
 	//float attackSpeed = 200f;
 
-	public delegate void ActivateNearBear();
-	public static event ActivateNearBear TurnNearBearTrue;
+	EnemyAI enemyAI;
+//	public delegate void ActivateNearBear();
+//	public static event ActivateNearBear TurnNearBearTrue;
 
 //	public delegate void DeactivateNearBear();
 //	public static event DeactivateNearBear TurnNearBearFalse;
 
 	// Use this for initialization
 	void Start () {
+		enemyAI = gameObject.GetComponentInParent<EnemyAI> ();
 		//animEnemy = GetComponent<Animator> ();
 		animEnemy = gameObject.GetComponentInParent<Animator> ();
 		//anim.SetTrigger("stand");
@@ -43,9 +45,10 @@ public class EnemyProximity : MonoBehaviour {
 			//Destroy(target.transform.parent.gameObject); 
 
 			//sending event to EnemyAI
-			if (TurnNearBearTrue != null){
-				TurnNearBearTrue();
-			}
+//			if (TurnNearBearTrue != null){
+//				TurnNearBearTrue();
+//			}
+			enemyAI.NearBearOn();
 
 			if (target.transform.parent.gameObject.transform.position.x > transform.position.x) 
 			{

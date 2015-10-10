@@ -61,17 +61,17 @@ public class EnemyAI : MonoBehaviour {
 		} 
 	}
 
-	void OnEnable(){
-		EnemyProximity.TurnNearBearTrue += NearBearOn;
-		//EnemyProximity.TurnNearBearFalse += NearBearOff;
-	}
+//	void OnEnable(){
+//		EnemyProximity.TurnNearBearTrue += NearBearOn;
+//		//EnemyProximity.TurnNearBearFalse += NearBearOff;
+//	}
+//
+//	void OnDisable(){
+//		EnemyProximity.TurnNearBearTrue -= NearBearOn;
+//		//EnemyProximity.TurnNearBearFalse -= NearBearOff;
+//	}
 
-	void OnDisable(){
-		EnemyProximity.TurnNearBearTrue -= NearBearOn;
-		//EnemyProximity.TurnNearBearFalse -= NearBearOff;
-	}
-
-	void NearBearOn(){
+	public void NearBearOn(){
 		playerNearBear = true;
 	}
 
