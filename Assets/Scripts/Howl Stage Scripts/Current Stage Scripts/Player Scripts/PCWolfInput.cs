@@ -188,6 +188,9 @@ public class PCWolfInput : MonoBehaviour
 
 		//if ((howling && !running) || (howling && !walking)) {
 		if (howling) {
+			//howl sfx starts
+			HowlSFX();
+
 			if(running){
 				anim.SetInteger("AnimState", 7);
 			} else if (walking) {
@@ -205,6 +208,8 @@ public class PCWolfInput : MonoBehaviour
 				HowlAttractCollider.radius = 0f;
 				HowlSprite.transform.localScale = Vector3.zero;
 				howling = false;
+				//howling sfx stops
+				//StopHowlSFX();
 			}
 		}
 		if (Input.GetKeyUp (KeyCode.UpArrow)||
@@ -224,6 +229,7 @@ public class PCWolfInput : MonoBehaviour
 
 		if(Input.GetKeyUp(KeyCode.Space)) {
 			howling = true;
+
 		}
 		if (Input.GetKeyUp (KeyCode.LeftAlt)) {
 			if (prepAttack){
@@ -358,6 +364,20 @@ public class PCWolfInput : MonoBehaviour
 		sources[0].Stop();
 		sources[1].Stop();
 		//}
+		
+	}
+
+	void HowlSFX() {
+		if (!sources [2].isPlaying) 
+		{
+			//audio.Play ();
+			sources [2].Play ();
+		}
+	}
+
+	void StopHowlSFX() {
+			//audio.Play ();
+			sources [2].Stop ();
 		
 	}
 
