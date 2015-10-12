@@ -5,10 +5,8 @@ using System.Collections.Generic;
 public class WolfDenSpiritMusic : MonoBehaviour {
 	
 	public BoxCollider2D LostWolfCollider;
-	public GameObject LostWolfGO;
 	public Rigidbody2D rb2DLostWolf;
 	public GameObject PlayerWolfGO;
-	//public SpriteRenderer PlayerWolfRenderer;
 	//Lost wolves spawn points
 	public GameObject lostWolf2Pos;
 	public GameObject lostWolf3Pos;
@@ -55,7 +53,7 @@ public class WolfDenSpiritMusic : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-		LostWolfGO = this.gameObject;
+		//LostWolfGO = this.gameObject;
 		lostWolf2Pos = GameObject.Find ("LostWolf2Pos");
 		lostWolf3Pos = GameObject.Find ("LostWolf3Pos");
 		lostWolf4Pos = GameObject.Find ("LostWolf4Pos");
@@ -98,8 +96,7 @@ public class WolfDenSpiritMusic : MonoBehaviour {
 		//LostWolfCollider.enabled = false;
 		
 		PlayerWolfGO = GameObject.Find("playerWolf");
-		//PlayerWolfRenderer = PlayerWolfGO.GetComponent <SpriteRenderer> ();
-		
+
 		speed = moveSpeed;
 		rb2DLostWolf = GetComponent<Rigidbody2D> ();
 		wolfDenAnim = wolfDenArt.GetComponent<Animator> ();
@@ -132,12 +129,10 @@ public class WolfDenSpiritMusic : MonoBehaviour {
 
 				GameObject instance = Instantiate(Resources.Load("Lost Wolf Orange")) as GameObject;
 		
-				//instance.transform.position = lostWolf2Pos.transform.position;
-				instance.transform.position = spawnPoints[spawnPointIndex].transform.position;
-				GetSpawnPoint();
+				instance.transform.position = lostWolf3Pos.transform.position;
+//				instance.transform.position = spawnPoints[spawnPointIndex].transform.position;
+//				GetSpawnPoint();
 				//spawnPoints.Remove(
-				//spawnPoints.Remove.r
-
 
 				//instance.transform.position = new Vector3(Random.Range(-10.0, 10.0), 0, Random.Range(-10.0, 10.0));
 			
@@ -156,9 +151,9 @@ public class WolfDenSpiritMusic : MonoBehaviour {
 			{
 				GameObject instance = Instantiate(Resources.Load("Lost Wolf Purple")) as GameObject;
 
-				//instance.transform.position = lostWolf3Pos.transform.position;
-				instance.transform.position = spawnPoints[spawnPointIndex].transform.position;
-				GetSpawnPoint();
+				instance.transform.position = lostWolf4Pos.transform.position;
+//				instance.transform.position = spawnPoints[spawnPointIndex].transform.position;
+//				GetSpawnPoint();
 
 				sources[1].emissionRate = 500;
 				spiritAnim [1].GetComponent<Animator> ().enabled = true;
@@ -172,9 +167,10 @@ public class WolfDenSpiritMusic : MonoBehaviour {
 
 				GameObject instance = Instantiate(Resources.Load("Lost Wolf L Blue")) as GameObject;
 
-				//instance.transform.position = lostWolf4Pos.transform.position;
-				instance.transform.position = spawnPoints[spawnPointIndex].transform.position;
-				GetSpawnPoint();
+				instance.transform.position = lostWolf5Pos.transform.position;
+//				instance.transform.position = spawnPoints[spawnPointIndex].transform.position;
+//				GetSpawnPoint();
+
 				//Destroy(target.gameObject);
 				sources[1].emissionRate = 700;
 				sources[1].transform.localPosition = rightSide.transform.localPosition;
@@ -188,10 +184,11 @@ public class WolfDenSpiritMusic : MonoBehaviour {
 			{
 				GameObject instance = Instantiate(Resources.Load("Lost Wolf Red")) as GameObject;
 
-				//instance.transform.position = lostWolf5Pos.transform.position;
+				instance.transform.position = lostWolf2Pos.transform.position;
 
-				instance.transform.position = spawnPoints[spawnPointIndex].transform.position;
-				GetSpawnPoint();
+//				instance.transform.position = spawnPoints[spawnPointIndex].transform.position;
+//				GetSpawnPoint();
+
 				//Destroy(target.gameObject);
 				sources[1].emissionRate = 900;
 				sources[1].transform.localPosition = leftSide.transform.localPosition;
@@ -209,8 +206,9 @@ public class WolfDenSpiritMusic : MonoBehaviour {
 				{
 					RedWolfCollected();
 				}
-				//PlayerWolfRenderer.enabled = false;
+
 				//Application.LoadLevel ("Howl Title Screen");
+				StartCoroutine("GameEnd");
 				//GameEnd();
 			}
 		}//end target tag LostWolf
@@ -229,6 +227,13 @@ public class WolfDenSpiritMusic : MonoBehaviour {
 			print ("There are " + spawnPoints.Count + " spawn points left.");
 			//print ("Spawn point index left:" + spawnPointIndex);
 		}
+	}
+
+	IEnumerator GameEnd(){
+
+		yield return new WaitForSeconds(5);
+		Application.LoadLevel ("Howl Title Screen");
+		//Destroy(this.gameObject);
 	}
 
 }//end whole class
