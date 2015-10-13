@@ -136,7 +136,7 @@ public class WolfDenSpiritMusic : MonoBehaviour {
 
 				//instance.transform.position = new Vector3(Random.Range(-10.0, 10.0), 0, Random.Range(-10.0, 10.0));
 			
-				sources[1].emissionRate = 120;
+				sources[1].emissionRate = 300;
 				sources[1].transform.localPosition = leftSide.transform.localPosition;
 				sources[1].transform.localRotation = leftSide.transform.localRotation;
 

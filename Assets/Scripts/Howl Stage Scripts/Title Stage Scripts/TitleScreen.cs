@@ -66,12 +66,18 @@ public class TitleScreen : MonoBehaviour {
 			if (hit.collider != null && hit.collider.gameObject.tag == "Title")
 			{
 				//hit.GetComponent<TouchObjectScript>().ApplyForce(); 
-				Application.LoadLevel ("Howl Last Stage");
+				//Application.LoadLevel ("Howl Last Stage");
+				Application.LoadLevel ("Howl PS Demo");
 			}
 			//			if (Physics.Raycast(targetPos)){
 			//				//Instantiate(particle, transform.position, transform.rotation);
 			//			}
 		}//ends getmousebuttondown
+
+		if(Input.GetKeyUp(KeyCode.Space)) {
+			Application.LoadLevel ("Howl PS Demo");
+			
+		}
 		#endif
 	}//end update
 }//end whole class
