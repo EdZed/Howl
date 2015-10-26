@@ -2,10 +2,11 @@
 using System.Collections;
 
 public class EnemyAttackCollider : MonoBehaviour {
+	GameObject myPlayerWolf;
 
 	// Use this for initialization
 	void Start () {
-	
+		myPlayerWolf = GameObject.Find("playerWolf");
 	}
 	
 	// Update is called once per frame
@@ -16,6 +17,15 @@ public class EnemyAttackCollider : MonoBehaviour {
 	{
 		if (target.gameObject.tag == "PlayerToAttack") 
 		{
+			myPlayerWolf.GetComponent<PCWolfInput> ().playerHealth-= 1 ;
+			StartCoroutine(PlayerHurtFlash());
+
+
+
+//			myPlayerWolf.GetComponent<PCWolfInput> ().s
+//			renderer.material.color = colors[0];
+//			yield WaitForSeconds(.5);
+//			renderer.material.color = colors[1];
 			//if(attacking)
 			//{
 			//var explode = target.GetComponent<Explode>() as Explode;
@@ -34,6 +44,23 @@ public class EnemyAttackCollider : MonoBehaviour {
 		
 	}
 	//}
+
+	IEnumerator PlayerHurtFlash(){
+		Color myOrgColor = myPlayerWolf.GetComponent<SpriteRenderer>().color;
+
+		myOrgColor.r += 0.8f;
+		myPlayerWolf.GetComponent<SpriteRenderer>().color = myOrgColor;
+		//yield return new WaitForSeconds(.5);
+		yield return new WaitForSeconds(.1f);
+		myOrgColor.r -= 0.8f;
+		myPlayerWolf.GetComponent<SpriteRenderer>().color = myOrgColor;
+		yield return new WaitForSeconds(.1f);
+		myOrgColor.r += 0.8f;
+		myPlayerWolf.GetComponent<SpriteRenderer>().color = myOrgColor;
+		yield return new WaitForSeconds(.1f);
+		myOrgColor.r -= 0.8f;
+		myPlayerWolf.GetComponent<SpriteRenderer>().color = myOrgColor;
+	}
 	
 	void OnTriggerExit2D(Collider2D target){
 		//readyToAttack = false;

@@ -44,6 +44,9 @@ public class PCWolfInput : MonoBehaviour
 	int atkDmg = 0;
 	Color startColor;
 
+	public int playerHealth = 3;
+
+
 	Vector3 currentPosition;
 
 	public delegate void ClickLeft();
@@ -190,11 +193,14 @@ public class PCWolfInput : MonoBehaviour
 		if (howling) {
 			//howl sfx starts
 			HowlSFX();
+			canMove = false;
 
 			if(running){
-				anim.SetInteger("AnimState", 7);
+				anim.SetInteger("AnimState", 6);
+				//anim.SetInteger("AnimState", 7);
 			} else if (walking) {
-				anim.SetInteger("AnimState", 2);
+				anim.SetInteger("AnimState", 6);
+				//anim.SetInteger("AnimState", 2);
 			} else {
 				anim.SetInteger("AnimState", 6);
 			}
@@ -208,6 +214,7 @@ public class PCWolfInput : MonoBehaviour
 				HowlAttractCollider.radius = 0f;
 				HowlSprite.transform.localScale = Vector3.zero;
 				howling = false;
+				canMove = true;
 				//howling sfx stops
 				//StopHowlSFX();
 			}
@@ -281,8 +288,14 @@ public class PCWolfInput : MonoBehaviour
 		}
 
 		if (canMove) {
+//			if (howling == true){
+//				canMove = false;
+//			} else if (howling == false){
+//				canMove = true;
+//			}
 			if (Input.GetKey (KeyCode.LeftArrow) || Input.GetKey (KeyCode.A) || Input.GetButton("Gamepad_Mac_HorizontalLeft")) {
 				WolfMoveToLeft ();
+
 				if (Input.GetKey (KeyCode.LeftShift)|| Input.GetButton("Gamepad_Mac_Run") ) {
 					running = true;
 					walking = false;
@@ -335,6 +348,20 @@ public class PCWolfInput : MonoBehaviour
 					transform.position += Vector3.down * speed * Time.deltaTime;
 				}
 			} 
+		}
+		if (playerHealth == 1) {
+			Color myHurtColor = playerWolf.GetComponent<SpriteRenderer> ().color;
+			//myHurtColor.r += 0.4f;
+
+			myHurtColor = Color.Lerp (startColor, Color.white, 4);
+			playerWolf.GetComponent<SpriteRenderer> ().color = myHurtColor;
+		} else {
+			playerWolf.GetComponent<SpriteRenderer> ().color = startColor;
+
+		}
+
+		if (playerHealth == 0) {
+			Application.LoadLevel ("Howl PS Demo");
 		}
 
 	}//end of update. Now fixedUpdate

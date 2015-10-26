@@ -49,6 +49,8 @@ public class WolfDenSpiritMusic : MonoBehaviour {
 
 	public delegate IEnumerator LastWolfCollected();
 	public static event LastWolfCollected RedWolfCollected;
+
+	//int playerHealthTrack;
 	
 	// Use this for initialization
 	void Start () {
@@ -104,6 +106,9 @@ public class WolfDenSpiritMusic : MonoBehaviour {
 		wolfDenAnim.SetInteger ("DenAnimState", 0);
 		isTriggering = false;
 		rescuedWolvesCounter = 0;
+
+		//playerHealthTrack = PlayerWolfGO.GetComponent<PCWolfInput> ().playerHealth;
+
 		
 		//Vector3 randomPos = new Vector3(Random.Range(-10.0, 10.0), 0, Random.Range(-10.0, 10.0));
 	}//end start
@@ -116,10 +121,20 @@ public class WolfDenSpiritMusic : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D target)
 	{
 		isTriggering = true;
- 
+
+ 	//if wolf rescued, up counter by 1 and do other changes
 		if (target.gameObject.tag == "LostWolf") 
 		{
+
+			print ("1 wolf rescued");
 			if (rescuedWolvesCounter == 0){
+
+//				if (playerHealthTrack == 1|| playerHealthTrack == 2){
+//					playerHealthTrack += 1;
+//				}
+				HealthIncrease();
+
+
 			//PlayerWolfGO.GetComponent<AudioSource> ().Play ();
 			
 			// Instantiates a prefab located in any Resources
@@ -149,6 +164,8 @@ public class WolfDenSpiritMusic : MonoBehaviour {
 				//PlayerWolfGO.GetComponent<AudioSource> ().Play ();
 			} else if(rescuedWolvesCounter == 1)
 			{
+				HealthIncrease();
+
 				GameObject instance = Instantiate(Resources.Load("Lost Wolf Purple")) as GameObject;
 
 				instance.transform.position = lostWolf4Pos.transform.position;
@@ -164,7 +181,7 @@ public class WolfDenSpiritMusic : MonoBehaviour {
 
 			} else if(rescuedWolvesCounter == 2)
 			{
-
+				HealthIncrease();
 				GameObject instance = Instantiate(Resources.Load("Lost Wolf L Blue")) as GameObject;
 
 				instance.transform.position = lostWolf5Pos.transform.position;
@@ -182,6 +199,7 @@ public class WolfDenSpiritMusic : MonoBehaviour {
 				musicLayers [2].GetComponent<AudioSource> ().mute = false;
 			} else if(rescuedWolvesCounter == 3)
 			{
+				HealthIncrease();
 				GameObject instance = Instantiate(Resources.Load("Lost Wolf Red")) as GameObject;
 
 				instance.transform.position = lostWolf2Pos.transform.position;
@@ -200,6 +218,7 @@ public class WolfDenSpiritMusic : MonoBehaviour {
 				musicLayers [3].GetComponent<AudioSource> ().mute = false;
 			} else if(rescuedWolvesCounter == 4)
 			{
+				HealthIncrease();
 				sources[1].emissionRate = 1000;
 				rescuedWolvesCounter = 5;
 				if(RedWolfCollected != null)
@@ -226,6 +245,15 @@ public class WolfDenSpiritMusic : MonoBehaviour {
 			print (spawnPoints [spawnPointIndex]);
 			print ("There are " + spawnPoints.Count + " spawn points left.");
 			//print ("Spawn point index left:" + spawnPointIndex);
+		}
+	}
+
+	void HealthIncrease()
+	{
+		if (PlayerWolfGO.GetComponent<PCWolfInput> ().playerHealth == 1|| PlayerWolfGO.GetComponent<PCWolfInput> ().playerHealth == 2){
+			PlayerWolfGO.GetComponent<PCWolfInput> ().playerHealth += 1;
+			//print ("Increase player health by 1");
+			print ("player health:" + PlayerWolfGO.GetComponent<PCWolfInput> ().playerHealth);
 		}
 	}
 
