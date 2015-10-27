@@ -88,18 +88,20 @@ public class PCWolfInput : MonoBehaviour
 
 		Screen.orientation = ScreenOrientation.LandscapeLeft;
 		//Screen.orientation = ScreenOrientation.AutoRotation;
+		WolfSprRend = GetComponent<SpriteRenderer> ();
 		anim = GetComponent<Animator> ();
 		playerWolf = GameObject.Find("playerWolf");
 		MainCam = GameObject.Find("Main Camera");
 		anim.SetInteger ("AnimState", 0);
-		if (OnIdleAnim != null) {
-			OnIdleAnim ();
-		}
+		//This bottom code chunk causes the player running anim to play in the beginning when the scene restarts, and makes player invisible
+//		if (OnIdleAnim != null) {
+//			OnIdleAnim ();
+//		}
 		rb2DplayerWolf = playerWolf.GetComponent<Rigidbody2D>();
 		//HowlAttract = GameObject.Find("HowlAttract");
 		HowlAttract = transform.FindChild ("HowlAttract").gameObject;
 		HowlAttractCollider = HowlAttract.GetComponent <CircleCollider2D> ();
-		WolfSprRend = GetComponent<SpriteRenderer> ();
+
 
 		HowlAttractCollider.radius = 0f;
 		HowlSprite = HowlAttract.transform.FindChild ("HowlSprite").gameObject;

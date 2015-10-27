@@ -13,8 +13,8 @@ public class FollowPlayer : MonoBehaviour
 	public GameObject followPlayerWolfGO;
 	//public GameObject lostWolf2Pos;
 	float speed;
-	float moveSpeed = 7f;
-	float runSpeed = 12f;
+	float moveSpeed = 9f;
+	float runSpeed = 14f;
 	float staySpeed = 0f;
 
 	bool isFollowing = false;
