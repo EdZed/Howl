@@ -180,56 +180,90 @@ public class PlayerWolfShadow : MonoBehaviour
 		#endif
 
 		#if UNITY_EDITOR || UNITY_WEBPLAYER || UNITY_STANDALONE
-		Vector3 currentPosition = transform.position;
-
-		if (playerWolf.GetComponent<PCWolfInput>().walking){
-			walking = true;
-			running = false;
-		} else if (playerWolf.GetComponent<PCWolfInput>().running){
-			running = true;
-			walking = false;
-		} else {
-			running = false;
-			walking = false;
-		}
-
-		if(running){
-			anim.SetInteger ("AnimState", 7);
-			if (targetPoint.x > transform.position.x) {
-				if (playerWolfShadow.transform.localScale.x < 0){
-					playerWolfShadow.transform.localScale = new Vector3 (-1, 1, 1);
-				}
-				playerWolfShadow.transform.localRotation = Quaternion.Euler(58, 328, 0);
-				playerWolfShadow.transform.localPosition = new Vector3 (-0.43f, -0.52f, 1);
-			} else if (targetPoint.x < transform.position.x) {
-				if (playerWolfShadow.transform.localScale.x > 0){
-					playerWolfShadow.transform.localScale = new Vector3 (1, 1, 1);	
-					playerWolfShadow.transform.localPosition = new Vector3 (-0.15f, -0.52f, 1);
-					playerWolfShadow.transform.localRotation = Quaternion.Euler(59.7f, 342, 354.65f);
-				}
-			}
-		} else if (walking) {
-			anim.SetInteger ("AnimState", 2);
-			if (targetPoint.x > transform.position.x) {
-				if (playerWolfShadow.transform.localScale.x < 0){
-					playerWolfShadow.transform.localScale = new Vector3 (-1, 1, 1);
-				}
-				playerWolfShadow.transform.localPosition = new Vector3 (-0.43f, -0.52f, 1);
-				playerWolfShadow.transform.localRotation = Quaternion.Euler(58, 328, 0);
-			} else if (targetPoint.x < transform.position.x) {
-				if (playerWolfShadow.transform.localScale.x > 0){
-					playerWolfShadow.transform.localScale = new Vector3 (1, 1, 1);	
-				}
-				playerWolfShadow.transform.localPosition = new Vector3 (-0.15f, -0.52f, 1);
-				playerWolfShadow.transform.localRotation = Quaternion.Euler(59.7f, 342, 354.65f);
-			}
-		} else {
-			anim.SetInteger("AnimState", 0);
-		}
+//		Vector3 currentPosition = transform.position;
+//
+//		if (playerWolf.GetComponent<PCWolfInput>().walking){
+//			walking = true;
+//			running = false;
+//		} else if (playerWolf.GetComponent<PCWolfInput>().running){
+//			running = true;
+//			walking = false;
+//		} else {
+//			running = false;
+//			walking = false;
+//		}
+//
+//		if(running){
+//			anim.SetInteger ("AnimState", 7);
+//			if (targetPoint.x > transform.position.x) {
+//				if (playerWolfShadow.transform.localScale.x < 0){
+//					playerWolfShadow.transform.localScale = new Vector3 (-1, 1, 1);
+//				}
+//				playerWolfShadow.transform.localRotation = Quaternion.Euler(58, 328, 0);
+//				playerWolfShadow.transform.localPosition = new Vector3 (-0.43f, -0.52f, 1);
+//			} else if (targetPoint.x < transform.position.x) {
+//				if (playerWolfShadow.transform.localScale.x > 0){
+//					playerWolfShadow.transform.localScale = new Vector3 (1, 1, 1);	
+//					playerWolfShadow.transform.localPosition = new Vector3 (-0.15f, -0.52f, 1);
+//					playerWolfShadow.transform.localRotation = Quaternion.Euler(59.7f, 342, 354.65f);
+//				}
+//			}
+//		} else if (walking) {
+//			anim.SetInteger ("AnimState", 2);
+//			if (targetPoint.x > transform.position.x) {
+//				if (playerWolfShadow.transform.localScale.x < 0){
+//					playerWolfShadow.transform.localScale = new Vector3 (-1, 1, 1);
+//				}
+//				playerWolfShadow.transform.localPosition = new Vector3 (-0.43f, -0.52f, 1);
+//				playerWolfShadow.transform.localRotation = Quaternion.Euler(58, 328, 0);
+//			} else if (targetPoint.x < transform.position.x) {
+//				if (playerWolfShadow.transform.localScale.x > 0){
+//					playerWolfShadow.transform.localScale = new Vector3 (1, 1, 1);	
+//				}
+//				playerWolfShadow.transform.localPosition = new Vector3 (-0.15f, -0.52f, 1);
+//				playerWolfShadow.transform.localRotation = Quaternion.Euler(59.7f, 342, 354.65f);
+//			}
+//		} else {
+//			anim.SetInteger("AnimState", 0);
+//		}
 
 		#endif
 	}//end of update. Now fixedUpdate
+
+	void OnEnable()
+	{
+		PCWolfInput.OnIdleAnim += Idle;
+		PCWolfInput.OnWalkAnim += Walk;
+		PCWolfInput.OnRunAnim += Run;
+		PCWolfInput.OnHowlAnim += Howl;
+	}
 	
+	
+	void OnDisable()
+	{
+		PCWolfInput.OnIdleAnim -= Idle;
+		PCWolfInput.OnWalkAnim -= Walk;
+		PCWolfInput.OnRunAnim -= Run;
+		PCWolfInput.OnHowlAnim -= Howl;
+	}
+
+
+	void Walk() {
+		anim.SetInteger ("AnimState", 2);
+	}
+
+	void Run() {
+		anim.SetInteger ("AnimState", 7);
+	}
+	void Idle() {
+		anim.SetInteger ("AnimState", 0);
+	}
+
+	void Howl() {
+		anim.SetInteger ("AnimState", 6);
+	}
+
+
 } //end of whole class***
 
 

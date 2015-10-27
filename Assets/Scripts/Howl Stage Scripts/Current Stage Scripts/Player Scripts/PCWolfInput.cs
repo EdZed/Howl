@@ -46,6 +46,8 @@ public class PCWolfInput : MonoBehaviour
 
 	public int playerHealth = 3;
 
+	public GameObject playerWolfShadow;
+
 
 	Vector3 currentPosition;
 
@@ -55,6 +57,19 @@ public class PCWolfInput : MonoBehaviour
 
 	public delegate void ClickRight();
 	public static event ClickRight OnClickRight;
+
+	//walk
+	public delegate void WalkAnim();
+	public static event WalkAnim OnWalkAnim;
+	//run
+	public delegate void RunAnim();
+	public static event RunAnim OnRunAnim;
+	//idle
+	public delegate void IdleAnim();
+	public static event IdleAnim OnIdleAnim;
+	//howl
+	public delegate void HowlAnim();
+	public static event HowlAnim OnHowlAnim;
 
 	//#if UNITY_EDITOR || UNITY_WEBPLAYER
 	private Vector3 moveDirection;
@@ -77,6 +92,9 @@ public class PCWolfInput : MonoBehaviour
 		playerWolf = GameObject.Find("playerWolf");
 		MainCam = GameObject.Find("Main Camera");
 		anim.SetInteger ("AnimState", 0);
+		if (OnIdleAnim != null) {
+			OnIdleAnim ();
+		}
 		rb2DplayerWolf = playerWolf.GetComponent<Rigidbody2D>();
 		//HowlAttract = GameObject.Find("HowlAttract");
 		HowlAttract = transform.FindChild ("HowlAttract").gameObject;
@@ -86,7 +104,11 @@ public class PCWolfInput : MonoBehaviour
 		HowlAttractCollider.radius = 0f;
 		HowlSprite = HowlAttract.transform.FindChild ("HowlSprite").gameObject;
 		HowlSprite.transform.localScale = Vector3.zero;
+		HowlAttractCollider.enabled = false;
 		startColor = playerWolf.GetComponent<SpriteRenderer> ().color;
+
+		playerWolfShadow = GameObject.Find("playerWolfShadow");
+		running = false;
 
 		//restartTimer -= Time.deltaTime;
 
@@ -180,13 +202,22 @@ public class PCWolfInput : MonoBehaviour
 		if (running) {
 			anim.SetInteger ("AnimState", 7);
 			RunSFX();
+			if (OnRunAnim != null) {
+				OnRunAnim ();
+			}
 		} else if (walking) {
 			anim.SetInteger ("AnimState", 2);
 			WalkSFX();
+			if (OnWalkAnim != null) {
+				OnWalkAnim ();
+			}
 		} else {
 			//doesn't work
 			anim.SetInteger ("AnimState", 0);
 			StopSFX();
+			if (OnIdleAnim != null) {
+				OnIdleAnim ();
+			}
 		}
 
 		//if ((howling && !running) || (howling && !walking)) {
@@ -197,12 +228,21 @@ public class PCWolfInput : MonoBehaviour
 
 			if(running){
 				anim.SetInteger("AnimState", 6);
+				if (OnHowlAnim != null) {
+					OnHowlAnim ();
+				}
 				//anim.SetInteger("AnimState", 7);
 			} else if (walking) {
 				anim.SetInteger("AnimState", 6);
+				if (OnHowlAnim != null) {
+					OnHowlAnim ();
+				}
 				//anim.SetInteger("AnimState", 2);
 			} else {
 				anim.SetInteger("AnimState", 6);
+				if (OnHowlAnim != null) {
+					OnHowlAnim ();
+				}
 			}
 
 			if (HowlAttractCollider.radius < HowlRadiusMax){
@@ -213,8 +253,9 @@ public class PCWolfInput : MonoBehaviour
 			if(HowlAttractCollider.radius >= HowlRadiusMax){
 				HowlAttractCollider.radius = 0f;
 				HowlSprite.transform.localScale = Vector3.zero;
-				howling = false;
-				canMove = true;
+//				howling = false;
+//				canMove = true;
+				HowlFalse();
 				//howling sfx stops
 				//StopHowlSFX();
 			}
@@ -233,6 +274,9 @@ public class PCWolfInput : MonoBehaviour
 		    Input.GetButtonUp("Gamepad_Mac_VerticalDown") ){
 			StopSFX();
 			anim.SetInteger("AnimState", 0);
+			if (OnIdleAnim != null) {
+				OnIdleAnim ();
+			}
 			//print ("Player is idle!");
 			walking = false;
 			running = false;
@@ -240,7 +284,7 @@ public class PCWolfInput : MonoBehaviour
 
 		if(Input.GetKeyUp(KeyCode.Space) || Input.GetButtonUp("Gamepad_Mac_Howl") ) {
 			howling = true;
-
+			HowlAttractCollider.enabled = true;
 		}
 		if (Input.GetKeyUp (KeyCode.LeftAlt)) {
 			if (prepAttack){
@@ -423,6 +467,16 @@ public class PCWolfInput : MonoBehaviour
 			playerWolf.transform.localScale = new Vector3 (-1, 1, 1);	
 		}
 	}
+
+	void HowlFalse() {
+		howling = false;
+		canMove = true;
+		HowlAttractCollider.enabled = false;
+		print ("howl is false now");
+	}
+
+
+
 //	void WolfRun()
 //	{
 //		if (Input.GetKey (KeyCode.LeftShift))
