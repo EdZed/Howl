@@ -274,8 +274,8 @@ public class PCWolfInput : MonoBehaviour
 		    Input.GetButtonUp("Gamepad_Mac_HorizontalRight")||
 		    Input.GetButtonUp("Gamepad_Mac_VerticalUp")||
 		    Input.GetButtonUp("Gamepad_Mac_VerticalDown") ||
-		    Input.GetAxisRaw ("Gamepad_PC_Horizontal") == 0 ||
-		    Input.GetAxisRaw ("Gamepad_PC_Vertical") == 0 ){
+		    Input.GetAxisRaw ("Gamepad_PC_Horizontal") == 0 &&
+		    Input.GetAxisRaw ("Gamepad_PC_Vertical") == 0 && howling == false ){
 			StopSFX();
 			anim.SetInteger("AnimState", 0);
 			if (OnIdleAnim != null) {
