@@ -48,6 +48,8 @@ public class PCWolfInput : MonoBehaviour
 
 	public GameObject playerWolfShadow;
 
+	float playerRunMeter;
+	bool RunMeterEmpty;
 
 	Vector3 currentPosition;
 
@@ -115,6 +117,8 @@ public class PCWolfInput : MonoBehaviour
 
 		playerWolfShadow = GameObject.Find("playerWolfShadow");
 		running = false;
+		playerRunMeter = 30f;
+		RunMeterEmpty = false;
 
 		//restartTimer -= Time.deltaTime;
 
@@ -130,6 +134,7 @@ public class PCWolfInput : MonoBehaviour
 	
 	// Update is called once per frame
 	//Using fixed update instead for rigidbody use
+
 	void Update () 
 	{
 		//#if UNITY_EDITOR || UNITY_WEBPLAYER
@@ -211,6 +216,15 @@ public class PCWolfInput : MonoBehaviour
 			if (OnRunAnim != null) {
 				OnRunAnim ();
 			}
+			if (playerRunMeter > 0){
+				playerRunMeter--;
+			} else {
+				playerRunMeter = 0;
+			}
+
+			if (playerRunMeter <= 0){
+				RunMeterEmpty = true;
+			}
 		} else if (walking) {
 			anim.SetInteger ("AnimState", 2);
 			WalkSFX();
@@ -224,6 +238,21 @@ public class PCWolfInput : MonoBehaviour
 			if (OnIdleAnim != null) {
 				OnIdleAnim ();
 			}
+		}
+
+		if (!running) {
+			if (playerRunMeter < 30f){
+				if (RunMeterEmpty){
+					playerRunMeter +=0.2f;
+				} else if (!RunMeterEmpty){
+					playerRunMeter +=0.5f;
+				}
+			}
+			if (playerRunMeter >= 30f){
+				playerRunMeter = 30f;
+				RunMeterEmpty = false;
+			}
+
 		}
 
 		//if ((howling && !running) || (howling && !walking)) {
@@ -352,9 +381,15 @@ public class PCWolfInput : MonoBehaviour
 				WolfMoveToLeft ();
 				leftPressed = true;
 				if (Input.GetKey (KeyCode.LeftShift)|| Input.GetButton("Gamepad_Mac_Run") ) {
-					running = true;
-					walking = false;
-					speed = runSpeed;
+					if (!RunMeterEmpty){
+						running = true;
+						walking = false;
+						speed = runSpeed;
+					} else {
+						running = false;
+						walking = true;
+						speed = moveSpeed;
+					}
 					transform.position += Vector3.left * speed * Time.deltaTime;
 				} else {
 					running = false;
@@ -372,9 +407,15 @@ public class PCWolfInput : MonoBehaviour
 				WolfMoveToRight ();
 				rightPressed = true;
 				if (Input.GetKey (KeyCode.LeftShift) || Input.GetButton("Gamepad_Mac_Run") ) {
-					running = true;
-					walking = false;
-					speed = runSpeed;
+					if (!RunMeterEmpty){
+						running = true;
+						walking = false;
+						speed = runSpeed;
+					} else {
+						running = false;
+						walking = true;
+						speed = moveSpeed;
+					}
 					transform.position += Vector3.right * speed * Time.deltaTime;
 				} else {
 					running = false;
@@ -392,9 +433,15 @@ public class PCWolfInput : MonoBehaviour
 
 				upPressed = true;
 				if (Input.GetKey (KeyCode.LeftShift) || Input.GetButton("Gamepad_Mac_Run") ) {
-					running = true;
-					walking = false;
-					speed = runSpeed;
+					if (!RunMeterEmpty){
+						running = true;
+						walking = false;
+						speed = runSpeed;
+					} else {
+						running = false;
+						walking = true;
+						speed = moveSpeed;
+					}
 					transform.position += Vector3.up * speed * Time.deltaTime;
 				} else {
 					running = false;
@@ -411,9 +458,15 @@ public class PCWolfInput : MonoBehaviour
 			    Input.GetAxisRaw ("Gamepad_PC_Vertical") < 0) {
 				downPressed = true;
 				if (Input.GetKey (KeyCode.LeftShift) || Input.GetButton("Gamepad_Mac_Run") ) {
-					running = true;
-					walking = false;
-					speed = runSpeed;
+					if (!RunMeterEmpty){
+						running = true;
+						walking = false;
+						speed = runSpeed;
+					} else {
+						running = false;
+						walking = true;
+						speed = moveSpeed;
+					}
 					transform.position += Vector3.down * speed * Time.deltaTime;
 				} else {
 					running = false;
@@ -440,6 +493,7 @@ public class PCWolfInput : MonoBehaviour
 			Application.LoadLevel ("Howl PS Demo");
 		}
 
+		Debug.Log (playerRunMeter);
 	}//end of update. Now fixedUpdate
 	//Vector3 target = moveDirection * speed + currentPosition;
 	//transform.position = Vector3.Lerp( currentPosition, target, Time.deltaTime );
