@@ -81,6 +81,10 @@ public class PCWolfInput : MonoBehaviour
 
 	RaycastHit2D hit;
 	bool howling = false;
+	bool leftPressed = false;
+	bool rightPressed = false;
+	bool upPressed = false;
+	bool downPressed = false;
 	
 	// Use this for initialization
 	void Start () 
@@ -274,8 +278,8 @@ public class PCWolfInput : MonoBehaviour
 		    Input.GetButtonUp("Gamepad_Mac_HorizontalRight")||
 		    Input.GetButtonUp("Gamepad_Mac_VerticalUp")||
 		    Input.GetButtonUp("Gamepad_Mac_VerticalDown") ||
-		    Input.GetAxisRaw ("Gamepad_PC_Horizontal") == 0 &&
-		    Input.GetAxisRaw ("Gamepad_PC_Vertical") == 0 && howling == false ){
+		    leftPressed == false && rightPressed == false &&
+		    upPressed == false && downPressed == false && howling == false){
 			StopSFX();
 			anim.SetInteger("AnimState", 0);
 			if (OnIdleAnim != null) {
@@ -346,7 +350,7 @@ public class PCWolfInput : MonoBehaviour
 			    Input.GetButton("Gamepad_Mac_HorizontalLeft") || 
 				Input.GetAxisRaw ("Gamepad_PC_Horizontal") < 0) {
 				WolfMoveToLeft ();
-
+				leftPressed = true;
 				if (Input.GetKey (KeyCode.LeftShift)|| Input.GetButton("Gamepad_Mac_Run") ) {
 					running = true;
 					walking = false;
@@ -358,12 +362,15 @@ public class PCWolfInput : MonoBehaviour
 					speed = moveSpeed;
 					transform.position += Vector3.left * speed * Time.deltaTime;
 				}
-			} 
+			} else{
+				leftPressed = false;
+			}
 			if (Input.GetKey (KeyCode.RightArrow) || 
 			    Input.GetKey (KeyCode.D) || 
 			    Input.GetButton("Gamepad_Mac_HorizontalRight") ||
 			    Input.GetAxisRaw ("Gamepad_PC_Horizontal") > 0) {
 				WolfMoveToRight ();
+				rightPressed = true;
 				if (Input.GetKey (KeyCode.LeftShift) || Input.GetButton("Gamepad_Mac_Run") ) {
 					running = true;
 					walking = false;
@@ -375,11 +382,15 @@ public class PCWolfInput : MonoBehaviour
 					speed = moveSpeed;
 					transform.position += Vector3.right * speed * Time.deltaTime;
 				}
-			} 
+			} else{
+				rightPressed = false;
+			}
 			if (Input.GetKey (KeyCode.UpArrow) || 
 			    Input.GetKey (KeyCode.W) || 
 			    Input.GetButton("Gamepad_Mac_VerticalUp") ||
 			    Input.GetAxisRaw ("Gamepad_PC_Vertical") > 0) {
+
+				upPressed = true;
 				if (Input.GetKey (KeyCode.LeftShift) || Input.GetButton("Gamepad_Mac_Run") ) {
 					running = true;
 					walking = false;
@@ -391,11 +402,14 @@ public class PCWolfInput : MonoBehaviour
 					speed = moveSpeed;
 					transform.position += Vector3.up * speed * Time.deltaTime;
 				}
-			} 
+			} else{
+				upPressed = false;
+			}
 			if (Input.GetKey (KeyCode.DownArrow) || 
 			    Input.GetKey (KeyCode.S) || 
 			    Input.GetButton("Gamepad_Mac_VerticalDown") ||
 			    Input.GetAxisRaw ("Gamepad_PC_Vertical") < 0) {
+				downPressed = true;
 				if (Input.GetKey (KeyCode.LeftShift) || Input.GetButton("Gamepad_Mac_Run") ) {
 					running = true;
 					walking = false;
@@ -407,7 +421,9 @@ public class PCWolfInput : MonoBehaviour
 					speed = moveSpeed;
 					transform.position += Vector3.down * speed * Time.deltaTime;
 				}
-			} 
+			} else{
+				downPressed = false;
+			}
 		}
 		if (playerHealth == 1) {
 			Color myHurtColor = playerWolf.GetComponent<SpriteRenderer> ().color;
