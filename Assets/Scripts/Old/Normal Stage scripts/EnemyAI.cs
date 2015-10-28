@@ -29,6 +29,7 @@ public class EnemyAI : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		enemyAttackGO = GameObject.Find("enemyAttack");
+		//enemyAttackGO = gameObject.transform.Find("enemyAttack");
 		//enemyAttackCollider = enemyAttackGO.GetComponent <BoxCollider2D>();
 		enemyAttackCollider = enemyAttackGO.GetComponent <BoxCollider2D> ();
 		enemyAttackCollider.enabled = false;
