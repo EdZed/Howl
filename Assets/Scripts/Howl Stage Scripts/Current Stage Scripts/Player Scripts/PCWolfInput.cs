@@ -273,7 +273,9 @@ public class PCWolfInput : MonoBehaviour
 		    Input.GetButtonUp("Gamepad_Mac_HorizontalLeft")||
 		    Input.GetButtonUp("Gamepad_Mac_HorizontalRight")||
 		    Input.GetButtonUp("Gamepad_Mac_VerticalUp")||
-		    Input.GetButtonUp("Gamepad_Mac_VerticalDown") ){
+		    Input.GetButtonUp("Gamepad_Mac_VerticalDown") ||
+		    Input.GetAxisRaw ("Gamepad_PC_Horizontal") == 0 ||
+		    Input.GetAxisRaw ("Gamepad_PC_Vertical") == 0 ){
 			StopSFX();
 			anim.SetInteger("AnimState", 0);
 			if (OnIdleAnim != null) {
@@ -339,7 +341,10 @@ public class PCWolfInput : MonoBehaviour
 //			} else if (howling == false){
 //				canMove = true;
 //			}
-			if (Input.GetKey (KeyCode.LeftArrow) || Input.GetKey (KeyCode.A) || Input.GetButton("Gamepad_Mac_HorizontalLeft")) {
+			if (Input.GetKey (KeyCode.LeftArrow) || 
+			    Input.GetKey (KeyCode.A) || 
+			    Input.GetButton("Gamepad_Mac_HorizontalLeft") || 
+				Input.GetAxisRaw ("Gamepad_PC_Horizontal") < 0) {
 				WolfMoveToLeft ();
 
 				if (Input.GetKey (KeyCode.LeftShift)|| Input.GetButton("Gamepad_Mac_Run") ) {
@@ -354,7 +359,10 @@ public class PCWolfInput : MonoBehaviour
 					transform.position += Vector3.left * speed * Time.deltaTime;
 				}
 			} 
-			if (Input.GetKey (KeyCode.RightArrow) || Input.GetKey (KeyCode.D) || Input.GetButton("Gamepad_Mac_HorizontalRight")) {
+			if (Input.GetKey (KeyCode.RightArrow) || 
+			    Input.GetKey (KeyCode.D) || 
+			    Input.GetButton("Gamepad_Mac_HorizontalRight") ||
+			    Input.GetAxisRaw ("Gamepad_PC_Horizontal") > 0) {
 				WolfMoveToRight ();
 				if (Input.GetKey (KeyCode.LeftShift) || Input.GetButton("Gamepad_Mac_Run") ) {
 					running = true;
@@ -368,7 +376,10 @@ public class PCWolfInput : MonoBehaviour
 					transform.position += Vector3.right * speed * Time.deltaTime;
 				}
 			} 
-			if (Input.GetKey (KeyCode.UpArrow) || Input.GetKey (KeyCode.W) || Input.GetButton("Gamepad_Mac_VerticalUp")) {
+			if (Input.GetKey (KeyCode.UpArrow) || 
+			    Input.GetKey (KeyCode.W) || 
+			    Input.GetButton("Gamepad_Mac_VerticalUp") ||
+			    Input.GetAxisRaw ("Gamepad_PC_Vertical") > 0) {
 				if (Input.GetKey (KeyCode.LeftShift) || Input.GetButton("Gamepad_Mac_Run") ) {
 					running = true;
 					walking = false;
@@ -381,7 +392,10 @@ public class PCWolfInput : MonoBehaviour
 					transform.position += Vector3.up * speed * Time.deltaTime;
 				}
 			} 
-			if (Input.GetKey (KeyCode.DownArrow) || Input.GetKey (KeyCode.S) || Input.GetButton("Gamepad_Mac_VerticalDown")) {
+			if (Input.GetKey (KeyCode.DownArrow) || 
+			    Input.GetKey (KeyCode.S) || 
+			    Input.GetButton("Gamepad_Mac_VerticalDown") ||
+			    Input.GetAxisRaw ("Gamepad_PC_Vertical") < 0) {
 				if (Input.GetKey (KeyCode.LeftShift) || Input.GetButton("Gamepad_Mac_Run") ) {
 					running = true;
 					walking = false;
