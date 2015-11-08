@@ -223,7 +223,7 @@ public class PCWolfInput : MonoBehaviour
 			}
 
 			if (playerRunMeter <= 0){
-				RunMeterEmpty = true;
+				//RunMeterEmpty = true;
 			}
 		} else if (walking) {
 			anim.SetInteger ("AnimState", 2);
@@ -244,8 +244,10 @@ public class PCWolfInput : MonoBehaviour
 			if (playerRunMeter < 30f){
 				if (RunMeterEmpty){
 					playerRunMeter +=0.2f;
+					//playerRunMeter +=0.8f;
 				} else if (!RunMeterEmpty){
 					playerRunMeter +=0.5f;
+					//playerRunMeter +=1.0f;
 				}
 			}
 			if (playerRunMeter >= 30f){
