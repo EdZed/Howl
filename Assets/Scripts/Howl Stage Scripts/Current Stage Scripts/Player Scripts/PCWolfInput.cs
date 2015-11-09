@@ -348,7 +348,7 @@ public class PCWolfInput : MonoBehaviour
 			attacking = false;
 			targetPos = Vector3.zero;
 			anim.SetInteger("AnimState", 0);
-			Debug.Log("Attack for " + atkDmg + " damage!");
+			//Debug.Log("Attack for " + atkDmg + " damage!");
 			atkDmg = 0;
 			playerWolf.GetComponent<SpriteRenderer>().color = startColor;
 			canMove = true;
@@ -495,7 +495,7 @@ public class PCWolfInput : MonoBehaviour
 			Application.LoadLevel ("Howl PS Demo");
 		}
 
-		Debug.Log (playerRunMeter);
+		//Debug.Log (playerRunMeter);
 	}//end of update. Now fixedUpdate
 	//Vector3 target = moveDirection * speed + currentPosition;
 	//transform.position = Vector3.Lerp( currentPosition, target, Time.deltaTime );
