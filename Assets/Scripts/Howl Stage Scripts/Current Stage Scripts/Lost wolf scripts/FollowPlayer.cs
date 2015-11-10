@@ -26,10 +26,16 @@ public class FollowPlayer : MonoBehaviour
 	public GameObject wolfDenArt;
 	private Animator wolfDenAnim;
 	private Animator LostWolfAnim;
+	//string OrangeWolfString ;
+
+	public bool runAtkPower;
 
 	// Use this for initialization
 	void Start () 
 	{
+		Debug.Log(gameObject);
+		runAtkPower = false;
+		//OrangeWolfString = "Lost Wolf Orange";
 		//redWolf = false;
 		LostWolfAnim = gameObject.GetComponent<Animator> ();
 		LostWolfGO = this.gameObject;
@@ -51,6 +57,10 @@ public class FollowPlayer : MonoBehaviour
 		wolfDenArt = GameObject.Find ("WolfDen");
 		wolfDenAnim = wolfDenArt.GetComponent<Animator> ();
 		wolfDenAnim.SetInteger ("DenAnimState", 0);
+
+		if (GameObject.Find ("Lost Wolf Orange") == this.gameObject) {
+			runAtkPower = true;
+		}
 //		if(LostWolfGO == GameObject.Find ("Lost Wolf Red"))
 //		{
 //			redWolf = true;
@@ -111,6 +121,10 @@ public class FollowPlayer : MonoBehaviour
 	void OnTriggerEnter2D(Collider2D target){
 		if (target.gameObject.tag == "HowlAttract") {
 			isFollowing = true;
+//			if(runAtkPower == true){
+//				PlayerWolfGO.GetComponent<PCWolfInput>().runAtk = true;
+//				|| target.gameObject.tag == "LostWolfOrange"
+//			}
 		} else if (target.gameObject.tag == "WolfDen") {
 			isFollowing = false;
 			isInDen = true;

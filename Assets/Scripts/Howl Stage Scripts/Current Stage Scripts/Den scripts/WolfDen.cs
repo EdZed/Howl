@@ -44,7 +44,7 @@ public class WolfDen : MonoBehaviour {
 		isTriggering = true;
 		
 		//send message to WolfDeManager
-		if (target.gameObject.tag == "LostWolf") 
+		if (target.gameObject.tag == "LostWolf" || target.gameObject.tag == "LostWolfOrange") 
 		{
 			if(WolfRescued != null){
 				WolfRescued();

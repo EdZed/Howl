@@ -37,6 +37,10 @@ public class PCWolfInput : MonoBehaviour
 	bool prepAttack = false;
 	public bool attacking;
 
+	public bool runAtk;
+	public GameObject ColliderRunAtkGO;
+	public BoxCollider2D runAtkCollider;
+
 	float currTime;
 	public float atkBuildTime = 2f;
 	public float atkDist = 5f;
@@ -119,6 +123,12 @@ public class PCWolfInput : MonoBehaviour
 		running = false;
 		playerRunMeter = 30f;
 		RunMeterEmpty = false;
+
+		ColliderRunAtkGO = transform.FindChild ("playerWolfCollRunAtk").gameObject;
+		runAtkCollider = ColliderRunAtkGO.GetComponent <BoxCollider2D> ();
+		runAtkCollider.enabled = false;
+
+		runAtk = false;
 
 		//restartTimer -= Time.deltaTime;
 
@@ -225,11 +235,26 @@ public class PCWolfInput : MonoBehaviour
 			if (playerRunMeter <= 0){
 				//RunMeterEmpty = true;
 			}
+			if(runAtk == true){
+				runAtkCollider.enabled = true;
+				Color myOrgColor = playerWolf.GetComponent<SpriteRenderer>().color;
+				myOrgColor.r += 0.4f;
+				playerWolf.GetComponent<SpriteRenderer>().color = myOrgColor;
+				print("runAttack Collider on");
+
+			} 
 		} else if (walking) {
 			anim.SetInteger ("AnimState", 2);
 			WalkSFX();
 			if (OnWalkAnim != null) {
 				OnWalkAnim ();
+			}
+			if(runAtk == true){
+				runAtkCollider.enabled = false;
+				Color myOrgColor = playerWolf.GetComponent<SpriteRenderer>().color;
+				myOrgColor.r -= 0.4f;
+				playerWolf.GetComponent<SpriteRenderer>().color = myOrgColor;
+				print("runAttack Collider off");
 			}
 		} else {
 			//doesn't work
@@ -563,8 +588,7 @@ public class PCWolfInput : MonoBehaviour
 		print ("howl is false now");
 	}
 
-
-
+	
 //	void WolfRun()
 //	{
 //		if (Input.GetKey (KeyCode.LeftShift))
