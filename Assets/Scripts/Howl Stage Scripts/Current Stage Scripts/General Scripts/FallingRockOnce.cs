@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class FallingRock : MonoBehaviour {
+public class FallingRockOnce : MonoBehaviour {
 
 	Vector3 startPos;
 	float fallSpeed = 14.0f;
@@ -57,11 +57,11 @@ public class FallingRock : MonoBehaviour {
 	{
 		if (target.gameObject.tag == "RockDisappear") 
 		{
-			GameObject instance = Instantiate(Resources.Load("Falling Rock")) as GameObject;
-			print ("Spawn new rock");
+			//GameObject instance = Instantiate(Resources.Load("Falling Rock")) as GameObject;
+			//print ("Spawn new rock");
 			//This was preventing the rocks from spawning
 			//instance.transform.parent = transform;
-			instance.transform.position = startPos;
+			//instance.transform.position = startPos;
 			Destroy(this.gameObject);
 		} 	
 
@@ -70,22 +70,29 @@ public class FallingRock : MonoBehaviour {
 			myPlayerWolf.GetComponent<PCWolfInput> ().playerHealth-= 1 ;
 			StartCoroutine(PlayerHurtFlash());
 
-			GameObject instance = Instantiate(Resources.Load("Falling Rock")) as GameObject;
+			//GameObject instance = Instantiate(Resources.Load("Falling Rock")) as GameObject;
 			//instance.transform.parent = transform;
-			instance.transform.position = startPos;
+			//instance.transform.position = startPos;
 			Destroy(this.gameObject);
 		} 
 
 		if (target.gameObject.tag == "Movable") 
 		{
-//			myPlayerWolf.GetComponent<PCWolfInput> ().playerHealth-= 1 ;
-//			StartCoroutine(PlayerHurtFlash());
+			//			myPlayerWolf.GetComponent<PCWolfInput> ().playerHealth-= 1 ;
+			//			StartCoroutine(PlayerHurtFlash());
 			
 			//GameObject instance = Instantiate(Resources.Load("Falling Rock")) as GameObject;
 			//instance.transform.parent = transform;
 			//instance.transform.position = startPos;
 			Destroy(this.gameObject);
 		} 
+	}
+
+	void OnCollisionEnter2D(Collision2D coll) {
+		if (coll.gameObject.tag == "Movable") {
+			Destroy(this.gameObject);
+		}
+		
 	}
 
 	IEnumerator PlayerHurtFlash(){
