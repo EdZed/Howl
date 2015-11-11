@@ -30,7 +30,7 @@ public class TreeFall : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D target){
 		if (target.gameObject.tag == "playerRunAtk") {
 			//Quaternion rotation = Quaternion.Euler(90, 0, 0);
-			gameObject.transform.Rotate (0, 0, -90);
+			gameObject.transform.Rotate (0, 0, -90 * target.gameObject.transform.lossyScale.x);
 			fallingDown = true;
 			treeCollider.enabled = false;
 			print ("tree falls down");

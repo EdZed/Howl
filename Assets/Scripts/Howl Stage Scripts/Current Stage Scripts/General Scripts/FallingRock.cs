@@ -6,6 +6,10 @@ public class FallingRock : MonoBehaviour {
 	Vector3 startPos;
 	float fallSpeed = 14.0f;
 	GameObject myPlayerWolf;
+//	Color dmgColor;
+//	float dmgTimeStart;
+//	float dmgTimeLength = 0.5f;
+//	float invincTimeLength = 0.8f; //MUST be longer than dmgTimeLength
 	//GameObject rockShadow;
 	//public GameObject[] rockShadowSpawnPos = new GameObject[4];
 
@@ -67,8 +71,11 @@ public class FallingRock : MonoBehaviour {
 
 		if (target.gameObject.tag == "PlayerToAttack") 
 		{
-			myPlayerWolf.GetComponent<PCWolfInput> ().playerHealth-= 1 ;
-			StartCoroutine(PlayerHurtFlash());
+			if (!myPlayerWolf.GetComponent<PCWolfInput>().invincible){
+				myPlayerWolf.GetComponent<PCWolfInput> ().playerHealth-= 1 ;
+				myPlayerWolf.GetComponent<PCWolfInput>().dmgTimeStart = Time.time;
+				myPlayerWolf.GetComponent<PCWolfInput>().damaged = true;
+			}
 
 			GameObject instance = Instantiate(Resources.Load("Falling Rock")) as GameObject;
 			//instance.transform.parent = transform;
@@ -86,22 +93,5 @@ public class FallingRock : MonoBehaviour {
 			//instance.transform.position = startPos;
 			Destroy(this.gameObject);
 		} 
-	}
-
-	IEnumerator PlayerHurtFlash(){
-		Color myOrgColor = myPlayerWolf.GetComponent<SpriteRenderer>().color;
-		
-		myOrgColor.r += 0.8f;
-		myPlayerWolf.GetComponent<SpriteRenderer>().color = myOrgColor;
-		//yield return new WaitForSeconds(.5);
-		yield return new WaitForSeconds(.1f);
-		myOrgColor.r -= 0.8f;
-		myPlayerWolf.GetComponent<SpriteRenderer>().color = myOrgColor;
-		yield return new WaitForSeconds(.1f);
-		myOrgColor.r += 0.8f;
-		myPlayerWolf.GetComponent<SpriteRenderer>().color = myOrgColor;
-		yield return new WaitForSeconds(.1f);
-		myOrgColor.r -= 0.8f;
-		myPlayerWolf.GetComponent<SpriteRenderer>().color = myOrgColor;
 	}
 }

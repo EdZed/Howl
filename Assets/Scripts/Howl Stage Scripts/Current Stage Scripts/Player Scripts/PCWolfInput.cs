@@ -36,6 +36,8 @@ public class PCWolfInput : MonoBehaviour
 	public bool canMove = true;
 	bool prepAttack = false;
 	public bool attacking;
+	public bool damaged;
+	public bool invincible;
 
 	public bool runAtk;
 	public GameObject ColliderRunAtkGO;
@@ -91,11 +93,22 @@ public class PCWolfInput : MonoBehaviour
 	bool rightPressed = false;
 	bool upPressed = false;
 	bool downPressed = false;
+
+	public string currLevel;
+
+	Color dmgColor;
+	public float dmgTimeStart;
+	float timeRatio = 0.3f;
+	float dmgTimeLength;
+	float invincTimeLength; //MUST be larger than dmgTimeLength
 	
 	// Use this for initialization
 	void Start () 
 	{
+		dmgTimeLength = 5f * timeRatio;
+		invincTimeLength = dmgTimeLength + (3f * timeRatio);
 
+		currLevel = Application.loadedLevelName;
 		Screen.orientation = ScreenOrientation.LandscapeLeft;
 		//Screen.orientation = ScreenOrientation.AutoRotation;
 		WolfSprRend = GetComponent<SpriteRenderer> ();
@@ -147,6 +160,7 @@ public class PCWolfInput : MonoBehaviour
 
 	void Update () 
 	{
+		Debug.Log (currLevel);
 		//#if UNITY_EDITOR || UNITY_WEBPLAYER
 		//Debug.Log("Unity Editor");
 		
@@ -218,6 +232,16 @@ public class PCWolfInput : MonoBehaviour
 //			running = false;
 //			walking = false;
 //		}
+
+		if (playerHealth == 1) {
+			Color myHurtColor = playerWolf.GetComponent<SpriteRenderer> ().color;
+			//myHurtColor.r += 0.4f;
+			
+			myHurtColor = Color.Lerp (startColor, Color.white, 4);
+			playerWolf.GetComponent<SpriteRenderer> ().color = myHurtColor;
+		} else {
+			playerWolf.GetComponent<SpriteRenderer> ().color = startColor;
+		}
 
 		//arrow keys controls
 		if (running) {
@@ -505,21 +529,21 @@ public class PCWolfInput : MonoBehaviour
 				downPressed = false;
 			}
 		}
-		if (playerHealth == 1) {
-			Color myHurtColor = playerWolf.GetComponent<SpriteRenderer> ().color;
-			//myHurtColor.r += 0.4f;
 
-			myHurtColor = Color.Lerp (startColor, Color.white, 4);
-			playerWolf.GetComponent<SpriteRenderer> ().color = myHurtColor;
-		} else {
-			playerWolf.GetComponent<SpriteRenderer> ().color = startColor;
-
+		if (damaged) {
+			invincible = true;
+			if (Time.time <= dmgTimeStart + dmgTimeLength) {
+				PlayerHurtFlash ();
+			} else {
+				damaged = false;
+			}
 		}
 
 		if (playerHealth == 0) {
-			Application.LoadLevel ("Howl PS Demo");
+			Application.LoadLevel (currLevel);
 		}
 
+		Debug.Log (damaged);
 		//Debug.Log (playerRunMeter);
 	}//end of update. Now fixedUpdate
 	//Vector3 target = moveDirection * speed + currentPosition;
@@ -588,6 +612,15 @@ public class PCWolfInput : MonoBehaviour
 		print ("howl is false now");
 	}
 
+	void PlayerHurtFlash(){
+		Color myOrgColor = this.GetComponent<SpriteRenderer> ().color;
+		float colorConstrain = Mathf.Sin((Time.time - dmgTimeStart / dmgTimeStart + dmgTimeLength - dmgTimeStart) / 2 - 0.5f) * 2;
+		float colorSpd = 1 - myOrgColor.r;
+
+		myOrgColor.r += colorSpd * colorConstrain;
+		this.GetComponent<SpriteRenderer> ().color = myOrgColor;
+		Debug.Log(this.GetComponent<SpriteRenderer>().color);
+	}
 	
 //	void WolfRun()
 //	{
