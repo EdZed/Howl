@@ -11,7 +11,14 @@ public class RockCracked : MonoBehaviour {
 	void Start () {
 		rockCollider = this.gameObject.GetComponent<BoxCollider2D> ();
 		startColor = this.gameObject.GetComponent<SpriteRenderer> ().color;
-		cracked = false;
+		//cracked = false;
+
+	if (cracked == true) {
+			Color crackedColor = this.gameObject.GetComponent<SpriteRenderer> ().color;
+			crackedColor.r += 3.4f;
+			crackedColor = Color.Lerp (startColor, Color.yellow, 4);
+			this.gameObject.GetComponent<SpriteRenderer> ().color = crackedColor;
+		}
 	}
 	
 	// Update is called once per frame

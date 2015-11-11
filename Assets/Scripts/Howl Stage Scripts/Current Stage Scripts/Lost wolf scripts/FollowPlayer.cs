@@ -29,12 +29,14 @@ public class FollowPlayer : MonoBehaviour
 	//string OrangeWolfString ;
 
 	public bool runAtkPower;
+	public bool howlFreezePower;
 
 	// Use this for initialization
 	void Start () 
 	{
 		Debug.Log(gameObject);
 		runAtkPower = false;
+		howlFreezePower = false;
 		//OrangeWolfString = "Lost Wolf Orange";
 		//redWolf = false;
 		LostWolfAnim = gameObject.GetComponent<Animator> ();
@@ -60,6 +62,9 @@ public class FollowPlayer : MonoBehaviour
 
 		if (GameObject.Find ("Lost Wolf Orange") == this.gameObject) {
 			runAtkPower = true;
+		}
+		if (GameObject.Find ("Lost Wolf Green") == this.gameObject) {
+			howlFreezePower = true;
 		}
 //		if(LostWolfGO == GameObject.Find ("Lost Wolf Red"))
 //		{

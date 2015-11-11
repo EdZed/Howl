@@ -9,6 +9,8 @@ public class EnemyAI : MonoBehaviour {
 
 	public GameObject enemyBear;
 	public Rigidbody2D rb2DenemyBear;
+
+	public BoxCollider2D enemyBearCollider;
 	//float speed;
 	public float speed;
 	//float attackSpeed = 100f;
@@ -38,6 +40,7 @@ public class EnemyAI : MonoBehaviour {
 
 		speed = attackSpeed;
 		enemyBear = this.gameObject;
+		enemyBearCollider = enemyBear.GetComponent<BoxCollider2D> ();
 		rb2DenemyBear = GetComponent<Rigidbody2D> ();
 		//bearProximity = GetComponentInChildren<BoxCollider2D> ();
 
@@ -75,15 +78,29 @@ public class EnemyAI : MonoBehaviour {
 
 	}
 
-//	void OnEnable(){
-//		EnemyProximity.TurnNearBearTrue += NearBearOn;
-//		//EnemyProximity.TurnNearBearFalse += NearBearOff;
-//	}
-//
-//	void OnDisable(){
-//		EnemyProximity.TurnNearBearTrue -= NearBearOn;
-//		//EnemyProximity.TurnNearBearFalse -= NearBearOff;
-//	}
+	void OnEnable(){
+		//EnemyProximity.TurnNearBearTrue += NearBearOn;
+		//EnemyProximity.TurnNearBearFalse += NearBearOff;
+		HowlAttractPowers.HowlFreezePower += BearFreeze;
+	}
+
+	void OnDisable(){
+		//EnemyProximity.TurnNearBearTrue -= NearBearOn;
+		//EnemyProximity.TurnNearBearFalse -= NearBearOff;
+		HowlAttractPowers.HowlFreezePower -= BearFreeze;
+	}
+
+	
+	IEnumerator BearFreeze(){
+		enemyBearCollider.enabled = false;
+		speed = stopSpeed;
+
+		print("Bear is immobolized");
+		yield return new WaitForSeconds(5);
+		//back to regular movement and collider on
+		enemyBearCollider.enabled = true;
+		speed = moveSpeed;
+	}
 
 	public void NearBearOn(){
 		playerNearBear = true;
