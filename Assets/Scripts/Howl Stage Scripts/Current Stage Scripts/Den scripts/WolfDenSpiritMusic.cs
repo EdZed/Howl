@@ -123,7 +123,7 @@ public class WolfDenSpiritMusic : MonoBehaviour {
 		isTriggering = true;
 
  	//if wolf rescued, up counter by 1 and do other changes
-		if (target.gameObject.tag == "LostWolf") 
+		if (target.gameObject.tag == "LostWolf" || target.gameObject.tag == "LostWolfGreen" || target.gameObject.tag == "LostWolfOrange") 
 		{
 
 			print ("1 wolf rescued");

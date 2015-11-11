@@ -15,7 +15,12 @@ public class TutorialTransitionToScene : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D target){
 		if (target.gameObject.tag == "Player") {
-			Application.LoadLevel("Howl PS Demo");
+			if( Application.loadedLevelName == "Tutorial PS Demo"){
+			Application.LoadLevel("Tutorial 2 PS Demo");
+			}
+			if(Application.loadedLevelName == "Tutorial 2 PS Demo"){
+				Application.LoadLevel("Howl PS Demo");
+			}
 			
 		} 
 	}//end ontrigger

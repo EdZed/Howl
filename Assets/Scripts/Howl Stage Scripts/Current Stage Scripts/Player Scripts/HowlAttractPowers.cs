@@ -5,7 +5,7 @@ public class HowlAttractPowers : MonoBehaviour {
 	GameObject PlayerWolfGO;
 	public bool howlFreeze;
 
-	public delegate IEnumerator PowerActivate();
+	public delegate void PowerActivate();
 	public static event PowerActivate HowlFreezePower;
 
 	// Use this for initialization

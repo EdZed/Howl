@@ -5,7 +5,8 @@ public class EnemyAI : MonoBehaviour {
 	private Animator animEnemy;
 
 	public BoxCollider2D enemyAttackCollider;
-	public GameObject enemyAttackGO;
+	//public GameObject enemyAttackGO;
+	public Transform enemyAttackGO;
 
 	public GameObject enemyBear;
 	public Rigidbody2D rb2DenemyBear;
@@ -27,14 +28,11 @@ public class EnemyAI : MonoBehaviour {
 	bool playerNearBear;
 
 	bool bearAttacking;
+	bool isEnemyFrozen;
 
 	// Use this for initialization
 	void Start () {
-		enemyAttackGO = GameObject.Find("enemyAttack");
-		//enemyAttackGO = gameObject.transform.Find("enemyAttack");
-		//enemyAttackCollider = enemyAttackGO.GetComponent <BoxCollider2D>();
-		enemyAttackCollider = enemyAttackGO.GetComponent <BoxCollider2D> ();
-		enemyAttackCollider.enabled = false;
+
 
 		playerWolf = GameObject.Find("playerWolf");
 
@@ -44,6 +42,14 @@ public class EnemyAI : MonoBehaviour {
 		rb2DenemyBear = GetComponent<Rigidbody2D> ();
 		//bearProximity = GetComponentInChildren<BoxCollider2D> ();
 
+		//enemyAttackGO = GameObject.Find("enemyAttack");
+		enemyAttackGO = enemyBear.transform.FindChild ("enemyAttack");
+		//enemyAttackGO = enemyBear.transform
+		//enemyAttackGO = gameObject.transform.Find("enemyAttack");
+		//enemyAttackCollider = enemyAttackGO.GetComponent <BoxCollider2D>();
+		enemyAttackCollider = enemyAttackGO.GetComponent <BoxCollider2D> ();
+		enemyAttackCollider.enabled = false;
+
 		animEnemy = gameObject.GetComponent<Animator> ();
 		animEnemy.SetInteger ("AnimState", 0);
 
@@ -51,29 +57,38 @@ public class EnemyAI : MonoBehaviour {
 		//wayPoint1 = wayPoints [0].GetComponent<gameObject> ();
 		playerNearBear = false;
 		bearAttacking = false;
+		isEnemyFrozen = false;
 
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (playerNearBear) {
-			//BearAttack();
-			//anim below activates BearAttack method
+		if (isEnemyFrozen == false) {
+			if (playerNearBear) {
+				//BearAttack();
+				//anim below activates BearAttack method
+				speed = stopSpeed;
+
+				animEnemy.SetInteger ("AnimState", 3);
+
+				if (bearAttacking == true) {
+					speed = attackSpeed;
+					enemyBear.transform.position = Vector3.MoveTowards (enemyBear.transform.position, playerWolf.transform.position, speed * Time.deltaTime);
+					Debug.Log ("Bear attacking player");
+				} else {
+				}
+				//Debug.Log ("Bear attacking player");
+			} else if (!playerNearBear) {
+				BearPatrol ();
+		
+				Debug.Log ("Bear walking");
+			} 
+
+		} else {
+			enemyBearCollider.enabled = false;
+			enemyAttackCollider.enabled = false;
 			speed = stopSpeed;
-
-			animEnemy.SetInteger ("AnimState", 3);
-
-			if(bearAttacking == true){
-				speed = attackSpeed;
-				enemyBear.transform.position = Vector3.MoveTowards(enemyBear.transform.position, playerWolf.transform.position, speed * Time.deltaTime);
-				Debug.Log ("Bear attacking player");
-			} else{}
-			//Debug.Log ("Bear attacking player");
-		} else if (!playerNearBear) {
-			BearPatrol ();
-	
-			Debug.Log ("Bear walking");
-		} 
+		}
 
 
 	}
@@ -91,14 +106,22 @@ public class EnemyAI : MonoBehaviour {
 	}
 
 	
-	IEnumerator BearFreeze(){
-		enemyBearCollider.enabled = false;
-		speed = stopSpeed;
+	void BearFreeze(){
+		//enemyBearCollider.enabled = false;
+		//speed = stopSpeed;
+		StartCoroutine(FreezeOnOff());
 
+	}
+
+	IEnumerator FreezeOnOff(){
+		isEnemyFrozen = true;
 		print("Bear is immobolized");
 		yield return new WaitForSeconds(5);
 		//back to regular movement and collider on
+		isEnemyFrozen = false;
+		
 		enemyBearCollider.enabled = true;
+		enemyAttackCollider.enabled = true;
 		speed = moveSpeed;
 	}
 
