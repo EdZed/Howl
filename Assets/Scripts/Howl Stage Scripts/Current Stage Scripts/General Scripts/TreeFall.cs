@@ -4,11 +4,13 @@ using System.Collections;
 public class TreeFall : MonoBehaviour {
 	public BoxCollider2D treeCollider;
 	public bool fallingDown;
+	public AudioSource[] treeFalling = new AudioSource[1];
 
 	// Use this for initialization
 	void Start () {
 		treeCollider = this.gameObject.GetComponent<BoxCollider2D> ();
 		fallingDown = false;
+		treeFalling [0].enabled = false;
 	}
 	
 	// Update is called once per frame
@@ -33,6 +35,7 @@ public class TreeFall : MonoBehaviour {
 			gameObject.transform.Rotate (0, 0, -90 * target.gameObject.transform.lossyScale.x);
 			fallingDown = true;
 			treeCollider.enabled = false;
+			treeFalling [0].enabled = true;
 			print ("tree falls down");
 			
 		} 
