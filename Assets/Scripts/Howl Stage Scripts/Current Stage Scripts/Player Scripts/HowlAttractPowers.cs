@@ -33,6 +33,7 @@ public class HowlAttractPowers : MonoBehaviour {
 		if (target.gameObject.tag == "EnemyToAttack") {
 			if(howlFreeze == true){
 				//StartCoroutine(BearImmobolize());
+				//sends message to ?
 				if (HowlFreezePower != null) {
 					HowlFreezePower ();
 					print ("Enemy almost frozen");

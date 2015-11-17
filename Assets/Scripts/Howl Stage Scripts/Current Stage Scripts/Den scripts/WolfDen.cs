@@ -9,6 +9,7 @@ public class WolfDen : MonoBehaviour {
 	private Animator wolfDenAnim;	
 	public bool isTriggering;
 	public GameObject[] spiritAnim = new GameObject[4];	
+	public GameObject PlayerWolfGO;
 
 	//event**
 	public delegate void Rescues();
@@ -32,6 +33,8 @@ public class WolfDen : MonoBehaviour {
 
 		wolfDenAnim.SetInteger ("DenAnimState", 0);
 		isTriggering = false;
+
+		PlayerWolfGO = GameObject.Find("playerWolf");
 	}//end start
 	
 	// Update is called once per frame
@@ -48,10 +51,13 @@ public class WolfDen : MonoBehaviour {
 		    || target.gameObject.tag == "LostWolfOrange"
 		    || target.gameObject.tag == "LostWolfGreen") 
 		{
+			//sends message to WolfDenManager Script
 			if(WolfRescued != null){
 				WolfRescued();
 			}
 		}//end target tag LostWolf
+
+
 	}//end on trigger enter
 
 }//end whole class

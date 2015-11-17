@@ -191,7 +191,7 @@ public class EnemyAI : MonoBehaviour {
 		bearAttacking = true;
 		enemyAttackCollider.enabled = true;
 		print ("enemy attack collider on!");
-		print (bearAttacking);
+		print ("beat attacking:"+ bearAttacking);
 	}
 	
 	void BearAttackTriggerOff()
@@ -199,7 +199,7 @@ public class EnemyAI : MonoBehaviour {
 		bearAttacking = false;
 		enemyAttackCollider.enabled = false;
 		print ("enemy attack collider off!");
-		print (bearAttacking);
+		print ("beat attacking:"+ bearAttacking);
 	}
 
 	void BearFaceRight(){

@@ -17,8 +17,13 @@ public class EnemyAttackCollider : MonoBehaviour {
 	{
 		if (target.gameObject.tag == "PlayerToAttack") 
 		{
-			myPlayerWolf.GetComponent<PCWolfInput> ().playerHealth-= 1 ;
-			StartCoroutine(PlayerHurtFlash());
+			//myPlayerWolf.GetComponent<PCWolfInput> ().playerHealth-= 1 ;
+			//StartCoroutine(PlayerHurtFlash());
+			if (!myPlayerWolf.GetComponent<PCWolfInput>().invincible){
+				myPlayerWolf.GetComponent<PCWolfInput> ().playerHealth-= 1 ;
+				myPlayerWolf.GetComponent<PCWolfInput>().dmgTimeStart = Time.time;
+				myPlayerWolf.GetComponent<PCWolfInput>().damaged = true;
+			}
 
 
 

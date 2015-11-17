@@ -96,6 +96,7 @@ public class PCWolfInput : MonoBehaviour
 
 	public string currLevel;
 
+	//Damage flash and invincibilty frames. 
 	Color dmgColor;
 	public float dmgTimeStart;
 	float timeRatio = 0.3f;
@@ -233,21 +234,23 @@ public class PCWolfInput : MonoBehaviour
 //			walking = false;
 //		}
 
-		if (playerHealth == 1) {
-			Color myHurtColor = playerWolf.GetComponent<SpriteRenderer> ().color;
-			//myHurtColor.r += 0.4f;
-			
-			myHurtColor = Color.Lerp (startColor, Color.white, 4);
-			playerWolf.GetComponent<SpriteRenderer> ().color = myHurtColor;
-		} else {
-			playerWolf.GetComponent<SpriteRenderer> ().color = startColor;
-		}
+//		if (playerHealth == 1) {
+//			Color myHurtColor = playerWolf.GetComponent<SpriteRenderer> ().color;
+//			//myHurtColor.r += 0.4f;
+//			
+//			myHurtColor = Color.Lerp (startColor, Color.white, 4);
+//			playerWolf.GetComponent<SpriteRenderer> ().color = myHurtColor;
+//		} else {
+//			playerWolf.GetComponent<SpriteRenderer> ().color = startColor;
+//		}
 
 		//arrow keys controls
 		if (running) {
+			//running anim left/right
 			anim.SetInteger ("AnimState", 7);
 			RunSFX();
 			if (OnRunAnim != null) {
+				//sends message to ?
 				OnRunAnim ();
 			}
 			if (playerRunMeter > 0){
@@ -259,14 +262,23 @@ public class PCWolfInput : MonoBehaviour
 			if (playerRunMeter <= 0){
 				//RunMeterEmpty = true;
 			}
+			//if guiding Orange lost wolf, turn on break ability while running
+			//turning on from HowlAttractPowers Script
 			if(runAtk == true){
 				runAtkCollider.enabled = true;
 				Color myOrgColor = playerWolf.GetComponent<SpriteRenderer>().color;
-				myOrgColor.r += 0.4f;
+
+				//Makes orange color to match wolf and destructible orange objects
+				myOrgColor.r += 1.4f;
+				myOrgColor.b -= 1.4f;
+
 				playerWolf.GetComponent<SpriteRenderer>().color = myOrgColor;
 				print("runAttack Collider on");
 
-			} 
+			} else{
+				//runAtkCollider.enabled = false;
+				//playerWolf.GetComponent<SpriteRenderer>().color = startColor;
+			}
 		} else if (walking) {
 			anim.SetInteger ("AnimState", 2);
 			WalkSFX();
@@ -275,16 +287,22 @@ public class PCWolfInput : MonoBehaviour
 			}
 			if(runAtk == true){
 				runAtkCollider.enabled = false;
-				Color myOrgColor = playerWolf.GetComponent<SpriteRenderer>().color;
-				myOrgColor.r -= 0.4f;
-				playerWolf.GetComponent<SpriteRenderer>().color = myOrgColor;
+				//player goes from orange to normal color when walking
+				playerWolf.GetComponent<SpriteRenderer>().color = startColor;
 				print("runAttack Collider off");
 			}
 		} else {
 			//doesn't work
 			anim.SetInteger ("AnimState", 0);
 			StopSFX();
+			if(runAtk == true){
+				runAtkCollider.enabled = false;
+				//player goes from orange to normal color when standing
+				playerWolf.GetComponent<SpriteRenderer>().color = startColor;
+				//print("runAttack Collider off");
+			}
 			if (OnIdleAnim != null) {
+				//sends message to ?
 				OnIdleAnim ();
 			}
 		}
@@ -531,9 +549,11 @@ public class PCWolfInput : MonoBehaviour
 		}
 
 		if (damaged) {
+			Debug.Log ("player health:" + playerHealth);
 			invincible = true;
 			if (Time.time <= dmgTimeStart + dmgTimeLength) {
-				PlayerHurtFlash ();
+				StartCoroutine(PlayerHurtFlash());
+				//PlayerHurtFlash ();
 			} else {
 				damaged = false;
 			}
@@ -543,7 +563,7 @@ public class PCWolfInput : MonoBehaviour
 			Application.LoadLevel (currLevel);
 		}
 
-		Debug.Log (damaged);
+		Debug.Log ("player hit equals:" + damaged);
 		//Debug.Log (playerRunMeter);
 	}//end of update. Now fixedUpdate
 	//Vector3 target = moveDirection * speed + currentPosition;
@@ -612,14 +632,45 @@ public class PCWolfInput : MonoBehaviour
 		print ("howl is false now");
 	}
 
-	void PlayerHurtFlash(){
+	IEnumerator PlayerHurtFlash(){
 		Color myOrgColor = this.GetComponent<SpriteRenderer> ().color;
 		float colorConstrain = Mathf.Sin((Time.time - dmgTimeStart / dmgTimeStart + dmgTimeLength - dmgTimeStart) / 2 - 0.5f) * 2;
 		float colorSpd = 1 - myOrgColor.r;
 
 		myOrgColor.r += colorSpd * colorConstrain;
 		this.GetComponent<SpriteRenderer> ().color = myOrgColor;
-		Debug.Log(this.GetComponent<SpriteRenderer>().color);
+		//Debug.Log(this.GetComponent<SpriteRenderer>().color);
+		yield return new WaitForSeconds(2);
+		if (playerHealth == 1) {
+			Color myHurtColor = playerWolf.GetComponent<SpriteRenderer> ().color;
+			//myHurtColor.r += 0.4f;
+			
+			myHurtColor = Color.Lerp (startColor, Color.white, 4);
+			playerWolf.GetComponent<SpriteRenderer> ().color = myHurtColor;
+		} else {
+			playerWolf.GetComponent<SpriteRenderer> ().color = startColor;
+		}
+		invincible = false;
+		damaged = false;
+		Debug.Log ("Player invincible:" + invincible);
+	}
+
+	void OnEnable()
+	{
+		WolfDenManager.OnHeal += PlayerHeal;
+	}
+	
+	
+	void OnDisable()
+	{
+		WolfDenManager.OnHeal -= PlayerHeal;
+	}
+	
+	
+	void PlayerHeal()
+	{
+		//If health more than 1, color back to normal (blue)
+		playerWolf.GetComponent<SpriteRenderer> ().color = startColor;
 	}
 	
 //	void WolfRun()

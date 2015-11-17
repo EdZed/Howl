@@ -60,12 +60,19 @@ public class FollowPlayer : MonoBehaviour
 		wolfDenAnim = wolfDenArt.GetComponent<Animator> ();
 		wolfDenAnim.SetInteger ("DenAnimState", 0);
 
-		if (GameObject.Find ("Lost Wolf Orange") == this.gameObject) {
+		if(this.gameObject.tag == "LostWolfOrange"){
 			runAtkPower = true;
 		}
-		if (GameObject.Find ("Lost Wolf Green") == this.gameObject) {
+		if(this.gameObject.tag == "LostWolfGreen"){
 			howlFreezePower = true;
 		}
+
+//		if (GameObject.Find ("Lost Wolf Orange") == this.gameObject) {
+//			runAtkPower = true;
+//		}
+//		if (GameObject.Find ("Lost Wolf Green") == this.gameObject) {
+//			howlFreezePower = true;
+//		}
 //		if(LostWolfGO == GameObject.Find ("Lost Wolf Red"))
 //		{
 //			redWolf = true;
@@ -130,10 +137,17 @@ public class FollowPlayer : MonoBehaviour
 //				PlayerWolfGO.GetComponent<PCWolfInput>().runAtk = true;
 //				|| target.gameObject.tag == "LostWolfOrange"
 //			}
-		} else if (target.gameObject.tag == "WolfDen") {
+		} //else 
+		if (target.gameObject.tag == "WolfDen") {
 			isFollowing = false;
 			isInDen = true;
 			isTriggeringDen = true;
+			Debug.Log("Wolf triggering wolf den");
+			if (runAtkPower == true) {
+				PlayerWolfGO.GetComponent<PCWolfInput>().runAtk = false;
+				Debug.Log("run attack power is:" + PlayerWolfGO.GetComponent<PCWolfInput>().runAtk);
+			}
+
 		}
 	}
 

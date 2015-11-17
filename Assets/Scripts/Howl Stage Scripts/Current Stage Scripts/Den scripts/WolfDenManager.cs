@@ -40,6 +40,9 @@ public class WolfDenManager : MonoBehaviour {
 	public delegate IEnumerator LastWolfCollected();
 	public static event LastWolfCollected RedWolfCollected;
 
+	public delegate void PlayerHealth();
+	public static event PlayerHealth OnHeal;
+
 	// Use this for initialization
 	void Start () {
 		
@@ -91,6 +94,11 @@ public class WolfDenManager : MonoBehaviour {
 	{
 		if (PlayerWolfGO.GetComponent<PCWolfInput> ().playerHealth == 1|| PlayerWolfGO.GetComponent<PCWolfInput> ().playerHealth == 2){
 			PlayerWolfGO.GetComponent<PCWolfInput> ().playerHealth += 1;
+
+				if(OnHeal != null){
+				//Sends to PCWolfInput script
+					OnHeal();
+			}
 			//print ("Increase player health by 1");
 			print ("player health:" + PlayerWolfGO.GetComponent<PCWolfInput> ().playerHealth);
 		}
