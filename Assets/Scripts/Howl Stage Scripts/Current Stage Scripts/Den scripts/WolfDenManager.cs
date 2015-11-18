@@ -77,7 +77,7 @@ public class WolfDenManager : MonoBehaviour {
 		wolfDenAnim.SetInteger ("DenAnimState", 0);
 		isTriggering = false;
 		rescuedWolvesCounter = 0;
-		print ("Rescued Counter:" + rescuedWolvesCounter);
+		//print ("Rescued Counter:" + rescuedWolvesCounter);
 		
 		//playerHealthTrack = PlayerWolfGO.GetComponent<PCWolfInput> ().playerHealth;
 		
@@ -100,7 +100,7 @@ public class WolfDenManager : MonoBehaviour {
 					OnHeal();
 			}
 			//print ("Increase player health by 1");
-			print ("player health:" + PlayerWolfGO.GetComponent<PCWolfInput> ().playerHealth);
+			//print ("player health:" + PlayerWolfGO.GetComponent<PCWolfInput> ().playerHealth);
 		}
 	}
 	
@@ -124,7 +124,7 @@ public class WolfDenManager : MonoBehaviour {
 
 	void SpawnWolf()
 	{
-		print ("a wolf was rescued");
+		//print ("a wolf was rescued");
 		if (rescuedWolvesCounter == 0){
 	
 			HealthIncrease();
@@ -139,7 +139,7 @@ public class WolfDenManager : MonoBehaviour {
 			//spiritAnim [0].GetComponent<SpriteRenderer> ().enabled = true;
 			
 			rescuedWolvesCounter = 1;
-			print ("Rescued Counter:" + rescuedWolvesCounter);
+			//print ("Rescued Counter:" + rescuedWolvesCounter);
 			
 			//musicLayers [0].GetComponent<AudioSource> ().mute = false;
 			//PlayerWolfGO.GetComponent<AudioSource> ().Play ();

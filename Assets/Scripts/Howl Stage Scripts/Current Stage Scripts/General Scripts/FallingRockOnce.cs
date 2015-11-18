@@ -6,6 +6,16 @@ public class FallingRockOnce : MonoBehaviour {
 	Vector3 startPos;
 	float fallSpeed = 14.0f;
 	GameObject myPlayerWolf;
+	public AudioSource[] rockHitGround = new AudioSource[1];
+
+	//to make rock spriterenderer transparent
+	private SpriteRenderer spriteRenderer;
+	private Color start;
+	private Color end;
+	private float t = 0.0f;
+	private Renderer rendMaterialColor;
+
+	bool isRockBreaking;
 	//GameObject rockShadow;
 	//public GameObject[] rockShadowSpawnPos = new GameObject[4];
 
@@ -17,6 +27,15 @@ public class FallingRockOnce : MonoBehaviour {
 		startPos = gameObject.transform.position;
 
 		myPlayerWolf = GameObject.Find("playerWolf");
+
+		rockHitGround [0].enabled = false;
+		isRockBreaking = false;
+
+		//to make rock spriterenderer transparent
+		spriteRenderer = GetComponent<SpriteRenderer> ();
+		start = spriteRenderer.color;
+		end = new Color (start.r, start.g, start.b, 0.0f);
+		rendMaterialColor = GetComponent<Renderer> ();
 
 		//spawn shadow positions
 		//parentFallRocks = gameObject.transform.parent.gameObject;
@@ -51,6 +70,14 @@ public class FallingRockOnce : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		transform.Translate(Vector3.down * fallSpeed * Time.deltaTime);
+
+		t += Time.deltaTime;
+		if (isRockBreaking == true) {
+			rendMaterialColor.material.color = Color.Lerp (start, end, t / 1.5f);
+			//			if (rendMaterialColor.material.color.a <= 0.0) {
+			//				Destroy (gameObject);
+			//			}
+		}
 	}
 
 	void OnTriggerEnter2D(Collider2D target)
@@ -62,7 +89,10 @@ public class FallingRockOnce : MonoBehaviour {
 			//This was preventing the rocks from spawning
 			//instance.transform.parent = transform;
 			//instance.transform.position = startPos;
-			Destroy(this.gameObject);
+
+			rockHitGround [0].enabled = true;
+			StartCoroutine(RockBreaks());
+			//Destroy(this.gameObject);
 		} 	
 
 		if (target.gameObject.tag == "PlayerToAttack") 
@@ -79,7 +109,9 @@ public class FallingRockOnce : MonoBehaviour {
 			//GameObject instance = Instantiate(Resources.Load("Falling Rock")) as GameObject;
 			//instance.transform.parent = transform;
 			//instance.transform.position = startPos;
-			Destroy(this.gameObject);
+			//Destroy(this.gameObject);
+			rockHitGround [0].enabled = true;
+			StartCoroutine(RockBreaks());
 		} 
 
 		if (target.gameObject.tag == "Movable") 
@@ -90,13 +122,17 @@ public class FallingRockOnce : MonoBehaviour {
 			//GameObject instance = Instantiate(Resources.Load("Falling Rock")) as GameObject;
 			//instance.transform.parent = transform;
 			//instance.transform.position = startPos;
-			Destroy(this.gameObject);
+			//Destroy(this.gameObject);
+			rockHitGround [0].enabled = true;
+			StartCoroutine(RockBreaks());
 		} 
 	}
 
 	void OnCollisionEnter2D(Collision2D coll) {
 		if (coll.gameObject.tag == "Movable") {
-			Destroy(this.gameObject);
+			rockHitGround [0].enabled = true;
+			StartCoroutine(RockBreaks());
+			//Destroy(this.gameObject);
 		}
 		
 	}
@@ -116,5 +152,11 @@ public class FallingRockOnce : MonoBehaviour {
 		yield return new WaitForSeconds(.1f);
 		myOrgColor.r -= 0.8f;
 		myPlayerWolf.GetComponent<SpriteRenderer>().color = myOrgColor;
+	}
+
+	IEnumerator RockBreaks(){
+		isRockBreaking = true;
+		yield return new WaitForSeconds(.5f);
+		Destroy(this.gameObject);
 	}
 }

@@ -161,7 +161,10 @@ public class PCWolfInput : MonoBehaviour
 
 	void Update () 
 	{
-		Debug.Log (currLevel);
+		//****
+		//Debug.Log (currLevel);
+
+
 		//#if UNITY_EDITOR || UNITY_WEBPLAYER
 		//Debug.Log("Unity Editor");
 		
@@ -273,7 +276,7 @@ public class PCWolfInput : MonoBehaviour
 				myOrgColor.b -= 1.4f;
 
 				playerWolf.GetComponent<SpriteRenderer>().color = myOrgColor;
-				print("runAttack Collider on");
+				//print("runAttack Collider on");
 
 			} else{
 				//runAtkCollider.enabled = false;
@@ -289,7 +292,7 @@ public class PCWolfInput : MonoBehaviour
 				runAtkCollider.enabled = false;
 				//player goes from orange to normal color when walking
 				playerWolf.GetComponent<SpriteRenderer>().color = startColor;
-				print("runAttack Collider off");
+				//print("runAttack Collider off");
 			}
 		} else {
 			//doesn't work
@@ -549,7 +552,7 @@ public class PCWolfInput : MonoBehaviour
 		}
 
 		if (damaged) {
-			Debug.Log ("player health:" + playerHealth);
+			//Debug.Log ("player health:" + playerHealth);
 			invincible = true;
 			if (Time.time <= dmgTimeStart + dmgTimeLength) {
 				StartCoroutine(PlayerHurtFlash());
@@ -563,7 +566,7 @@ public class PCWolfInput : MonoBehaviour
 			Application.LoadLevel (currLevel);
 		}
 
-		Debug.Log ("player hit equals:" + damaged);
+		//Debug.Log ("player hit equals:" + damaged);
 		//Debug.Log (playerRunMeter);
 	}//end of update. Now fixedUpdate
 	//Vector3 target = moveDirection * speed + currentPosition;
@@ -629,7 +632,7 @@ public class PCWolfInput : MonoBehaviour
 		howling = false;
 		canMove = true;
 		HowlAttractCollider.enabled = false;
-		print ("howl is false now");
+		//print ("howl is false now");
 	}
 
 	IEnumerator PlayerHurtFlash(){
@@ -652,7 +655,7 @@ public class PCWolfInput : MonoBehaviour
 		}
 		invincible = false;
 		damaged = false;
-		Debug.Log ("Player invincible:" + invincible);
+		//Debug.Log ("Player invincible:" + invincible);
 	}
 
 	void OnEnable()

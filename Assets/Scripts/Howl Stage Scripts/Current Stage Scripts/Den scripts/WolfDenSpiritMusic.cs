@@ -67,11 +67,11 @@ public class WolfDenSpiritMusic : MonoBehaviour {
 		spawnPoints.Add (lostWolf3Pos);
 		spawnPoints.Add (lostWolf4Pos);
 		spawnPoints.Add (lostWolf5Pos);
-		print ("Starting spawn points:" + spawnPoints.Count);
+		//print ("Starting spawn points:" + spawnPoints.Count);
 		//spawnPointIndex = UnityEngine.Random.Range (0, spawnPoints.Count);
 		spawnPointIndex = Random.Range (0, spawnPoints.Count);
 		//print ("Starting spawn point index:" + spawnPoint);
-		print (spawnPoints [spawnPointIndex]);
+		//print (spawnPoints [spawnPointIndex]);
 
 		//Wolf Den Music Layers
 //		musicLayer1 = GameObject.Find ("Music Layer 1");
@@ -126,7 +126,7 @@ public class WolfDenSpiritMusic : MonoBehaviour {
 		if (target.gameObject.tag == "LostWolf" || target.gameObject.tag == "LostWolfGreen" || target.gameObject.tag == "LostWolfOrange") 
 		{
 
-			print ("1 wolf rescued");
+			//print ("1 wolf rescued");
 			if (rescuedWolvesCounter == 0){
 
 //				if (playerHealthTrack == 1|| playerHealthTrack == 2){
@@ -253,7 +253,7 @@ public class WolfDenSpiritMusic : MonoBehaviour {
 		if (PlayerWolfGO.GetComponent<PCWolfInput> ().playerHealth == 1|| PlayerWolfGO.GetComponent<PCWolfInput> ().playerHealth == 2){
 			PlayerWolfGO.GetComponent<PCWolfInput> ().playerHealth += 1;
 			//print ("Increase player health by 1");
-			print ("player health:" + PlayerWolfGO.GetComponent<PCWolfInput> ().playerHealth);
+			//print ("player health:" + PlayerWolfGO.GetComponent<PCWolfInput> ().playerHealth);
 		}
 	}
 

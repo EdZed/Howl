@@ -7,10 +7,31 @@ public class RockCracked : MonoBehaviour {
 	Color startColor;
 	public bool cracked;
 
+	public AudioSource[] rockBroken = new AudioSource[1];
+	
+	//to make rock spriterenderer transparent
+	private SpriteRenderer spriteRenderer;
+	private Color start;
+	private Color end;
+	private float t = 0.0f;
+	private Renderer rendMaterialColor;
+	
+	bool isRockBreaking;
+
 	// Use this for initialization
 	void Start () {
 		rockCollider = this.gameObject.GetComponent<BoxCollider2D> ();
 		startColor = this.gameObject.GetComponent<SpriteRenderer> ().color;
+
+		rockBroken [0].enabled = false;
+		isRockBreaking = false;
+		
+		//to make rock spriterenderer transparent
+		spriteRenderer = GetComponent<SpriteRenderer> ();
+		start = spriteRenderer.color;
+		end = new Color (start.r, start.g, start.b, 0.0f);
+		rendMaterialColor = GetComponent<Renderer> ();
+
 		//cracked = false;
 
 	if (cracked == true) {
@@ -23,7 +44,13 @@ public class RockCracked : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		t += Time.deltaTime;
+		if (isRockBreaking == true) {
+			rendMaterialColor.material.color = Color.Lerp (start, end, t / 1.5f);
+			//			if (rendMaterialColor.material.color.a <= 0.0) {
+			//				Destroy (gameObject);
+			//			}
+		}
 	}
 
 	void OnTriggerEnter2D(Collider2D target)
@@ -44,7 +71,9 @@ public class RockCracked : MonoBehaviour {
 			//fallingDown = true;
 			//rockCollider.enabled = false;
 			if(cracked == true){
-				Destroy(this.gameObject);
+				//Destroy(this.gameObject);
+				rockBroken [0].enabled = true;
+				StartCoroutine(RockBreaks());
 			}
 
 			//print ("tree falls down");
@@ -67,9 +96,16 @@ public class RockCracked : MonoBehaviour {
 //			playerWolf.GetComponent<SpriteRenderer> ().color = myHurtColor;
 
 			cracked = true;
-			print ("rock is cracked");
+			//print ("rock is cracked");
 		}
 		
+	}
+
+	IEnumerator RockBreaks(){
+		isRockBreaking = true;
+		rockCollider.enabled = false;
+		yield return new WaitForSeconds(.5f);
+		Destroy(this.gameObject);
 	}
 	
 }

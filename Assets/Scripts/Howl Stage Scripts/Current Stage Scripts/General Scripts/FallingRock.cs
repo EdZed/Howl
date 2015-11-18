@@ -92,7 +92,7 @@ public class FallingRock : MonoBehaviour {
 		{
 			rockHitGround [0].enabled = true;
 			GameObject instance = Instantiate(Resources.Load("Falling Rock")) as GameObject;
-			print ("Spawn new rock");
+			//print ("Spawn new rock");
 			//This was preventing the rocks from spawning
 			//instance.transform.parent = transform;
 			instance.transform.position = startPos;

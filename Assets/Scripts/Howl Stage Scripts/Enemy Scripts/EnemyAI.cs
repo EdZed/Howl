@@ -30,6 +30,8 @@ public class EnemyAI : MonoBehaviour {
 	bool bearAttacking;
 	bool isEnemyFrozen;
 
+	Color startColor;
+
 	// Use this for initialization
 	void Start () {
 
@@ -53,6 +55,8 @@ public class EnemyAI : MonoBehaviour {
 		animEnemy = gameObject.GetComponent<Animator> ();
 		animEnemy.SetInteger ("AnimState", 0);
 
+		startColor = enemyBear.GetComponent<SpriteRenderer> ().color;
+
 		//wayPoints [0].GetComponent<gameObject>().
 		//wayPoint1 = wayPoints [0].GetComponent<gameObject> ();
 		playerNearBear = false;
@@ -74,14 +78,14 @@ public class EnemyAI : MonoBehaviour {
 				if (bearAttacking == true) {
 					speed = attackSpeed;
 					enemyBear.transform.position = Vector3.MoveTowards (enemyBear.transform.position, playerWolf.transform.position, speed * Time.deltaTime);
-					Debug.Log ("Bear attacking player");
+					//Debug.Log ("Bear attacking player");
 				} else {
 				}
 				//Debug.Log ("Bear attacking player");
 			} else if (!playerNearBear) {
 				BearPatrol ();
 		
-				Debug.Log ("Bear walking");
+				//Debug.Log ("Bear walking");
 			} 
 
 		} else {
@@ -115,9 +119,17 @@ public class EnemyAI : MonoBehaviour {
 
 	IEnumerator FreezeOnOff(){
 		isEnemyFrozen = true;
-		print("Bear is immobolized");
+		Color crackedColor = this.gameObject.GetComponent<SpriteRenderer> ().color;
+		//crackedColor.r += 3.4f;
+		crackedColor = Color.Lerp (startColor, Color.blue, 4);
+		this.gameObject.GetComponent<SpriteRenderer> ().color = crackedColor;
+		//print("Bear is immobolized");
+
 		yield return new WaitForSeconds(5);
+
 		//back to regular movement and collider on
+		crackedColor = Color.Lerp ( Color.blue, startColor, 4);
+		this.gameObject.GetComponent<SpriteRenderer> ().color = crackedColor;
 		isEnemyFrozen = false;
 		
 		enemyBearCollider.enabled = true;
@@ -190,16 +202,16 @@ public class EnemyAI : MonoBehaviour {
 	{
 		bearAttacking = true;
 		enemyAttackCollider.enabled = true;
-		print ("enemy attack collider on!");
-		print ("beat attacking:"+ bearAttacking);
+		//print ("enemy attack collider on!");
+		//print ("beat attacking:"+ bearAttacking);
 	}
 	
 	void BearAttackTriggerOff()
 	{
 		bearAttacking = false;
 		enemyAttackCollider.enabled = false;
-		print ("enemy attack collider off!");
-		print ("beat attacking:"+ bearAttacking);
+		//print ("enemy attack collider off!");
+		//print ("beat attacking:"+ bearAttacking);
 	}
 
 	void BearFaceRight(){

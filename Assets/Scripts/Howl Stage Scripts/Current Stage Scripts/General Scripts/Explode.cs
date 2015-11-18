@@ -5,10 +5,11 @@ public class Explode : MonoBehaviour {
 
 	public RockPiece rockPiece;
 	public int totalParts = 5;
+	public GameObject thisRock;
 
 	// Use this for initialization
 	void Start () {
-	
+		thisRock = this.gameObject;
 	}
 	
 	// Update is called once per frame
@@ -18,7 +19,8 @@ public class Explode : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D target){
 		if (target.gameObject.tag == "RockDisappear"||
-		    target.gameObject.tag == "Movable") {
+		    target.gameObject.tag == "Movable" ||
+		    target.gameObject.tag == "playerRunAtk" && thisRock.GetComponent<RockCracked>().cracked==true) {
 			OnExplode();
 		}
 	}

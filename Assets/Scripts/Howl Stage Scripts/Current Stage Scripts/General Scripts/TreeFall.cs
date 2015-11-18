@@ -36,7 +36,7 @@ public class TreeFall : MonoBehaviour {
 			fallingDown = true;
 			treeCollider.enabled = false;
 			treeFalling [0].enabled = true;
-			print ("tree falls down");
+			//print ("tree falls down");
 			
 		} 
 	}//end ontrigger

@@ -34,7 +34,7 @@ public class FollowPlayer : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
-		Debug.Log(gameObject);
+		//Debug.Log(gameObject);
 		runAtkPower = false;
 		howlFreezePower = false;
 		//OrangeWolfString = "Lost Wolf Orange";
@@ -142,10 +142,10 @@ public class FollowPlayer : MonoBehaviour
 			isFollowing = false;
 			isInDen = true;
 			isTriggeringDen = true;
-			Debug.Log("Wolf triggering wolf den");
+			//Debug.Log("Wolf triggering wolf den");
 			if (runAtkPower == true) {
 				PlayerWolfGO.GetComponent<PCWolfInput>().runAtk = false;
-				Debug.Log("run attack power is:" + PlayerWolfGO.GetComponent<PCWolfInput>().runAtk);
+				//Debug.Log("run attack power is:" + PlayerWolfGO.GetComponent<PCWolfInput>().runAtk);
 			}
 
 		}

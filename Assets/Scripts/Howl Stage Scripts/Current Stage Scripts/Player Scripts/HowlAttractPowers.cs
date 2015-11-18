@@ -36,7 +36,7 @@ public class HowlAttractPowers : MonoBehaviour {
 				//sends message to ?
 				if (HowlFreezePower != null) {
 					HowlFreezePower ();
-					print ("Enemy almost frozen");
+					//print ("Enemy almost frozen");
 				}
 			}
 			
