@@ -24,12 +24,13 @@ public class FollowPlayer : MonoBehaviour
 
 	//Wolf Den Art
 	public GameObject wolfDenArt;
-	private Animator wolfDenAnim;
+	//private Animator wolfDenAnim;
 	private Animator LostWolfAnim;
 	//string OrangeWolfString ;
 
 	public bool runAtkPower;
 	public bool howlFreezePower;
+	public bool lostWolfAffection;
 
 	// Use this for initialization
 	void Start () 
@@ -52,13 +53,15 @@ public class FollowPlayer : MonoBehaviour
 		speed = moveSpeed;
 		rb2DLostWolf = GetComponent<Rigidbody2D> ();
 		LostWolfAnim = GetComponent<Animator> ();
-		LostWolfAnim.SetInteger ("LostWolfAnimState", 2);
+		//Wolf Idle
+		LostWolfAnim.SetInteger ("LostWolfAnimState", 0);
 		isTriggeringDen = false;
 
 		//wolf Den
 		wolfDenArt = GameObject.Find ("WolfDen");
-		wolfDenAnim = wolfDenArt.GetComponent<Animator> ();
-		wolfDenAnim.SetInteger ("DenAnimState", 0);
+		//wolfDenAnim = wolfDenArt.GetComponent<Animator> ();
+		//Wolf idle
+		//wolfDenAnim.SetInteger ("DenAnimState", 0);
 
 		if(this.gameObject.tag == "LostWolfOrange"){
 			runAtkPower = true;
@@ -66,6 +69,7 @@ public class FollowPlayer : MonoBehaviour
 		if(this.gameObject.tag == "LostWolfGreen"){
 			howlFreezePower = true;
 		}
+		lostWolfAffection = false;
 
 //		if (GameObject.Find ("Lost Wolf Orange") == this.gameObject) {
 //			runAtkPower = true;
@@ -85,41 +89,11 @@ public class FollowPlayer : MonoBehaviour
 	// Update is called once per frame
 	void Update () {
 		if (isTriggeringDen) {
-//			if(redWolf)
-//			{
-//				LostWolfAnim.SetInteger ("LostWolfAnimState", 6);
-//				//GameEnd();
-//				print ("red wolf disappear");
-//			}else
-//			{
 			speed = staySpeed;
 			//WolfSpirit disappears
 			LostWolfAnim.SetInteger ("LostWolfAnimState", 5);
 			//print ("Beam up Update!");
 			//}
-		}
-	
-		if (isFollowing) {
-			rb2DLostWolf.transform.position = Vector3.MoveTowards(rb2DLostWolf.transform.position, followPlayerWolfGO.transform.position, speed * Time.deltaTime);
-			if(rb2DLostWolf.transform.position == followPlayerWolfGO.transform.position){
-				rb2DLostWolf.transform.position = followPlayerWolfGO.transform.position;
-			}
-
-			float LoneWolfDist = Vector3.Distance(rb2DLostWolf.transform.position, followPlayerWolfGO.transform.position);
-
-			if (PlayerWolfGO.transform.position.x > rb2DLostWolf.transform.position.x){
-				WolfSpiritFaceRight();
-			} else if (PlayerWolfGO.transform.position.x < rb2DLostWolf.transform.position.x){
-				WolfSpiritFaceLeft();
-			}
-
-			if (PlayerWolfGO.GetComponent<PCWolfInput>().walking || (LoneWolfDist > 0f && LoneWolfDist < 9f)){
-				LostWolfAnim.SetInteger ("LostWolfAnimState", 1);
-			} else if (PlayerWolfGO.GetComponent<PCWolfInput>().running || LoneWolfDist > 9f){
-				LostWolfAnim.SetInteger ("LostWolfAnimState", 7);
-			} else if (!PlayerWolfGO.GetComponent<PCWolfInput>().walking || !PlayerWolfGO.GetComponent<PCWolfInput>().running){
-				LostWolfAnim.SetInteger ("LostWolfAnimState", 0);
-			}
 		}
 
 		if (isInDen) {
@@ -128,6 +102,38 @@ public class FollowPlayer : MonoBehaviour
 				rb2DLostWolf.transform.position = wolfDenArt.transform.position;
 			}
 		}
+	
+		if (isFollowing) {
+			rb2DLostWolf.transform.position = Vector3.MoveTowards (rb2DLostWolf.transform.position, followPlayerWolfGO.transform.position, speed * Time.deltaTime);
+			if (rb2DLostWolf.transform.position == followPlayerWolfGO.transform.position) {
+				rb2DLostWolf.transform.position = followPlayerWolfGO.transform.position;
+			}
+
+			float LoneWolfDist = Vector3.Distance (rb2DLostWolf.transform.position, followPlayerWolfGO.transform.position);
+
+			if (PlayerWolfGO.transform.position.x > rb2DLostWolf.transform.position.x) {
+				WolfSpiritFaceRight ();
+			} else if (PlayerWolfGO.transform.position.x < rb2DLostWolf.transform.position.x) {
+				WolfSpiritFaceLeft ();
+			}
+
+			if (PlayerWolfGO.GetComponent<PCWolfInput> ().walking || (LoneWolfDist > 0f && LoneWolfDist < 9f)) {
+				LostWolfAnim.SetInteger ("LostWolfAnimState", 1);
+			} else if (PlayerWolfGO.GetComponent<PCWolfInput> ().running || LoneWolfDist > 9f) {
+				LostWolfAnim.SetInteger ("LostWolfAnimState", 7);
+			} else if (!PlayerWolfGO.GetComponent<PCWolfInput> ().walking || !PlayerWolfGO.GetComponent<PCWolfInput> ().running) {
+				//idle
+				LostWolfAnim.SetInteger ("LostWolfAnimState", 0);
+			}
+		} else if (!isFollowing) {
+			if (lostWolfAffection == true) {
+				LostWolfAnim.SetInteger ("LostWolfAnimState", 2);
+			} 
+			else if(lostWolfAffection == false) {
+				LostWolfAnim.SetInteger ("LostWolfAnimState", 0);
+			}
+		}
+
 	}//end update
 
 	void OnTriggerEnter2D(Collider2D target){
@@ -151,16 +157,17 @@ public class FollowPlayer : MonoBehaviour
 		}
 	}
 
+
 	void HowlEnd(){
 		isTriggeringDen = false;
-		wolfDenAnim.SetInteger ("DenAnimState", 0);
+		//wolfDenAnim.SetInteger ("DenAnimState", 0);
 		Destroy(this.gameObject);
 		PlayerWolfCollider.enabled = true;
 	}
 
 	void LastHowlEnd(){
 		isTriggeringDen = false;
-		wolfDenAnim.SetInteger ("DenAnimState", 0);
+		//wolfDenAnim.SetInteger ("DenAnimState", 0);
 		//Destroy(this.gameObject);
 		PlayerWolfCollider.enabled = true;
 	}
@@ -187,12 +194,29 @@ public class FollowPlayer : MonoBehaviour
 	void OnEnable()
 	{
 		WolfDenSpiritMusic.RedWolfCollected += GameEnd;
+		AffectionTrigger.AffectionAnimOn += AffectionOn;
+		AffectionTrigger.AffectionAnimOff += AffectionOff;
 	}
 	
 	
 	void OnDisable()
 	{
 		WolfDenSpiritMusic.RedWolfCollected -= GameEnd;
+		AffectionTrigger.AffectionAnimOn -= AffectionOn;
+		AffectionTrigger.AffectionAnimOff -= AffectionOff;
+	}
+
+	void AffectionOn()
+	{
+		lostWolfAffection = true;
+		Debug.Log ("den wolf is showing affection");
+	}
+	
+	
+	void AffectionOff()
+	{
+		lostWolfAffection = false;
+		Debug.Log ("den wolf stopped showing affection");
 	}
 
 

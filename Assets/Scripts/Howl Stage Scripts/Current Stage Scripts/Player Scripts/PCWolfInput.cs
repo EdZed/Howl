@@ -1,6 +1,7 @@
 ﻿ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(AudioSource))]
 
@@ -40,8 +41,12 @@ public class PCWolfInput : MonoBehaviour
 	public bool invincible;
 
 	public bool runAtk;
+	public bool affection;
 	public GameObject ColliderRunAtkGO;
 	public BoxCollider2D runAtkCollider;
+
+	public GameObject affectionColliderGO;
+	public BoxCollider2D affectionCollider;
 
 	float currTime;
 	public float atkBuildTime = 2f;
@@ -54,8 +59,20 @@ public class PCWolfInput : MonoBehaviour
 
 	public GameObject playerWolfShadow;
 
-	float playerRunMeter;
-	bool RunMeterEmpty;
+	//***Warmth Meter***
+	//float playerRunMeter;
+	public int startingWarmthMeter = 30;
+	public int currentWarmth;
+	public Slider WarmthSlider;
+	public Image coldImage;
+	public float flashSpeed = 5f;
+	//color(R,G,B, Alpha)
+	public Color flashColor = new Color (1f, 0f, 0f, 0.1f);
+
+	//works as isDead bool in tut
+	bool WarmthMeterEmpty;
+	//works as take damage in tut
+	bool gettingCold;
 
 	Vector3 currentPosition;
 
@@ -102,6 +119,12 @@ public class PCWolfInput : MonoBehaviour
 	float timeRatio = 0.3f;
 	float dmgTimeLength;
 	float invincTimeLength; //MUST be larger than dmgTimeLength
+
+	//turns back on and off when done healing
+	public bool callOnce;
+
+	//public bool isWarmingUp;
+
 	
 	// Use this for initialization
 	void Start () 
@@ -135,14 +158,26 @@ public class PCWolfInput : MonoBehaviour
 
 		playerWolfShadow = GameObject.Find("playerWolfShadow");
 		running = false;
-		playerRunMeter = 30f;
-		RunMeterEmpty = false;
+		//playerRunMeter = 30f;
+		//RunMeterEmpty = false;
+		currentWarmth = startingWarmthMeter;
+		WarmthMeterEmpty = false;
 
 		ColliderRunAtkGO = transform.FindChild ("playerWolfCollRunAtk").gameObject;
 		runAtkCollider = ColliderRunAtkGO.GetComponent <BoxCollider2D> ();
 		runAtkCollider.enabled = false;
 
 		runAtk = false;
+
+		affectionColliderGO = transform.FindChild ("playerWolfCollAffection").gameObject;
+		affectionCollider = affectionColliderGO.GetComponent <BoxCollider2D> ();
+		//affectionCollider.enabled = false;
+
+		affection = false;
+		callOnce = false;
+		//isWarmingUp = false;
+
+
 
 		//restartTimer -= Time.deltaTime;
 
@@ -248,6 +283,18 @@ public class PCWolfInput : MonoBehaviour
 //		}
 
 		//arrow keys controls
+		if (!callOnce) {
+			InvokeRepeating("OutInCold", 1,1);
+			callOnce = true;
+		}
+
+		if (gettingCold) {
+			coldImage.color = flashColor;
+		} else {
+			coldImage.color = Color.Lerp (coldImage.color, Color.clear, flashSpeed * Time.deltaTime);
+		}
+		gettingCold = false;
+
 		if (running) {
 			//running anim left/right
 			anim.SetInteger ("AnimState", 7);
@@ -256,15 +303,16 @@ public class PCWolfInput : MonoBehaviour
 				//sends message to ?
 				OnRunAnim ();
 			}
-			if (playerRunMeter > 0){
-				playerRunMeter--;
-			} else {
-				playerRunMeter = 0;
-			}
-
-			if (playerRunMeter <= 0){
-				//RunMeterEmpty = true;
-			}
+//			if (playerRunMeter > 0){
+//				playerRunMeter--;
+//			} else {
+//				playerRunMeter = 0;
+//			}
+//
+//			if (playerRunMeter <= 0){
+//				//code next line out to deactivate meter
+//				RunMeterEmpty = true;
+//			}
 			//if guiding Orange lost wolf, turn on break ability while running
 			//turning on from HowlAttractPowers Script
 			if(runAtk == true){
@@ -311,19 +359,19 @@ public class PCWolfInput : MonoBehaviour
 		}
 
 		if (!running) {
-			if (playerRunMeter < 30f){
-				if (RunMeterEmpty){
-					playerRunMeter +=0.2f;
-					//playerRunMeter +=0.8f;
-				} else if (!RunMeterEmpty){
-					playerRunMeter +=0.5f;
-					//playerRunMeter +=1.0f;
-				}
-			}
-			if (playerRunMeter >= 30f){
-				playerRunMeter = 30f;
-				RunMeterEmpty = false;
-			}
+//			if (playerRunMeter < 30f){
+//				if (RunMeterEmpty){
+//					playerRunMeter +=0.2f;
+//					//playerRunMeter +=0.8f;
+//				} else if (!RunMeterEmpty){
+//					playerRunMeter +=0.5f;
+//					//playerRunMeter +=1.0f;
+//				}
+//			}
+//			if (playerRunMeter >= 30f){
+//				playerRunMeter = 30f;
+//				RunMeterEmpty = false;
+//			}
 
 		}
 
@@ -367,6 +415,23 @@ public class PCWolfInput : MonoBehaviour
 				//StopHowlSFX();
 			}
 		}
+
+		if(affection){
+			canMove = false;
+		
+			if(running){
+				anim.SetInteger("AnimState", 1);
+
+				//anim.SetInteger("AnimState", 7);
+			} else if (walking) {
+				anim.SetInteger("AnimState", 1);
+
+				//anim.SetInteger("AnimState", 2);
+			} else if(!running && !walking){
+				anim.SetInteger("AnimState", 1);
+			}
+		}
+
 		if (Input.GetKeyUp (KeyCode.UpArrow)||
 		    Input.GetKeyUp(KeyCode.DownArrow)||
 		    Input.GetKeyUp(KeyCode.LeftArrow)|| 
@@ -394,6 +459,21 @@ public class PCWolfInput : MonoBehaviour
 		if(Input.GetKeyUp(KeyCode.Space) || Input.GetButtonUp("Gamepad_Mac_Howl") ) {
 			howling = true;
 			HowlAttractCollider.enabled = true;
+		}
+
+		//Affection
+		if(Input.GetKey(KeyCode.V) ) {
+			anim.SetInteger("AnimState", 1);
+			Debug.Log ("affection");
+			affection = true;
+			//affectionCollider.enabled = true;
+			//HowlAttractCollider.enabled = true;
+		}
+		if(Input.GetKeyUp(KeyCode.V) ) {
+			//anim.SetInteger("AnimState", 1);
+			//Debug.Log ("affection");
+			AffectionFalse();
+			//HowlAttractCollider.enabled = true;
 		}
 		if (Input.GetKeyUp (KeyCode.LeftAlt)) {
 			if (prepAttack){
@@ -453,7 +533,8 @@ public class PCWolfInput : MonoBehaviour
 				WolfMoveToLeft ();
 				leftPressed = true;
 				if (Input.GetKey (KeyCode.LeftShift)|| Input.GetButton("Gamepad_Mac_Run") ) {
-					if (!RunMeterEmpty){
+					//if (!RunMeterEmpty){
+					if (WarmthMeterEmpty == false){
 						running = true;
 						walking = false;
 						speed = runSpeed;
@@ -479,7 +560,7 @@ public class PCWolfInput : MonoBehaviour
 				WolfMoveToRight ();
 				rightPressed = true;
 				if (Input.GetKey (KeyCode.LeftShift) || Input.GetButton("Gamepad_Mac_Run") ) {
-					if (!RunMeterEmpty){
+					if (!WarmthMeterEmpty){
 						running = true;
 						walking = false;
 						speed = runSpeed;
@@ -505,7 +586,7 @@ public class PCWolfInput : MonoBehaviour
 
 				upPressed = true;
 				if (Input.GetKey (KeyCode.LeftShift) || Input.GetButton("Gamepad_Mac_Run") ) {
-					if (!RunMeterEmpty){
+					if (!WarmthMeterEmpty){
 						running = true;
 						walking = false;
 						speed = runSpeed;
@@ -530,7 +611,7 @@ public class PCWolfInput : MonoBehaviour
 			    Input.GetAxisRaw ("Gamepad_PC_Vertical") < 0) {
 				downPressed = true;
 				if (Input.GetKey (KeyCode.LeftShift) || Input.GetButton("Gamepad_Mac_Run") ) {
-					if (!RunMeterEmpty){
+					if (!WarmthMeterEmpty){
 						running = true;
 						walking = false;
 						speed = runSpeed;
@@ -575,6 +656,46 @@ public class PCWolfInput : MonoBehaviour
 	//#endif
 
 //}//end of update. Now fixedUpdate	
+
+//	IEnumerator OutinCold(){
+//		
+//		yield return new WaitForSeconds(2);
+//	}
+	//*** METHODS ****
+
+	void OutInCold(){
+		
+		//InvokeRepeating("TakeDamage", 1,1);
+		TakeCold (1);
+	}
+
+	public void TakeCold (int amount){
+
+		currentWarmth -= amount;
+		WarmthSlider.value = currentWarmth;
+
+		gettingCold = true;
+
+
+		if(currentWarmth <= 0 && !WarmthMeterEmpty){
+			WarmthMeterEmpty = true;
+		}
+	}
+
+	public void TakeWarm (int amount){
+		
+		//gettingCold = true;
+		currentWarmth += amount;
+		WarmthSlider.value = currentWarmth;
+
+		if (currentWarmth >= 30){
+			currentWarmth = 30;
+			WarmthSlider.value = currentWarmth;
+			WarmthMeterEmpty = false;
+			
+		}
+	}
+
 	void WalkSFX() {
 		if (!sources [0].isPlaying) 
 		{
@@ -635,6 +756,13 @@ public class PCWolfInput : MonoBehaviour
 		//print ("howl is false now");
 	}
 
+	void AffectionFalse() {
+		affection = false;
+		canMove = true;
+		//affectionCollider.enabled = false;
+		//print ("howl is false now");
+	}
+
 	IEnumerator PlayerHurtFlash(){
 		Color myOrgColor = this.GetComponent<SpriteRenderer> ().color;
 		float colorConstrain = Mathf.Sin((Time.time - dmgTimeStart / dmgTimeStart + dmgTimeLength - dmgTimeStart) / 2 - 0.5f) * 2;
@@ -661,14 +789,30 @@ public class PCWolfInput : MonoBehaviour
 	void OnEnable()
 	{
 		WolfDenManager.OnHeal += PlayerHeal;
+		AffectionTrigger.OnPlayerClose += PlayerWarmUp;
+		//AffectionTrigger.OnPlayerAway += PlayerStopWarm;
 	}
 	
 	
 	void OnDisable()
 	{
 		WolfDenManager.OnHeal -= PlayerHeal;
+		AffectionTrigger.OnPlayerClose -= PlayerWarmUp;
+		//AffectionTrigger.OnPlayerAway -= PlayerStopWarm;
 	}
-	
+
+	void PlayerWarmUp()
+	{
+		//isWarmingUp = true;
+		TakeWarm (1);
+		//cancelinvoke??
+	}
+
+//	void PlayerStopWarm()
+//	{
+//		//isWarmingUp = false;
+//		CancelInvoke
+//	}
 	
 	void PlayerHeal()
 	{
