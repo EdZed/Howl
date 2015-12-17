@@ -11,6 +11,11 @@ public class FollowPlayer : MonoBehaviour
 	public BoxCollider2D PlayerWolfCollider;
 
 	public GameObject followPlayerWolfGO;
+	public GameObject followPosNeutral;
+	public GameObject followPosLeftFront;
+	public GameObject followPosRightFront;
+	public GameObject followPosLeftMid;
+	public GameObject followPosRightMid;
 	//public GameObject lostWolf2Pos;
 	float speed;
 	float moveSpeed = 9f;
@@ -19,7 +24,9 @@ public class FollowPlayer : MonoBehaviour
 
 	bool isFollowing = false;
 	bool isInDen = false;
+	 
 	public bool isTriggeringDen;
+	//public bool 
 	//public bool redWolf;
 
 	//Wolf Den Art
@@ -31,6 +38,19 @@ public class FollowPlayer : MonoBehaviour
 	public bool runAtkPower;
 	public bool howlFreezePower;
 	public bool lostWolfAffection;
+
+	PackFormationPos PackFormationPosScript;
+	public GameObject packPosFormationGO;
+
+	public delegate void PackMember();
+	public static event PackMember AddPackMember;
+
+	public GameObject LostWolfSlot1;
+	public GameObject LostWolfSlot2;
+	public GameObject LostWolfSlot3;
+	public GameObject LostWolfSlot4;
+	public GameObject LostWolfSlot5;
+
 
 	// Use this for initialization
 	void Start () 
@@ -49,6 +69,11 @@ public class FollowPlayer : MonoBehaviour
 		PlayerWolfCollider.enabled = true;
 
 		followPlayerWolfGO = GameObject.Find("FollowPlayerWolf");
+		followPosNeutral = GameObject.Find("Pos Neutral");
+		followPosLeftFront = GameObject.Find("Pos Left Front");
+		followPosRightFront = GameObject.Find("Pos Right Front");
+		followPosLeftMid = GameObject.Find("Pos Left Mid");
+		followPosRightMid = GameObject.Find("Pos Right Mid");
 		
 		speed = moveSpeed;
 		rb2DLostWolf = GetComponent<Rigidbody2D> ();
@@ -70,6 +95,15 @@ public class FollowPlayer : MonoBehaviour
 			howlFreezePower = true;
 		}
 		lostWolfAffection = false;
+
+		packPosFormationGO = GameObject.Find ("Pack Pos Formation");
+		//howlFreeze = false;
+		PackFormationPosScript = packPosFormationGO.GetComponent<PackFormationPos> ();
+		LostWolfSlot1 = PackFormationPosScript.PackFormationGOSlots [0];
+		LostWolfSlot2 = PackFormationPosScript.PackFormationGOSlots [1];
+		LostWolfSlot3 = PackFormationPosScript.PackFormationGOSlots [2];
+		LostWolfSlot4 = PackFormationPosScript.PackFormationGOSlots [3];
+		LostWolfSlot5 = PackFormationPosScript.PackFormationGOSlots [4];
 
 //		if (GameObject.Find ("Lost Wolf Orange") == this.gameObject) {
 //			runAtkPower = true;
@@ -104,46 +138,85 @@ public class FollowPlayer : MonoBehaviour
 		}
 	
 		if (isFollowing) {
-			rb2DLostWolf.transform.position = Vector3.MoveTowards (rb2DLostWolf.transform.position, followPlayerWolfGO.transform.position, speed * Time.deltaTime);
-			if (rb2DLostWolf.transform.position == followPlayerWolfGO.transform.position) {
-				rb2DLostWolf.transform.position = followPlayerWolfGO.transform.position;
+			if(PackFormationPosScript.packSize == 1){
+				if(LostWolfSlot1  == this.gameObject){
+					FollowInPack(followPosNeutral);
+					//Debug.Log ("if this wolf is 1st, start following");
+				}
+				
+				
+			} else if(PackFormationPosScript.packSize >= 2){
+				if(LostWolfSlot1  == this.gameObject){
+					FollowInPack(followPosLeftFront);
+					//Debug.Log ("1st wolf on left slot");
+				}
+
+				if(LostWolfSlot2  == this.gameObject){
+					FollowInPack(followPosRightFront);
+					//Debug.Log ("2nd wolf on right slot");
+				}
 			}
 
-			float LoneWolfDist = Vector3.Distance (rb2DLostWolf.transform.position, followPlayerWolfGO.transform.position);
-
-			if (PlayerWolfGO.transform.position.x > rb2DLostWolf.transform.position.x) {
-				WolfSpiritFaceRight ();
-			} else if (PlayerWolfGO.transform.position.x < rb2DLostWolf.transform.position.x) {
-				WolfSpiritFaceLeft ();
+			if(PackFormationPosScript.packSize == 3){
+				if(LostWolfSlot3  == this.gameObject){
+					FollowInPack(followPosNeutral);
+					//Debug.Log ("if this wolf is 1st, start following");
+				}
+			}
+			else if(PackFormationPosScript.packSize >= 4){
+				if(LostWolfSlot3  == this.gameObject){
+					FollowInPack(followPosLeftMid);
+					//Debug.Log ("1st wolf on left slot");
+				}
+				
+				if(LostWolfSlot4  == this.gameObject){
+					FollowInPack(followPosRightMid);
+					//Debug.Log ("2nd wolf on right slot");
+				}
+			}
+			if(PackFormationPosScript.packSize == 5){
+				if(LostWolfSlot5  == this.gameObject){
+					FollowInPack(followPosNeutral);
+					//Debug.Log ("if this wolf is 1st, start following");
+				}
 			}
 
-			if (PlayerWolfGO.GetComponent<PCWolfInput> ().walking || (LoneWolfDist > 0f && LoneWolfDist < 9f)) {
-				LostWolfAnim.SetInteger ("LostWolfAnimState", 1);
-			} else if (PlayerWolfGO.GetComponent<PCWolfInput> ().running || LoneWolfDist > 9f) {
-				LostWolfAnim.SetInteger ("LostWolfAnimState", 7);
-			} else if (!PlayerWolfGO.GetComponent<PCWolfInput> ().walking || !PlayerWolfGO.GetComponent<PCWolfInput> ().running) {
-				//idle
-				LostWolfAnim.SetInteger ("LostWolfAnimState", 0);
-			}
-		} else if (!isFollowing) {
-			if (lostWolfAffection == true) {
-				LostWolfAnim.SetInteger ("LostWolfAnimState", 2);
-			} 
-			else if(lostWolfAffection == false) {
-				LostWolfAnim.SetInteger ("LostWolfAnimState", 0);
-			}
-		}
+			
+
+		} 
+
+//		else if (!isFollowing) {
+//			if (lostWolfAffection == true) {
+//				LostWolfAnim.SetInteger ("LostWolfAnimState", 2);
+//			} 
+//			else if(lostWolfAffection == false) {
+//				LostWolfAnim.SetInteger ("LostWolfAnimState", 0);
+//			}
+//		}
 
 	}//end update
 
 	void OnTriggerEnter2D(Collider2D target){
-		if (target.gameObject.tag == "HowlAttract") {
-			isFollowing = true;
+		if (!isFollowing) {
+			if (target.gameObject.tag == "HowlAttract") {
+				if (AddPackMember != null) {
+					AddPackMember ();
+					//Debug.Log ("affect trig stay");
+				}
+
+				AddToPackSlot ();
+				Debug.Log ("add member to pack");
+
+				isFollowing = true;
+				//send message to PackFormationScript adding wolf to packSize and turning on bool
+
 //			if(runAtkPower == true){
 //				PlayerWolfGO.GetComponent<PCWolfInput>().runAtk = true;
 //				|| target.gameObject.tag == "LostWolfOrange"
 //			}
-		} //else 
+			} //else 
+
+		}
 		if (target.gameObject.tag == "WolfDen") {
 			isFollowing = false;
 			isInDen = true;
@@ -157,6 +230,50 @@ public class FollowPlayer : MonoBehaviour
 		}
 	}
 
+	void FollowInPack (GameObject placeHolderGO){
+		//follow behind player
+		//rb2DLostWolf.transform.position = Vector3.MoveTowards (rb2DLostWolf.transform.position, followPlayerWolfGO.transform.position, speed * Time.deltaTime);
+		//Debug.Log ("a wolf should be following");
+		rb2DLostWolf.transform.position = Vector3.MoveTowards (rb2DLostWolf.transform.position, placeHolderGO.transform.position, speed * Time.deltaTime);
+		if (rb2DLostWolf.transform.position == placeHolderGO.transform.position) {
+			rb2DLostWolf.transform.position = placeHolderGO.transform.position;
+		}
+		
+		float LoneWolfDist = Vector3.Distance (rb2DLostWolf.transform.position, placeHolderGO.transform.position);
+		
+		if (PlayerWolfGO.transform.position.x > rb2DLostWolf.transform.position.x) {
+			WolfSpiritFaceRight ();
+		} else if (PlayerWolfGO.transform.position.x < rb2DLostWolf.transform.position.x) {
+			WolfSpiritFaceLeft ();
+		}
+		
+		if (PlayerWolfGO.GetComponent<PCWolfInput> ().walking || (LoneWolfDist > 0f && LoneWolfDist < 9f)) {
+			LostWolfAnim.SetInteger ("LostWolfAnimState", 1);
+		} else if (PlayerWolfGO.GetComponent<PCWolfInput> ().running || LoneWolfDist > 9f) {
+			LostWolfAnim.SetInteger ("LostWolfAnimState", 7);
+		} else if (!PlayerWolfGO.GetComponent<PCWolfInput> ().walking || !PlayerWolfGO.GetComponent<PCWolfInput> ().running) {
+			//idle
+			LostWolfAnim.SetInteger ("LostWolfAnimState", 0);
+		}
+
+	}
+
+	void AddToPackSlot(){
+		Debug.Log ("add to pack slot called");
+		if(PackFormationPosScript.packSize == 1){
+			LostWolfSlot1 = this.gameObject;
+			Debug.Log ("this wolf is 1st");
+		} else if(PackFormationPosScript.packSize == 2){
+			LostWolfSlot2 = this.gameObject;
+		} else if(PackFormationPosScript.packSize == 3){
+			LostWolfSlot3 = this.gameObject;
+		} else if(PackFormationPosScript.packSize == 4){
+			LostWolfSlot4 = this.gameObject;
+		} else if(PackFormationPosScript.packSize == 5){
+			LostWolfSlot5 = this.gameObject;
+		}
+	}
+	
 
 	void HowlEnd(){
 		isTriggeringDen = false;

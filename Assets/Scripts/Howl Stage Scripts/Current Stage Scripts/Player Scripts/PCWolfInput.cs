@@ -283,17 +283,19 @@ public class PCWolfInput : MonoBehaviour
 //		}
 
 		//arrow keys controls
-		if (!callOnce) {
-			InvokeRepeating("OutInCold", 1,1);
-			callOnce = true;
-		}
 
-		if (gettingCold) {
-			coldImage.color = flashColor;
-		} else {
-			coldImage.color = Color.Lerp (coldImage.color, Color.clear, flashSpeed * Time.deltaTime);
-		}
-		gettingCold = false;
+
+//		if (!callOnce) {
+//			InvokeRepeating("OutInCold", 1,1);
+//			callOnce = true;
+//		}
+
+//		if (gettingCold) {
+//			coldImage.color = flashColor;
+//		} else {
+//			coldImage.color = Color.Lerp (coldImage.color, Color.clear, flashSpeed * Time.deltaTime);
+//		}
+//		gettingCold = false;
 
 		if (running) {
 			//running anim left/right
@@ -416,21 +418,21 @@ public class PCWolfInput : MonoBehaviour
 			}
 		}
 
-		if(affection){
-			canMove = false;
-		
-			if(running){
-				anim.SetInteger("AnimState", 1);
-
-				//anim.SetInteger("AnimState", 7);
-			} else if (walking) {
-				anim.SetInteger("AnimState", 1);
-
-				//anim.SetInteger("AnimState", 2);
-			} else if(!running && !walking){
-				anim.SetInteger("AnimState", 1);
-			}
-		}
+//		if(affection){
+//			canMove = false;
+//		
+//			if(running){
+//				anim.SetInteger("AnimState", 1);
+//
+//				//anim.SetInteger("AnimState", 7);
+//			} else if (walking) {
+//				anim.SetInteger("AnimState", 1);
+//
+//				//anim.SetInteger("AnimState", 2);
+//			} else if(!running && !walking){
+//				anim.SetInteger("AnimState", 1);
+//			}
+//		}
 
 		if (Input.GetKeyUp (KeyCode.UpArrow)||
 		    Input.GetKeyUp(KeyCode.DownArrow)||
@@ -462,19 +464,19 @@ public class PCWolfInput : MonoBehaviour
 		}
 
 		//Affection
-		if(Input.GetKey(KeyCode.V) ) {
-			anim.SetInteger("AnimState", 1);
-			Debug.Log ("affection");
-			affection = true;
-			//affectionCollider.enabled = true;
-			//HowlAttractCollider.enabled = true;
-		}
-		if(Input.GetKeyUp(KeyCode.V) ) {
-			//anim.SetInteger("AnimState", 1);
-			//Debug.Log ("affection");
-			AffectionFalse();
-			//HowlAttractCollider.enabled = true;
-		}
+//		if(Input.GetKey(KeyCode.V) ) {
+//			anim.SetInteger("AnimState", 1);
+//			Debug.Log ("affection");
+//			affection = true;
+//			//affectionCollider.enabled = true;
+//			//HowlAttractCollider.enabled = true;
+//		}
+//		if(Input.GetKeyUp(KeyCode.V) ) {
+//			//anim.SetInteger("AnimState", 1);
+//			//Debug.Log ("affection");
+//			AffectionFalse();
+//			//HowlAttractCollider.enabled = true;
+//		}
 		if (Input.GetKeyUp (KeyCode.LeftAlt)) {
 			if (prepAttack){
 				attacking = true;
