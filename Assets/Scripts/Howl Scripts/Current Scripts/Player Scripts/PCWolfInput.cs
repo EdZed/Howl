@@ -1,7 +1,8 @@
-﻿ using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using UnityStandardAssets.ImageEffects;
 
 [RequireComponent(typeof(AudioSource))]
 
@@ -124,7 +125,13 @@ public class PCWolfInput : MonoBehaviour
 	public bool callOnce;
 
 	//public bool isWarmingUp;
+	public float warmthTemp = 50f; public float maxWarmthTemp = 50f;
+	float WarmingRate = 0.1f;
+	public bool WarmingUp = false;
+	public float WolfEnterTime; float WolfWarmingTime = 0.075f;
+	public float coolingTime; float coolingRate = 0.1f;
 
+	//public bool inSpiritWorld; bool worldSwitch = false; //False = Real World, True = Spirit world 
 	
 	// Use this for initialization
 	void Start () 
@@ -177,7 +184,7 @@ public class PCWolfInput : MonoBehaviour
 		callOnce = false;
 		//isWarmingUp = false;
 
-
+		//inSpiritWorld = false;
 
 		//restartTimer -= Time.deltaTime;
 
@@ -433,6 +440,8 @@ public class PCWolfInput : MonoBehaviour
 //				anim.SetInteger("AnimState", 1);
 //			}
 //		}
+
+		WolfWarmthSystem ();
 
 		if (Input.GetKeyUp (KeyCode.UpArrow)||
 		    Input.GetKeyUp(KeyCode.DownArrow)||
@@ -820,6 +829,32 @@ public class PCWolfInput : MonoBehaviour
 	{
 		//If health more than 1, color back to normal (blue)
 		playerWolf.GetComponent<SpriteRenderer> ().color = startColor;
+	}
+
+	void WolfWarmthSystem(){
+		float tempVignette;
+
+		if (WarmingUp) {
+			if (Time.time >= WolfEnterTime + WolfWarmingTime) {
+				if (warmthTemp < maxWarmthTemp) {
+					warmthTemp += WarmingRate;
+					WolfEnterTime = Time.time;
+				} else if (warmthTemp == maxWarmthTemp) {
+					warmthTemp = maxWarmthTemp;
+				}
+			}
+		} else if (!WarmingUp) {
+			if (Time.time >= coolingTime + coolingRate){
+				warmthTemp -= WarmingRate;
+				coolingTime = Time.time;
+			}
+		}
+		tempVignette = (maxWarmthTemp - warmthTemp) + 1.0f;
+		if (tempVignette <= 1f) {
+			tempVignette = 1f;
+		}
+
+		Camera.main.GetComponent<VignetteAndChromaticAberration> ().intensity = tempVignette;
 	}
 	
 //	void WolfRun()
