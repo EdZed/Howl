@@ -6,7 +6,8 @@ using System.IO;
 public class SaveBrushWindow : EditorWindow {
 
     string _brushName;
-    static string _saveFilePath = "Assets\\Editor\\Prefab Brush\\Data\\";
+    //static string _saveFilePath = "Assets\\Editor\\Prefab Brush\\Data\\";
+	static string _saveFilePath = @"Assets/Editor/PrefabBrush/Data/";
 
 	public static void ShowWindow()
     {
@@ -21,6 +22,7 @@ public class SaveBrushWindow : EditorWindow {
         _brushName = EditorGUILayout.TextField("Brush Name:", _brushName);
         if (GUILayout.Button("Save"))
         {
+			Debug.Log ("Save button pressed");
             PrefabBrushEditor editor = EditorWindow.GetWindow<PrefabBrushEditor>();
             File.WriteAllText(_saveFilePath + _brushName + ".brush", editor.ToString());
             this.Close();

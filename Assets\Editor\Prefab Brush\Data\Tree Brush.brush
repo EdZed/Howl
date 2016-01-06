@@ -8,7 +8,7 @@ Game Object: Assets/Prefabs/HOWL Prefabs/Objects Prefabs/Trees/Tree A.prefab
 Layer: Terrain
 Toggle: True
 Slider: 1
-Lock Orientation Toggle: False
+Lock Orientation Toggle: True
 Random Rotation Toggle: False
 Random Rotation X: False
 Random Rotation Y: False
@@ -16,17 +16,17 @@ Random Rotation Z: False
 Random Scale Toggle: False
 Random Scale Min: 0.1
 Random Scale Max: 1
-Fixed Rotation Toggle: False
+Fixed Rotation Toggle: True
 Fixed Rotation X: 0
 Fixed Rotation Y: 0
 Fixed Rotation Z: 0
-Depth: 0
+Depth: 10
 
 Game Object: Assets/Prefabs/HOWL Prefabs/Objects Prefabs/Trees/Tree B.prefab
 Layer: Terrain
 Toggle: True
 Slider: 1
-Lock Orientation Toggle: False
+Lock Orientation Toggle: True
 Random Rotation Toggle: False
 Random Rotation X: False
 Random Rotation Y: False
@@ -34,17 +34,17 @@ Random Rotation Z: False
 Random Scale Toggle: False
 Random Scale Min: 0.1
 Random Scale Max: 1
-Fixed Rotation Toggle: False
+Fixed Rotation Toggle: True
 Fixed Rotation X: 0
 Fixed Rotation Y: 0
 Fixed Rotation Z: 0
-Depth: 0
+Depth: 10
 
 Game Object: Assets/Prefabs/HOWL Prefabs/Objects Prefabs/Trees/Tree C.prefab
 Layer: Terrain
 Toggle: True
 Slider: 1
-Lock Orientation Toggle: False
+Lock Orientation Toggle: True
 Random Rotation Toggle: False
 Random Rotation X: False
 Random Rotation Y: False
@@ -52,17 +52,17 @@ Random Rotation Z: False
 Random Scale Toggle: False
 Random Scale Min: 0.1
 Random Scale Max: 1
-Fixed Rotation Toggle: False
+Fixed Rotation Toggle: True
 Fixed Rotation X: 0
 Fixed Rotation Y: 0
 Fixed Rotation Z: 0
-Depth: 0
+Depth: 10
 
 Game Object: Assets/Prefabs/HOWL Prefabs/Objects Prefabs/Trees/Tree D.prefab
 Layer: Terrain
 Toggle: True
 Slider: 1
-Lock Orientation Toggle: False
+Lock Orientation Toggle: True
 Random Rotation Toggle: False
 Random Rotation X: False
 Random Rotation Y: False
@@ -70,8 +70,8 @@ Random Rotation Z: False
 Random Scale Toggle: False
 Random Scale Min: 0.1
 Random Scale Max: 1
-Fixed Rotation Toggle: False
+Fixed Rotation Toggle: True
 Fixed Rotation X: 0
 Fixed Rotation Y: 0
 Fixed Rotation Z: 0
-Depth: 0
+Depth: 10
