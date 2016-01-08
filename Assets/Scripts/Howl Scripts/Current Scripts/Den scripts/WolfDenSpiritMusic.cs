@@ -237,7 +237,8 @@ public class WolfDenSpiritMusic : MonoBehaviour {
 		if (target.gameObject.tag == "HowlAttract") {
 			//send an event that changes the color of all prefabs
 			//PCwolf or warmthobj int changed to spirit world
-			WorldManagerScript.WorldTypeSwitch();
+			//WorldManagerScript.WorldTypeSwitch();
+			WorldManagerScript.StartCoroutine("WorldTypeSwitch");
 
 		}
 	}//end on trigger enter

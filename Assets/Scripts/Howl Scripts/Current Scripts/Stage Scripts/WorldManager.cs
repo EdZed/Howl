@@ -12,10 +12,16 @@ public class WorldManager : MonoBehaviour {
 	*/
 
 	public CC_Vintage SpiritWorldOverlay;
+	public GameObject HearDenGO;
+
+	public bool isWorldTransitioning;
+
+	public delegate void LostWolfActive();
+	public static event LostWolfActive OnLostWolfActive;
 
 	// Use this for initialization
 	void Start () {
-	
+		isWorldTransitioning = false;
 	}
 	
 	// Update is called once per frame
@@ -23,15 +29,34 @@ public class WorldManager : MonoBehaviour {
 	
 	}
 
-	public void WorldTypeSwitch(){
+	public IEnumerator WorldTypeSwitch(){
 		if(WorldType == 0){
 			//if currently in real world, switch to spirit
-			WorldType = 1;
+
 			SpiritWorldOverlay.amount = .5f;
+			HearDenGO.SetActive(false);
+			Debug.Log ("world type switch function working");
+			//LostWolfGO.SetActive (true);
+			if(OnLostWolfActive != null){
+				OnLostWolfActive();
+				Debug.Log ("Event msg sent?");
+			}
+			WorldType = 1;
+
 		} else if(WorldType == 1){
 			//if currently in spirit world, switch to world
-			WorldType = 0;
+			isWorldTransitioning = true;
+
 			SpiritWorldOverlay.amount = 0f;
+			if(OnLostWolfActive != null){
+				OnLostWolfActive();
+				Debug.Log ("Event msg sent?");
+			}
+			HearDenGO.SetActive(true);
+			yield return new WaitForSeconds(4);
+			isWorldTransitioning = false;
+			WorldType = 0;
+
 		}
 	}
 }

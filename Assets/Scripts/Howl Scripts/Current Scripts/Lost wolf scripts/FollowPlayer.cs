@@ -16,6 +16,9 @@ public class FollowPlayer : MonoBehaviour
 	public GameObject followPosRightFront;
 	public GameObject followPosLeftMid;
 	public GameObject followPosRightMid;
+
+	SpriteRenderer LostWolfSpriteRend;
+
 	//public GameObject lostWolf2Pos;
 	float speed;
 	float moveSpeed = 9f;
@@ -104,6 +107,12 @@ public class FollowPlayer : MonoBehaviour
 		LostWolfSlot3 = PackFormationPosScript.PackFormationGOSlots [2];
 		LostWolfSlot4 = PackFormationPosScript.PackFormationGOSlots [3];
 		LostWolfSlot5 = PackFormationPosScript.PackFormationGOSlots [4];
+
+		LostWolfSpriteRend = GetComponent<SpriteRenderer> ();
+
+		//LostWolfGO.SetActive(false);
+		LostWolfSpriteRend.enabled = false;
+		LostWolfCollider.enabled = false;
 
 //		if (GameObject.Find ("Lost Wolf Orange") == this.gameObject) {
 //			runAtkPower = true;
@@ -199,6 +208,7 @@ public class FollowPlayer : MonoBehaviour
 	void OnTriggerEnter2D(Collider2D target){
 		if (!isFollowing) {
 			if (target.gameObject.tag == "HowlAttract") {
+				LostWolfSpriteRend.enabled = true;
 				if (AddPackMember != null) {
 					AddPackMember ();
 					//Debug.Log ("affect trig stay");
@@ -315,6 +325,7 @@ public class FollowPlayer : MonoBehaviour
 		WolfDenSpiritMusic.RedWolfCollected += GameEnd;
 		AffectionTrigger.AffectionAnimOn += AffectionOn;
 		AffectionTrigger.AffectionAnimOff += AffectionOff;
+		WorldManager.OnLostWolfActive += LostWolfActive;
 	}
 	
 	
@@ -323,6 +334,7 @@ public class FollowPlayer : MonoBehaviour
 		WolfDenSpiritMusic.RedWolfCollected -= GameEnd;
 		AffectionTrigger.AffectionAnimOn -= AffectionOn;
 		AffectionTrigger.AffectionAnimOff -= AffectionOff;
+		WorldManager.OnLostWolfActive -= LostWolfActive;
 	}
 
 	void AffectionOn()
@@ -338,5 +350,27 @@ public class FollowPlayer : MonoBehaviour
 		Debug.Log ("den wolf stopped showing affection");
 	}
 
+	void LostWolfActive()
+	{
+		//lostWolfAffection = false;
+		//Debug.Log ("den wolf stopped showing affection");
+
+		LostWolfCollider.enabled = !LostWolfCollider.enabled;
+	}
+
 
 }//end whole class
+
+
+
+
+
+
+
+
+
+
+
+
+
+

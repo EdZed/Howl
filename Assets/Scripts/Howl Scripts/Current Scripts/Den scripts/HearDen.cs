@@ -3,13 +3,14 @@ using System.Collections;
 
 public class HearDen : MonoBehaviour {
 
-	AudioSource hearDenHowl;
+	AudioSource hearDenHowlAudio;
 	public Animator DenAnim;
+	public WorldManager WorldManagerScript;
 
 	// Use this for initialization
 	void Start () {
-		hearDenHowl = GetComponent<AudioSource> ();
-		hearDenHowl.enabled = false;
+		hearDenHowlAudio = GetComponent<AudioSource> ();
+		//hearDenHowlAudio.enabled = false;
 	}
 	
 	// Update is called once per frame
@@ -29,13 +30,20 @@ public class HearDen : MonoBehaviour {
 	}
 
 	IEnumerator DenHowlTimer(){
-		yield return new WaitForSeconds(3);
-		hearDenHowl.enabled = true;
-		DenAnim.SetInteger ("DenAnimState", 1);
-		Debug.Log ("audio enable switching");
-		yield return new WaitForSeconds(5);
-		hearDenHowl.enabled = false;
-		DenAnim.SetInteger ("DenAnimState", 0);
+		if (WorldManagerScript.isWorldTransitioning == false) {
+
+			yield return new WaitForSeconds (3);
+
+			hearDenHowlAudio.Play ();
+			DenAnim.SetInteger ("DenAnimState", 1);
+			Debug.Log ("audio enable switching");
+
+			yield return new WaitForSeconds (5);
+
+			//hearDenHowlAudio.enabled = false;
+			hearDenHowlAudio.Stop ();
+			DenAnim.SetInteger ("DenAnimState", 0);
+		}
 	}
 
 }
