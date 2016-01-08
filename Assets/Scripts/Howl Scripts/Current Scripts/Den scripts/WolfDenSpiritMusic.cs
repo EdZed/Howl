@@ -50,6 +50,8 @@ public class WolfDenSpiritMusic : MonoBehaviour {
 	public delegate IEnumerator LastWolfCollected();
 	public static event LastWolfCollected RedWolfCollected;
 
+	public WorldManager WorldManagerScript;
+
 	//int playerHealthTrack;
 	
 	// Use this for initialization
@@ -231,6 +233,13 @@ public class WolfDenSpiritMusic : MonoBehaviour {
 				//GameEnd();
 			}
 		}//end target tag LostWolf
+
+		if (target.gameObject.tag == "HowlAttract") {
+			//send an event that changes the color of all prefabs
+			//PCwolf or warmthobj int changed to spirit world
+			WorldManagerScript.WorldTypeSwitch();
+
+		}
 	}//end on trigger enter
 
 	void GetSpawnPoint()
