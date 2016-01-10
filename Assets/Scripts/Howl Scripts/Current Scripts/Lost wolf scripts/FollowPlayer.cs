@@ -54,6 +54,17 @@ public class FollowPlayer : MonoBehaviour
 	public GameObject LostWolfSlot4;
 	public GameObject LostWolfSlot5;
 
+	public delegate void AddToCounter();
+	public static event AddToCounter OnAddToCounter;
+
+	//event**
+	public delegate void PackNotExist();
+	public static event PackNotExist OnPackNotExist;
+
+	//find script
+//	GameObject WorldManagerGO;
+//	public WorldManager WorldManagerScript;
+
 
 	// Use this for initialization
 	void Start () 
@@ -114,6 +125,9 @@ public class FollowPlayer : MonoBehaviour
 		LostWolfSpriteRend.enabled = false;
 		LostWolfCollider.enabled = false;
 
+//		WorldManagerGO = GameObject.Find ("WorldManager");
+//		WorldManagerScript = WorldManagerGO.GetComponent<WorldManager> ();
+
 //		if (GameObject.Find ("Lost Wolf Orange") == this.gameObject) {
 //			runAtkPower = true;
 //		}
@@ -138,13 +152,13 @@ public class FollowPlayer : MonoBehaviour
 			//print ("Beam up Update!");
 			//}
 		}
-
-		if (isInDen) {
-			rb2DLostWolf.transform.position = Vector3.MoveTowards(rb2DLostWolf.transform.position, wolfDenArt.transform.position, speed * Time.deltaTime);
-			if(rb2DLostWolf.transform.position == wolfDenArt.transform.position){
-				rb2DLostWolf.transform.position = wolfDenArt.transform.position;
-			}
-		}
+		//causes error that registers 143 times
+//		if (isInDen) {
+//			rb2DLostWolf.transform.position = Vector3.MoveTowards(rb2DLostWolf.transform.position, wolfDenArt.transform.position, speed * Time.deltaTime);
+//			if(rb2DLostWolf.transform.position == wolfDenArt.transform.position){
+//				rb2DLostWolf.transform.position = wolfDenArt.transform.position;
+//			}
+//		}
 	
 		if (isFollowing) {
 			if(PackFormationPosScript.packSize == 1){
@@ -230,14 +244,28 @@ public class FollowPlayer : MonoBehaviour
 
 		}
 		if (target.gameObject.tag == "WolfDen") {
-			isFollowing = false;
-			isInDen = true;
-			isTriggeringDen = true;
+
 			//Debug.Log("Wolf triggering wolf den");
 			if (runAtkPower == true) {
 				PlayerWolfGO.GetComponent<PCWolfInput>().runAtk = false;
 				//Debug.Log("run attack power is:" + PlayerWolfGO.GetComponent<PCWolfInput>().runAtk);
 			}
+
+			//WorldManager.
+			//sends to worldManager
+			if (OnAddToCounter != null) {
+				OnAddToCounter ();
+				Debug.Log ("added to counter from den");
+			}
+			//sends to WolfDen script
+			if (OnPackNotExist != null) {
+				OnPackNotExist ();
+				Debug.Log ("pack not exist from den");
+			}
+
+			isFollowing = false;
+			isInDen = true;
+			isTriggeringDen = true;
 
 		}
 	}
@@ -301,13 +329,13 @@ public class FollowPlayer : MonoBehaviour
 		PlayerWolfCollider.enabled = true;
 	}
 
-	IEnumerator GameEnd(){
-		Debug.Log("Before Waiting 7 seconds");
-		yield return new WaitForSeconds(7);
-		Debug.Log("After Waiting 7 Seconds");
-		Application.LoadLevel ("Howl Title Screen");
-		Destroy(this.gameObject);
-	}
+//	IEnumerator GameEnd(){
+//		Debug.Log("Before Waiting 7 seconds");
+//		yield return new WaitForSeconds(7);
+//		Debug.Log("After Waiting 7 Seconds");
+//		Application.LoadLevel ("Howl Title Screen");
+//		Destroy(this.gameObject);
+//	}
 
 	void WolfSpiritFaceRight(){
 		if (gameObject.transform.localScale.x < 0){
@@ -322,7 +350,7 @@ public class FollowPlayer : MonoBehaviour
 	}
 	void OnEnable()
 	{
-		WolfDenSpiritMusic.RedWolfCollected += GameEnd;
+		//WolfDenSpiritMusic.RedWolfCollected += GameEnd;
 		AffectionTrigger.AffectionAnimOn += AffectionOn;
 		AffectionTrigger.AffectionAnimOff += AffectionOff;
 		WorldManager.OnLostWolfActive += LostWolfActive;
@@ -331,7 +359,7 @@ public class FollowPlayer : MonoBehaviour
 	
 	void OnDisable()
 	{
-		WolfDenSpiritMusic.RedWolfCollected -= GameEnd;
+		//WolfDenSpiritMusic.RedWolfCollected -= GameEnd;
 		AffectionTrigger.AffectionAnimOn -= AffectionOn;
 		AffectionTrigger.AffectionAnimOff -= AffectionOff;
 		WorldManager.OnLostWolfActive -= LostWolfActive;

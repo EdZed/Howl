@@ -7,9 +7,20 @@ public class PackFormationPos : MonoBehaviour {
 	public int packSize = 0;
 	public bool doesPackExist = false;
 	public GameObject[] PackFormationGOSlots = new GameObject[5];
+
+	//event**
+	public delegate void PackNotExist();
+	public static event PackNotExist OnPackNotExist;
+
+	public delegate void PackDoesExist();
+	public static event PackDoesExist OnPackDoesExist;
+
 	// Use this for initialization
 	void Start () {
-		
+		//Sends to WolfDen
+		if(OnPackNotExist != null){
+			OnPackNotExist();
+		}
 	}
 	
 	// Update is called once per frame
@@ -38,7 +49,12 @@ public class PackFormationPos : MonoBehaviour {
 		Debug.Log ("pack size is: " + packSize);
 		
 		if (!doesPackExist && packSize >= 1) {
+			//only calls once, can send message to wolf den to block howl from switching world
 			doesPackExist = true;
+			//Sends to WolfDen
+			if(OnPackDoesExist != null){
+				OnPackDoesExist();
+			}
 		}
 
 	}//end WelcomePackMember

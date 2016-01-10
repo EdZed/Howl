@@ -9,7 +9,7 @@ public class WolfParticleToDen : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		particleToDen = GameObject.Find("Particle To Den");
-		den = GameObject.Find("WolfDen");
+		den = GameObject.Find("Wolf Den");
 	}
 
 	

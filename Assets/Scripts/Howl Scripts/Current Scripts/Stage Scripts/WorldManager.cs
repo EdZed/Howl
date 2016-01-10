@@ -19,14 +19,26 @@ public class WorldManager : MonoBehaviour {
 	public delegate void LostWolfActive();
 	public static event LostWolfActive OnLostWolfActive;
 
+	//Den Stuff
+	public int rescuedWolvesCounter;
+	public int rescueAmountOpenExit;
+
+	public GameObject StageExitGO;
+	public BoxCollider2D StageExitCol;
+
 	// Use this for initialization
 	void Start () {
 		isWorldTransitioning = false;
+		StageExitGO = GameObject.Find("StageExit");
+		StageExitCol = StageExitGO.GetComponent <BoxCollider2D> ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+		if(rescuedWolvesCounter == rescueAmountOpenExit){
+			//turn coll off on exit
+			StageExitCol.enabled = false;
+		}
 	}
 
 	public IEnumerator WorldTypeSwitch(){
@@ -59,4 +71,28 @@ public class WorldManager : MonoBehaviour {
 
 		}
 	}
+
+	void OnEnable()
+	{
+		FollowPlayer.OnAddToCounter += AddToRescueCounter;
+	}
+	
+	
+	void OnDisable()
+	{
+		FollowPlayer.OnAddToCounter -= AddToRescueCounter;
+	}
+
+	void AddToRescueCounter(){
+		rescuedWolvesCounter += 1;
+	}
 }
+
+
+
+
+
+
+
+
+

@@ -27,6 +27,7 @@ public class WolfDenSpiritMusic : MonoBehaviour {
 	//private Animator LostWolfAnim;
 
 	public int rescuedWolvesCounter;
+	public int rescueAmountOpenExit;
 	float speed;
 	float moveSpeed = 4f;
 	

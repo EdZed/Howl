@@ -20,6 +20,10 @@ public class WolfDen : MonoBehaviour {
 	public delegate void Rescues();
 	public static event Rescues WolfRescued;
 
+	public WorldManager WorldManagerScript;
+
+	public bool PackExist;
+
 	//public delegate void ParticlesOff();
 	//public static event ParticlesOff DenParticlesOff;
 	
@@ -79,8 +83,51 @@ public class WolfDen : MonoBehaviour {
 				WolfRescued();
 			}
 		}//end target tag LostWolf
+		if (PackExist == false) {
+			//if no pack, can switch worlds
+			if (target.gameObject.tag == "HowlAttract") {
+				//send an event that changes the color of all prefabs
+				//PCwolf or warmthobj int changed to spirit world
+				//WorldManagerScript.WorldTypeSwitch();
+				WorldManagerScript.StartCoroutine ("WorldTypeSwitch");
+			
+			}
+		}
 
 
 	}//end on trigger enter
 
+	void OnEnable()
+	{
+		PackFormationPos.OnPackNotExist += NoPack;
+		FollowPlayer.OnPackNotExist += NoPack;
+		PackFormationPos.OnPackDoesExist += YesPack;
+	}
+	
+	
+	void OnDisable()
+	{
+		PackFormationPos.OnPackNotExist -= NoPack;
+		FollowPlayer.OnPackNotExist -= NoPack;
+		PackFormationPos.OnPackDoesExist -= YesPack;
+	}
+	
+	void NoPack(){
+		PackExist = false;
+	}
+
+	void YesPack(){
+		PackExist = true;
+	}
+
 }//end whole class
+
+
+
+
+
+
+
+
+
+

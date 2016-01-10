@@ -1,11 +1,11 @@
-Layer Selection: Terrain
+Layer Selection: Everything
 Brush Max Size: 10
-Brush Size: 3.62
+Brush Size: 0.36
 Fill Mode: True
 Fill Rate: 0.25
 
 Game Object: Assets/Prefabs/HOWL Prefabs/Objects Prefabs/Trees/Tree A.prefab
-Layer: Terrain
+Layer: Default
 Toggle: True
 Slider: 1
 Lock Orientation Toggle: True
@@ -23,7 +23,7 @@ Fixed Rotation Z: 0
 Depth: 10
 
 Game Object: Assets/Prefabs/HOWL Prefabs/Objects Prefabs/Trees/Tree B.prefab
-Layer: Terrain
+Layer: Default
 Toggle: True
 Slider: 1
 Lock Orientation Toggle: True
@@ -41,7 +41,7 @@ Fixed Rotation Z: 0
 Depth: 10
 
 Game Object: Assets/Prefabs/HOWL Prefabs/Objects Prefabs/Trees/Tree C.prefab
-Layer: Terrain
+Layer: Default
 Toggle: True
 Slider: 1
 Lock Orientation Toggle: True
@@ -59,7 +59,7 @@ Fixed Rotation Z: 0
 Depth: 10
 
 Game Object: Assets/Prefabs/HOWL Prefabs/Objects Prefabs/Trees/Tree D.prefab
-Layer: Terrain
+Layer: Default
 Toggle: True
 Slider: 1
 Lock Orientation Toggle: True
