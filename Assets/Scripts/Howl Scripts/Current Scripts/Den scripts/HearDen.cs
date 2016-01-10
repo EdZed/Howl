@@ -32,7 +32,7 @@ public class HearDen : MonoBehaviour {
 	IEnumerator DenHowlTimer(){
 		if (WorldManagerScript.isWorldTransitioning == false) {
 
-			yield return new WaitForSeconds (3);
+			yield return new WaitForSeconds (2);
 
 			hearDenHowlAudio.Play ();
 			DenAnim.SetInteger ("DenAnimState", 1);

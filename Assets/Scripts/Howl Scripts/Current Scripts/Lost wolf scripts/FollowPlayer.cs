@@ -6,9 +6,13 @@ public class FollowPlayer : MonoBehaviour
 	public BoxCollider2D LostWolfCollider;
 	public GameObject LostWolfGO;
 	public Rigidbody2D rb2DLostWolf;
+	public GameObject lostWolfProximityGO;
+	public CircleCollider2D lostWolfProximityCol;
+
 	//player wolf
 	public GameObject PlayerWolfGO;
 	public BoxCollider2D PlayerWolfCollider;
+
 
 	public GameObject followPlayerWolfGO;
 	public GameObject followPosNeutral;
@@ -61,6 +65,8 @@ public class FollowPlayer : MonoBehaviour
 	public delegate void PackNotExist();
 	public static event PackNotExist OnPackNotExist;
 
+	public AudioSource lostWolfHowl;
+
 	//find script
 //	GameObject WorldManagerGO;
 //	public WorldManager WorldManagerScript;
@@ -74,9 +80,14 @@ public class FollowPlayer : MonoBehaviour
 		howlFreezePower = false;
 		//OrangeWolfString = "Lost Wolf Orange";
 		//redWolf = false;
-		LostWolfAnim = gameObject.GetComponent<Animator> ();
+
 		LostWolfGO = this.gameObject;
+		LostWolfAnim = LostWolfGO.GetComponent<Animator> ();
 		LostWolfCollider = GetComponent <BoxCollider2D> ();
+
+		lostWolfProximityGO = LostWolfGO.transform.Find("proximity").gameObject;
+		lostWolfProximityCol = lostWolfProximityGO.GetComponent<CircleCollider2D> ();
+		//lostWolfProximityCol = LostWolfGO.transform.Find ("proximity").gameObject.GetComponent<CircleCollider2D> ();
 
 		PlayerWolfGO = GameObject.Find("playerWolf");
 		PlayerWolfCollider = PlayerWolfGO.GetComponent <BoxCollider2D> ();
@@ -91,7 +102,7 @@ public class FollowPlayer : MonoBehaviour
 		
 		speed = moveSpeed;
 		rb2DLostWolf = GetComponent<Rigidbody2D> ();
-		LostWolfAnim = GetComponent<Animator> ();
+		//LostWolfAnim = GetComponent<Animator> ();
 		//Wolf Idle
 		LostWolfAnim.SetInteger ("LostWolfAnimState", 0);
 		isTriggeringDen = false;
@@ -121,9 +132,12 @@ public class FollowPlayer : MonoBehaviour
 
 		LostWolfSpriteRend = GetComponent<SpriteRenderer> ();
 
+		lostWolfHowl = GetComponent<AudioSource> ();
+
 		//LostWolfGO.SetActive(false);
 		LostWolfSpriteRend.enabled = false;
 		LostWolfCollider.enabled = false;
+		lostWolfProximityCol.enabled = false;
 
 //		WorldManagerGO = GameObject.Find ("WorldManager");
 //		WorldManagerScript = WorldManagerGO.GetComponent<WorldManager> ();
@@ -233,6 +247,8 @@ public class FollowPlayer : MonoBehaviour
 				this.gameObject.AddComponent<MovingSpriteZOrder> ();
 				//staticSpriteZOrder.enabled = false / To remove/disable current z order script?
 
+				lostWolfProximityGO.SetActive(false);
+
 				isFollowing = true;
 				//send message to PackFormationScript adding wolf to packSize and turning on bool
 
@@ -246,6 +262,8 @@ public class FollowPlayer : MonoBehaviour
 		if (target.gameObject.tag == "WolfDen") {
 
 			//Debug.Log("Wolf triggering wolf den");
+			//lostWolfHowl.enabled = true;
+			lostWolfHowl.Play();
 			if (runAtkPower == true) {
 				PlayerWolfGO.GetComponent<PCWolfInput>().runAtk = false;
 				//Debug.Log("run attack power is:" + PlayerWolfGO.GetComponent<PCWolfInput>().runAtk);
@@ -384,6 +402,7 @@ public class FollowPlayer : MonoBehaviour
 		//Debug.Log ("den wolf stopped showing affection");
 
 		LostWolfCollider.enabled = !LostWolfCollider.enabled;
+		lostWolfProximityCol.enabled = !lostWolfProximityCol.enabled;
 	}
 
 

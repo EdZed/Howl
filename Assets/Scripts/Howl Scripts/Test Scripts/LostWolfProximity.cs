@@ -3,14 +3,17 @@ using System.Collections;
 
 public class LostWolfProximity : MonoBehaviour {
 
-	public GameObject playerWolf;
-	private Animator anim;
+	public GameObject parentLostWolf;
+	public AudioSource lostWolfHowl;
+	//private Animator anim;
 
 
 	// Use this for initialization
 	void Start () {
-		playerWolf = GameObject.Find("playerWolf");
-		anim = playerWolf.GetComponent<Animator> ();
+		parentLostWolf = this.gameObject.transform.parent.gameObject;
+		lostWolfHowl = parentLostWolf.GetComponent<AudioSource> ();
+		//GameObject.Find("playerWolf"); Find ("Lost Wolf Green").gameObject
+		//anim = parentLostWolf.GetComponent<Animator> ();
 		//anim = gameObject.GetComponentInParent<Animator> ();
 		//anim.SetTrigger("stand");
 		//anim.SetInteger ("AnimState", 0);
@@ -23,10 +26,14 @@ public class LostWolfProximity : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D target)
 	{
-		if (target.gameObject.tag == "Player") 
+		if (target.gameObject.tag == "HowlAttract") 
 		{
-			anim.SetInteger ("AnimState", 6);
-			anim.SetInteger ("AnimState", 5);
+			//have lost wolf howl
+			//anim.SetInteger ("AnimState", 3);
+			StartCoroutine("HiddenWolfHowl");
+			Debug.Log ("howl coroutine called");
+
+			//anim.SetInteger ("AnimState", 5);
 			//if(attacking)
 			//{
 			//var explode = target.GetComponent<Explode>() as Explode;
@@ -38,6 +45,18 @@ public class LostWolfProximity : MonoBehaviour {
 			
 		} 	
 	} // end ontriggerEnter
+
+	IEnumerator HiddenWolfHowl(){
+		yield return new WaitForSeconds(2);
+
+		//lostWolfHowl.enabled = true;
+		lostWolfHowl.Play ();
+		Debug.Log ("howl should be heard");
+
+		//yield return new WaitForSeconds(4);
+
+		//lostWolfHowl.enabled = false;
+	}
 
 
 }

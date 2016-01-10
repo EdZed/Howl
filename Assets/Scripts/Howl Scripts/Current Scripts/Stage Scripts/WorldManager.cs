@@ -49,6 +49,7 @@ public class WorldManager : MonoBehaviour {
 			HearDenGO.SetActive(false);
 			Debug.Log ("world type switch function working");
 			//LostWolfGO.SetActive (true);
+			//sends to FollowPlayer script
 			if(OnLostWolfActive != null){
 				OnLostWolfActive();
 				Debug.Log ("Event msg sent?");

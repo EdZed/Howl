@@ -11,6 +11,9 @@ public class WolfDen : MonoBehaviour {
 	public GameObject[] spiritAnim = new GameObject[4];	
 	public GameObject PlayerWolfGO;
 
+//	public GameObject DenParticleSysGO;
+//	public ParticleSystem DenParticleSys;
+
 	//public CircleCollider2D DenCollider;
 	//public ParticleSystemRenderer[] particlefx = new ParticleSystemRenderer[1];
 	Color startColor;
@@ -40,13 +43,17 @@ public class WolfDen : MonoBehaviour {
 //		spiritAnim [3].GetComponent<SpriteRenderer> ().enabled = false;
 		
 		//wolf Den
-		wolfDenArt = GameObject.Find ("WolfDen");
+		wolfDenArt = GameObject.Find ("WolfDenAnim");
 		wolfDenAnim = wolfDenArt.GetComponent<Animator> ();
 
 		wolfDenAnim.SetInteger ("DenAnimState", 0);
 		isTriggering = false;
 
 		PlayerWolfGO = GameObject.Find("playerWolf");
+//		DenParticleSysGO = this.gameObject.transform.Find ("WolfDen Particle Sys").gameObject;
+//		DenParticleSys = DenParticleSysGO.GetComponent<ParticleSystem> ();
+
+			//lostWolfProximityCol = LostWolfGO.transform.Find ("proximity").gameObject.GetComponent<CircleCollider2D> ();
 
 		//DenCollider = this.gameObject.GetComponent<CircleCollider2D> ();
 		//wolfDen = GameObject.Find("Wolf Den");
