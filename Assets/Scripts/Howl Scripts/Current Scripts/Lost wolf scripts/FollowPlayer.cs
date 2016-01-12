@@ -66,6 +66,7 @@ public class FollowPlayer : MonoBehaviour
 	public static event PackNotExist OnPackNotExist;
 
 	public AudioSource lostWolfHowl;
+	public ParticleSystem lostWolfParticleSystem;
 
 	//find script
 //	GameObject WorldManagerGO;
@@ -138,6 +139,10 @@ public class FollowPlayer : MonoBehaviour
 		LostWolfSpriteRend.enabled = false;
 		LostWolfCollider.enabled = false;
 		lostWolfProximityCol.enabled = false;
+
+		//lostWolfParticleSystem = this.gameObject.GetComponent<ParticleSystem> ();
+		lostWolfParticleSystem = this.gameObject.transform.Find ("Particle to Den").GetComponent<ParticleSystem> ();
+		lostWolfParticleSystem.enableEmission = false;
 
 //		WorldManagerGO = GameObject.Find ("WorldManager");
 //		WorldManagerScript = WorldManagerGO.GetComponent<WorldManager> ();

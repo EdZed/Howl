@@ -5,13 +5,15 @@ public class LostWolfProximity : MonoBehaviour {
 
 	public GameObject parentLostWolf;
 	public AudioSource lostWolfHowl;
-	//private Animator anim;
+
+	public WolfParticleRadar WolfParticleRadarScript;
 
 
 	// Use this for initialization
 	void Start () {
 		parentLostWolf = this.gameObject.transform.parent.gameObject;
 		lostWolfHowl = parentLostWolf.GetComponent<AudioSource> ();
+		WolfParticleRadarScript = GameObject.Find ("Particle Radar").GetComponent<WolfParticleRadar> ();
 		//GameObject.Find("playerWolf"); Find ("Lost Wolf Green").gameObject
 		//anim = parentLostWolf.GetComponent<Animator> ();
 		//anim = gameObject.GetComponentInParent<Animator> ();
@@ -32,6 +34,9 @@ public class LostWolfProximity : MonoBehaviour {
 			//anim.SetInteger ("AnimState", 3);
 			StartCoroutine("HiddenWolfHowl");
 			Debug.Log ("howl coroutine called");
+
+			WolfParticleRadarScript.StartCoroutine("ParticleRadarLookAt", parentLostWolf);
+
 
 			//anim.SetInteger ("AnimState", 5);
 			//if(attacking)
