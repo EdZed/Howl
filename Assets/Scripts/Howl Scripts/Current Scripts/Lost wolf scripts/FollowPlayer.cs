@@ -242,6 +242,7 @@ public class FollowPlayer : MonoBehaviour
 		if (!isFollowing) {
 			if (target.gameObject.tag == "HowlAttract") {
 				LostWolfSpriteRend.enabled = true;
+				lostWolfParticleSystem.enableEmission = true;
 				if (AddPackMember != null) {
 					AddPackMember ();
 					//Debug.Log ("affect trig stay");
@@ -273,6 +274,10 @@ public class FollowPlayer : MonoBehaviour
 				PlayerWolfGO.GetComponent<PCWolfInput>().runAtk = false;
 				//Debug.Log("run attack power is:" + PlayerWolfGO.GetComponent<PCWolfInput>().runAtk);
 			}
+			PackFormationPosScript.packMusicLayers[0].mute = true;
+			PackFormationPosScript.packMusicLayers[1].mute = true;
+			PackFormationPosScript.packMusicLayers[2].mute = true;
+			PackFormationPosScript.packMusicLayers[3].mute = true;
 
 			//WorldManager.
 			//sends to worldManager
@@ -326,12 +331,16 @@ public class FollowPlayer : MonoBehaviour
 		if(PackFormationPosScript.packSize == 1){
 			LostWolfSlot1 = this.gameObject;
 			Debug.Log ("this wolf is 1st");
+			PackFormationPosScript.packMusicLayers[0].mute = false;
 		} else if(PackFormationPosScript.packSize == 2){
 			LostWolfSlot2 = this.gameObject;
+			PackFormationPosScript.packMusicLayers[1].mute = false;
 		} else if(PackFormationPosScript.packSize == 3){
 			LostWolfSlot3 = this.gameObject;
+			PackFormationPosScript.packMusicLayers[2].mute = false;
 		} else if(PackFormationPosScript.packSize == 4){
 			LostWolfSlot4 = this.gameObject;
+			PackFormationPosScript.packMusicLayers[3].mute = false;
 		} else if(PackFormationPosScript.packSize == 5){
 			LostWolfSlot5 = this.gameObject;
 		}

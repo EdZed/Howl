@@ -1,10 +1,10 @@
-Layer Selection: Terrain
-Brush Max Size: 10
-Brush Size: 0.1
+Layer Selection: Everything
+Brush Max Size: 8.77
+Brush Size: 0.36
 Fill Mode: True
 Fill Rate: 0.25
 
-Game Object: Assets/Prefabs/HOWL Prefabs/Objects Prefabs/Bushes/BushA.prefab
+Game Object: Assets/Prefabs/HOWL Prefabs/Objects Prefabs/Trees/Tree A.prefab
 Layer: Default
 Toggle: True
 Slider: 1
@@ -16,13 +16,13 @@ Random Rotation Z: False
 Random Scale Toggle: False
 Random Scale Min: 0.1
 Random Scale Max: 1
-Fixed Rotation Toggle: False
+Fixed Rotation Toggle: True
 Fixed Rotation X: 0
 Fixed Rotation Y: 0
 Fixed Rotation Z: 0
-Depth: 3
+Depth: 6
 
-Game Object: Assets/Prefabs/HOWL Prefabs/Objects Prefabs/Bushes/BushB.prefab
+Game Object: Assets/Prefabs/HOWL Prefabs/Objects Prefabs/Trees/Tree B.prefab
 Layer: Default
 Toggle: True
 Slider: 1
@@ -34,13 +34,13 @@ Random Rotation Z: False
 Random Scale Toggle: False
 Random Scale Min: 0.1
 Random Scale Max: 1
-Fixed Rotation Toggle: False
+Fixed Rotation Toggle: True
 Fixed Rotation X: 0
 Fixed Rotation Y: 0
 Fixed Rotation Z: 0
-Depth: 3
+Depth: 6
 
-Game Object: Assets/Prefabs/HOWL Prefabs/Objects Prefabs/Bushes/BushC.prefab
+Game Object: Assets/Prefabs/HOWL Prefabs/Objects Prefabs/Trees/Tree C.prefab
 Layer: Default
 Toggle: True
 Slider: 1
@@ -52,13 +52,13 @@ Random Rotation Z: False
 Random Scale Toggle: False
 Random Scale Min: 0.1
 Random Scale Max: 1
-Fixed Rotation Toggle: False
+Fixed Rotation Toggle: True
 Fixed Rotation X: 0
 Fixed Rotation Y: 0
 Fixed Rotation Z: 0
-Depth: 3
+Depth: 6
 
-Game Object: Assets/Prefabs/HOWL Prefabs/Objects Prefabs/Bushes/BushD.prefab
+Game Object: Assets/Prefabs/HOWL Prefabs/Objects Prefabs/Trees/Tree D.prefab
 Layer: Default
 Toggle: True
 Slider: 1
@@ -70,8 +70,8 @@ Random Rotation Z: False
 Random Scale Toggle: False
 Random Scale Min: 0.1
 Random Scale Max: 1
-Fixed Rotation Toggle: False
+Fixed Rotation Toggle: True
 Fixed Rotation X: 0
 Fixed Rotation Y: 0
 Fixed Rotation Z: 0
-Depth: 3
+Depth: 6

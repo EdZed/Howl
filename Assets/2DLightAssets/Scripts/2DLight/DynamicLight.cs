@@ -15,6 +15,10 @@ public class verts
 
 
 public class DynamicLight : MonoBehaviour {
+	//Here's my custom code:
+	public playerWarmth playerWarmthScript;
+
+	//End of my custom code
 	
 	// Public variables
 	public Material lightMaterial;
@@ -55,6 +59,12 @@ public class DynamicLight : MonoBehaviour {
 		meshFilter.mesh = lightMesh;															// Set this newly created mesh to the mesh filter
 		lightMesh.name = "Light Mesh";															// Give it a name
 		lightMesh.MarkDynamic ();
+
+		//Here's my custom code:
+		playerWarmthScript = GetComponent<playerWarmth>();
+		playerWarmthScript.WarmthRendOff ();
+		
+		//End of my custom code
 
 
 	}

@@ -7,6 +7,7 @@ public class PackFormationPos : MonoBehaviour {
 	public int packSize = 0;
 	public bool doesPackExist = false;
 	public GameObject[] PackFormationGOSlots = new GameObject[5];
+	public AudioSource[] packMusicLayers = new AudioSource[4];
 
 	//event**
 	public delegate void PackNotExist();
@@ -21,6 +22,11 @@ public class PackFormationPos : MonoBehaviour {
 		if(OnPackNotExist != null){
 			OnPackNotExist();
 		}
+		packMusicLayers [0].mute = true;
+		packMusicLayers [1].mute = true;
+		packMusicLayers [2].mute = true;
+		packMusicLayers [3].mute = true;
+
 	}
 	
 	// Update is called once per frame
@@ -47,7 +53,8 @@ public class PackFormationPos : MonoBehaviour {
 	void WelcomePackMember (){
 		packSize += 1;
 		Debug.Log ("pack size is: " + packSize);
-		
+
+		//if just got your first pack member and the bool was false, now it's true
 		if (!doesPackExist && packSize >= 1) {
 			//only calls once, can send message to wolf den to block howl from switching world
 			doesPackExist = true;

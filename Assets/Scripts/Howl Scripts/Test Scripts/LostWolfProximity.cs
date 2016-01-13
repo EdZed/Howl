@@ -7,13 +7,15 @@ public class LostWolfProximity : MonoBehaviour {
 	public AudioSource lostWolfHowl;
 
 	public WolfParticleRadar WolfParticleRadarScript;
-
+	public bool isLostHowling;
 
 	// Use this for initialization
 	void Start () {
 		parentLostWolf = this.gameObject.transform.parent.gameObject;
 		lostWolfHowl = parentLostWolf.GetComponent<AudioSource> ();
 		WolfParticleRadarScript = GameObject.Find ("Particle Radar").GetComponent<WolfParticleRadar> ();
+		isLostHowling = false;
+
 		//GameObject.Find("playerWolf"); Find ("Lost Wolf Green").gameObject
 		//anim = parentLostWolf.GetComponent<Animator> ();
 		//anim = gameObject.GetComponentInParent<Animator> ();
@@ -52,14 +54,19 @@ public class LostWolfProximity : MonoBehaviour {
 	} // end ontriggerEnter
 
 	IEnumerator HiddenWolfHowl(){
-		yield return new WaitForSeconds(2);
+
+		Debug.Log ("HiddenWolfHowl");
+		yield return new WaitForSeconds(1);
 
 		//lostWolfHowl.enabled = true;
-		lostWolfHowl.Play ();
-		Debug.Log ("howl should be heard");
+		if (!isLostHowling) {
+			lostWolfHowl.Play ();
+			Debug.Log ("howl should be heard");
+			isLostHowling = true;
+		}
 
-		//yield return new WaitForSeconds(4);
-
+		yield return new WaitForSeconds(3);
+		isLostHowling = false;
 		//lostWolfHowl.enabled = false;
 	}
 
