@@ -17,6 +17,7 @@ public class verts
 public class DynamicLight : MonoBehaviour {
 	//Here's my custom code:
 	public playerWarmth playerWarmthScript;
+	public WarmthObject warmthObjectScript;
 
 	//End of my custom code
 	
@@ -61,8 +62,15 @@ public class DynamicLight : MonoBehaviour {
 		lightMesh.MarkDynamic ();
 
 		//Here's my custom code:
-		playerWarmthScript = GetComponent<playerWarmth>();
-		playerWarmthScript.WarmthRendOff ();
+		if (gameObject.GetComponent<playerWarmth> ()) {
+			playerWarmthScript = GetComponent<playerWarmth>();
+			playerWarmthScript.WarmthRendOff ();
+		}
+		if (gameObject.GetComponent<WarmthObject> ()) {
+			warmthObjectScript = GetComponent<WarmthObject>();
+			warmthObjectScript.WarmthRendOff ();
+		}
+
 		
 		//End of my custom code
 

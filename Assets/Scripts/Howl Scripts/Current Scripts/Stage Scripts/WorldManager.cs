@@ -12,9 +12,13 @@ public class WorldManager : MonoBehaviour {
 	*/
 
 	public CC_Vintage SpiritWorldOverlay;
+	public playerWarmth playerWarmthScript;
+
 	public GameObject HearDenGO;
 
 	public bool isWorldTransitioning;
+	//to change camera filter color
+	public bool isWorldCold;
 
 	public delegate void LostWolfActive();
 	public static event LostWolfActive OnLostWolfActive;
@@ -28,9 +32,17 @@ public class WorldManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		playerWarmthScript = GameObject.Find ("playerWolf").transform.Find ("playerWarmth").GetComponent<playerWarmth> ();
 		isWorldTransitioning = false;
 		StageExitGO = GameObject.Find("StageExit");
 		StageExitCol = StageExitGO.GetComponent <BoxCollider2D> ();
+
+		if(isWorldCold){
+			SpiritWorldOverlay.filter = CC_Vintage.Filter.F1977;
+		} else if(!isWorldCold){
+			SpiritWorldOverlay.filter = CC_Vintage.Filter.Kelvin;
+			//CC_Vintage.Filter.Kelvin;
+		}
 	}
 	
 	// Update is called once per frame
@@ -54,6 +66,12 @@ public class WorldManager : MonoBehaviour {
 				OnLostWolfActive();
 				Debug.Log ("Event msg sent?");
 			}
+
+			//send event (invoke?) to playerWarmth script which makes radius appear and decrease
+			if(isWorldCold){
+				playerWarmthScript.InvokeRepeating("GetCold",2,2);
+				playerWarmthScript.warmthRend.enabled = true;
+			}
 			WorldType = 1;
 
 		} else if(WorldType == 1){
@@ -65,8 +83,10 @@ public class WorldManager : MonoBehaviour {
 				OnLostWolfActive();
 				Debug.Log ("Event msg sent?");
 			}
+			playerWarmthScript.StartCoroutine("ResetLightRadius");
 			HearDenGO.SetActive(true);
 			yield return new WaitForSeconds(4);
+
 			isWorldTransitioning = false;
 			WorldType = 0;
 
