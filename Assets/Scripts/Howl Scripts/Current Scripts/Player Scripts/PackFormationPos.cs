@@ -16,16 +16,19 @@ public class PackFormationPos : MonoBehaviour {
 	public delegate void PackDoesExist();
 	public static event PackDoesExist OnPackDoesExist;
 
+	public playerWarmth playerWarmthScript;
+
 	// Use this for initialization
 	void Start () {
 		//Sends to WolfDen
 		if(OnPackNotExist != null){
 			OnPackNotExist();
 		}
-		packMusicLayers [0].mute = true;
-		packMusicLayers [1].mute = true;
-		packMusicLayers [2].mute = true;
-		packMusicLayers [3].mute = true;
+		playerWarmthScript = GameObject.Find ("playerWarmth").GetComponent<playerWarmth> ();
+//		packMusicLayers [0].mute = true;
+//		packMusicLayers [1].mute = true;
+//		packMusicLayers [2].mute = true;
+//		packMusicLayers [3].mute = true;
 
 	}
 	
@@ -52,6 +55,7 @@ public class PackFormationPos : MonoBehaviour {
 
 	void WelcomePackMember (){
 		packSize += 1;
+		playerWarmthScript.IncreaseMaxLightRadius ();
 		Debug.Log ("pack size is: " + packSize);
 
 		//if just got your first pack member and the bool was false, now it's true
@@ -68,6 +72,7 @@ public class PackFormationPos : MonoBehaviour {
 
 	public void MinusPackMember(){
 		packSize -= 1;
+		playerWarmthScript.DecreaseMaxLightRadius ();
 		if (doesPackExist && packSize == 0) {
 			if(OnPackNotExist != null){
 				OnPackNotExist();

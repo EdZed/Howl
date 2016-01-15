@@ -123,6 +123,7 @@ public class PCWolfInput : MonoBehaviour
 
 	//turns back on and off when done healing
 	public bool callOnce;
+	public bool howlSpriteOnce = false;
 
 	//public bool isWarmingUp;
 	public float warmthTemp = 50f; public float maxWarmthTemp = 50f;
@@ -304,6 +305,10 @@ public class PCWolfInput : MonoBehaviour
 //		}
 //		gettingCold = false;
 
+		if (Input.GetKey (KeyCode.G)) {
+			Application.LoadLevel (currLevel);
+		}
+
 		if (running) {
 			//running anim left/right
 			anim.SetInteger ("AnimState", 7);
@@ -408,10 +413,11 @@ public class PCWolfInput : MonoBehaviour
 					OnHowlAnim ();
 				}
 			}
-
-			if (HowlAttractCollider.radius < HowlRadiusMax){
-				HowlAttractCollider.radius += HowlRadiusRate;
-				HowlSprite.transform.localScale += HowlSpriteRate;
+			if(howlSpriteOnce == false){
+				if (HowlAttractCollider.radius < HowlRadiusMax){
+					HowlAttractCollider.radius += HowlRadiusRate;
+					HowlSprite.transform.localScale += HowlSpriteRate;
+				}
 			}
 			
 			if(HowlAttractCollider.radius >= HowlRadiusMax){
@@ -419,7 +425,9 @@ public class PCWolfInput : MonoBehaviour
 				HowlSprite.transform.localScale = Vector3.zero;
 //				howling = false;
 //				canMove = true;
-				HowlFalse();
+				HowlAttractCollider.enabled = false;
+				howlSpriteOnce = true;
+				//HowlFalse();
 				//howling sfx stops
 				//StopHowlSFX();
 			}
@@ -469,6 +477,7 @@ public class PCWolfInput : MonoBehaviour
 
 		if(Input.GetKeyUp(KeyCode.Space) || Input.GetButtonUp("Gamepad_Mac_Howl") ) {
 			howling = true;
+			//StartCoroutine("PlayerHowling");
 			HowlAttractCollider.enabled = true;
 		}
 
@@ -658,6 +667,8 @@ public class PCWolfInput : MonoBehaviour
 			Application.LoadLevel (currLevel);
 		}
 
+
+
 		//Debug.Log ("player hit equals:" + damaged);
 		//Debug.Log (playerRunMeter);
 	}//end of update. Now fixedUpdate
@@ -673,6 +684,13 @@ public class PCWolfInput : MonoBehaviour
 //		yield return new WaitForSeconds(2);
 //	}
 	//*** METHODS ****
+
+//	IEnumerator PlayerHowling(){
+//		//sfx here
+//		yield return new WaitForSeconds(2);
+//		howling = false;
+//
+//	}
 
 	void OutInCold(){
 		
@@ -763,7 +781,9 @@ public class PCWolfInput : MonoBehaviour
 	void HowlFalse() {
 		howling = false;
 		canMove = true;
-		HowlAttractCollider.enabled = false;
+		howlSpriteOnce = false;
+		//HowlAttractCollider.enabled = false;
+		HowlSprite.transform.localScale = Vector3.zero;
 		//print ("howl is false now");
 	}
 

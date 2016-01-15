@@ -26,13 +26,13 @@ public class HearDen : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D target)
 	{
 		if (target.gameObject.tag == "HowlAttract"){
+			if(WorldManagerScript.rescuedWolvesCounter < WorldManagerScript.rescueAmountOpenExit){
 			StartCoroutine("DenHowlTimer");
-
 			//call method from particle radar that passes in this gameobject.
-			//WolfParticleRadarScript.ParticleRadarLookAt(parentDen);
 			WolfParticleRadarScript.StartCoroutine("ParticleRadarLookAt", parentDen);
 			//DenHowlTimer();
 			Debug.Log ("Den is howling");
+			}
 		}
 
 

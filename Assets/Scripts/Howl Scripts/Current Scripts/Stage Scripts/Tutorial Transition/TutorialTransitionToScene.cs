@@ -15,11 +15,11 @@ public class TutorialTransitionToScene : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D target){
 		if (target.gameObject.tag == "Player") {
-			if( target.gameObject.GetComponent<PCWolfInput>().currLevel == "Tutorial PS Demo"){
-				Application.LoadLevel("Tutorial 2 PS Demo");
+			if( target.gameObject.GetComponent<PCWolfInput>().currLevel == "Howl Stage 1"){
+				Application.LoadLevel("Howl Stage 2");
 			}
-			if( target.gameObject.GetComponent<PCWolfInput>().currLevel == "Tutorial 2 PS Demo"){
-				Application.LoadLevel("Howl PS Demo");
+			if( target.gameObject.GetComponent<PCWolfInput>().currLevel == "Howl Stage 2"){
+				Application.LoadLevel("Howl Stage 3");
 			}
 			
 		} 

@@ -67,7 +67,8 @@ public class TitleScreen : MonoBehaviour {
 			{
 				//hit.GetComponent<TouchObjectScript>().ApplyForce(); 
 				//Application.LoadLevel ("Howl Last Stage");
-				Application.LoadLevel ("Howl PS Demo");
+				//Application.LoadLevel ("Howl PS Demo");
+				Application.LoadLevel ("Howl Stage 1");
 			}
 			//			if (Physics.Raycast(targetPos)){
 			//				//Instantiate(particle, transform.position, transform.rotation);
@@ -75,7 +76,8 @@ public class TitleScreen : MonoBehaviour {
 		}//ends getmousebuttondown
 
 		if(Input.GetKeyUp(KeyCode.Space)) {
-			Application.LoadLevel ("Howl PS Demo");
+			//Application.LoadLevel ("Howl PS Demo");
+			Application.LoadLevel ("Howl Stage 1");
 			
 		}
 		#endif

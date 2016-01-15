@@ -7,6 +7,8 @@ public class playerWarmth : MonoBehaviour {
 	public WorldManager WorldManagerScript;
 	public bool isRealWorld;
 
+	public int lightRadiusMax = 7;
+
 	// Use this for initialization
 	void Start () {
 		dynLightScript = GetComponent<DynamicLight> ();
@@ -53,17 +55,29 @@ public class playerWarmth : MonoBehaviour {
 	public IEnumerator ResetLightRadius(){
 		warmthRend.enabled = false;
 		yield return new WaitForSeconds(1);
-		dynLightScript.lightRadius = 20;
+		dynLightScript.lightRadius = lightRadiusMax;
+	}
+
+	public void IncreaseMaxLightRadius(){
+		lightRadiusMax += 1;
+		dynLightScript.lightRadius = lightRadiusMax;
+		//yield return new WaitForSeconds(1);
+
+	}
+
+	public void DecreaseMaxLightRadius(){
+		lightRadiusMax -= 1;
+		dynLightScript.lightRadius = lightRadiusMax;
+		//yield return new WaitForSeconds(1);
+		
 	}
 
 	public void GetWarm(){
-
-		
 		//sfx here
 		dynLightScript.lightRadius += 1;
 		
 		//if hits 20, make playerWarmth disappear
-		if (dynLightScript.lightRadius >= 20) {
+		if (dynLightScript.lightRadius >= lightRadiusMax) {
 			WarmthRendOff();
 			CancelInvoke("GetWarm");
 
@@ -75,7 +89,7 @@ public class playerWarmth : MonoBehaviour {
 		if (coll.gameObject.tag == "Fire") {
 			//			coll.gameObject.GetComponent<PCWolfInput>().WarmingUp = true;
 			//			coll.gameObject.GetComponent<PCWolfInput>().WolfEnterTime = Time.time;
-			InvokeRepeating("GetWarm",.01f,1);
+			InvokeRepeating("GetWarm",.01f,.4f);
 			CancelInvoke("GetCold");
 			Debug.Log ("Player in warm area");
 		}

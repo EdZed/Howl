@@ -35,6 +35,10 @@ public class WorldManager : MonoBehaviour {
 
 	public GameObject StageExitGO;
 	public BoxCollider2D StageExitCol;
+	public StageExit stageExitScript;
+
+	public GameObject sceneTransitionGO;
+	public bool unlockOnce;
 
 	// Use this for initialization
 	void Start () {
@@ -42,6 +46,10 @@ public class WorldManager : MonoBehaviour {
 		isWorldTransitioning = false;
 		StageExitGO = GameObject.Find("StageExit");
 		StageExitCol = StageExitGO.GetComponent <BoxCollider2D> ();
+		sceneTransitionGO = GameObject.Find("TransitionTrig");
+		stageExitScript = StageExitGO.GetComponent<StageExit> ();
+		//sceneTransitionGO.enabled = false;
+		unlockOnce = false;
 
 		if(isWorldCold){
 			SpiritWorldOverlay.filter = CC_Vintage.Filter.F1977;
@@ -54,8 +62,20 @@ public class WorldManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if(rescuedWolvesCounter == rescueAmountOpenExit){
+			if(unlockOnce == false){
+				StageExitCol.enabled = false;
+				stageExitScript.exitParticleSys.startSize = 2;
+				stageExitScript.StartCoroutine("ExitOpenSfx");
+				unlockOnce = true;
+			}
 			//turn coll off on exit
-			StageExitCol.enabled = false;
+			if(WorldType == 0){
+				sceneTransitionGO.layer = LayerMask.NameToLayer("Default");
+			} else if (WorldType ==1){
+				//StageExitCol.enabled = false;
+				sceneTransitionGO.layer = LayerMask.NameToLayer("IgnoreLayer");
+			}
+			//StageExitCol.isTrigger = true;
 		}
 	}
 
