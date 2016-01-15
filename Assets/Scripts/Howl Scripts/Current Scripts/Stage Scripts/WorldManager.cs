@@ -20,8 +20,14 @@ public class WorldManager : MonoBehaviour {
 	//to change camera filter color
 	public bool isWorldCold;
 
+	//Sends to Followplayer script?
 	public delegate void LostWolfActive();
 	public static event LostWolfActive OnLostWolfActive;
+	public static event LostWolfActive OnLostWolfNotActive;
+
+	public delegate void WarmActive();
+	public static event WarmActive OnWarmActive;
+	public static event WarmActive OnWarmNotActive;
 
 	//Den Stuff
 	public int rescuedWolvesCounter;
@@ -67,28 +73,49 @@ public class WorldManager : MonoBehaviour {
 				Debug.Log ("Event msg sent?");
 			}
 
+			if(OnWarmActive != null){
+				OnWarmActive();
+				Debug.Log ("on warm active sent?");
+			}
+			//change layer on playerwarmth to trigger with warm Area
+			playerWarmthScript.isRealWorld = false;
+			playerWarmthScript.gameObject.layer = LayerMask.NameToLayer("Default");
+
 			//send event (invoke?) to playerWarmth script which makes radius appear and decrease
 			if(isWorldCold){
-				playerWarmthScript.InvokeRepeating("GetCold",2,2);
+				playerWarmthScript.InvokeRepeating("GetCold",1,1);
 				playerWarmthScript.warmthRend.enabled = true;
 			}
 			WorldType = 1;
 
+
 		} else if(WorldType == 1){
-			//if currently in spirit world, switch to world
+			//if currently in spirit world, switch to real world
 			isWorldTransitioning = true;
 
 			SpiritWorldOverlay.amount = 0f;
-			if(OnLostWolfActive != null){
-				OnLostWolfActive();
+//			if(OnLostWolfActive != null){
+//				OnLostWolfActive();
+//				Debug.Log ("Event msg sent?");
+//			}
+			if(OnLostWolfNotActive != null){
+				OnLostWolfNotActive();
 				Debug.Log ("Event msg sent?");
 			}
+			if(OnWarmNotActive != null){
+				OnWarmNotActive();
+				Debug.Log ("on warm NOT active sent?");
+			}
+			//change layer on playerwarmth to not trigger with warm Area anymore
+			playerWarmthScript.isRealWorld = true;
+			playerWarmthScript.gameObject.layer = LayerMask.NameToLayer("IgnoreLayer");
 			playerWarmthScript.StartCoroutine("ResetLightRadius");
 			HearDenGO.SetActive(true);
 			yield return new WaitForSeconds(4);
 
 			isWorldTransitioning = false;
 			WorldType = 0;
+
 
 		}
 	}

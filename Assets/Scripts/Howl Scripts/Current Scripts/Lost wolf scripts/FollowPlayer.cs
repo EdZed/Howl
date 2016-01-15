@@ -386,6 +386,7 @@ public class FollowPlayer : MonoBehaviour
 		AffectionTrigger.AffectionAnimOn += AffectionOn;
 		AffectionTrigger.AffectionAnimOff += AffectionOff;
 		WorldManager.OnLostWolfActive += LostWolfActive;
+		WorldManager.OnLostWolfNotActive += LostWolfNotActive;
 	}
 	
 	
@@ -395,6 +396,7 @@ public class FollowPlayer : MonoBehaviour
 		AffectionTrigger.AffectionAnimOn -= AffectionOn;
 		AffectionTrigger.AffectionAnimOff -= AffectionOff;
 		WorldManager.OnLostWolfActive -= LostWolfActive;
+		WorldManager.OnLostWolfNotActive -= LostWolfNotActive;
 	}
 
 	void AffectionOn()
@@ -415,8 +417,26 @@ public class FollowPlayer : MonoBehaviour
 		//lostWolfAffection = false;
 		//Debug.Log ("den wolf stopped showing affection");
 
-		LostWolfCollider.enabled = !LostWolfCollider.enabled;
-		lostWolfProximityCol.enabled = !lostWolfProximityCol.enabled;
+//		LostWolfCollider.enabled = !LostWolfCollider.enabled;
+//		lostWolfProximityCol.enabled = !lostWolfProximityCol.enabled;
+		LostWolfCollider.enabled = true;
+		lostWolfProximityCol.enabled = true;
+	}
+
+	//called by worldmanager script
+	void LostWolfNotActive()
+	{
+		isFollowing = false;
+		LostWolfSpriteRend.enabled = false;
+		PackFormationPosScript.MinusPackMember ();
+		LostWolfAnim.SetInteger ("LostWolfAnimState", 0);
+		Debug.Log ("lost wolf not active/ not following");
+
+		LostWolfCollider.enabled = false;
+		lostWolfProximityCol.enabled = false;
+		//Only un comment if can stll trigger in real world
+//		LostWolfCollider.enabled = !LostWolfCollider.enabled;
+//		lostWolfProximityCol.enabled = !lostWolfProximityCol.enabled;
 	}
 
 

@@ -41,25 +41,47 @@ public class WarmthObject : MonoBehaviour {
 	}
 
 	//called by DynamicLight script
+	//might have to make it an event
 	public void WarmthRendOff(){
-		
-		warmthRend = GetComponent<MeshRenderer> ();
+		if (warmthRend == null) {
+			warmthRend = GetComponent<MeshRenderer> ();
+		}
 		warmthRend.enabled = false;
 		//warmthCollider.tag = 
 	}
-	
-	void OnTriggerEnter2D(Collider2D coll){
-		if (coll.gameObject.tag == "Player") {
-//			coll.gameObject.GetComponent<PCWolfInput>().WarmingUp = true;
-//			coll.gameObject.GetComponent<PCWolfInput>().WolfEnterTime = Time.time;
-			playerWarmthScript.InvokeRepeating("GetWarm",2,2);
-			playerWarmthScript.CancelInvoke("GetCold");
-		}
+
+	public void WarmthRendOn(){
+		warmthRend.enabled = true;
+		//warmthCollider.tag = 
 	}
 
-	void OnTriggerExit2D(Collider2D coll){
-		if (coll.gameObject.tag == "Player") {
-			//coll.gameObject.GetComponent<PCWolfInput>().WarmingUp = false;
-		}
+	void OnEnable()
+	{
+		WorldManager.OnWarmActive += WarmthRendOn;
+		WorldManager.OnWarmNotActive += WarmthRendOff;
 	}
+	
+	
+	void OnDisable()
+	{
+		WorldManager.OnWarmActive -= WarmthRendOn;
+		WorldManager.OnWarmNotActive -= WarmthRendOff;
+	}
+	
+//	void OnTriggerEnter2D(Collider2D coll){
+//		if (coll.gameObject.tag == "Fire") {
+////			coll.gameObject.GetComponent<PCWolfInput>().WarmingUp = true;
+////			coll.gameObject.GetComponent<PCWolfInput>().WolfEnterTime = Time.time;
+//			playerWarmthScript.InvokeRepeating("GetWarm",2,2);
+//			playerWarmthScript.CancelInvoke("GetCold");
+//			Debug.Log ("Player in warm area");
+//		}
+//	}
+//
+//	void OnTriggerExit2D(Collider2D coll){
+//		if (coll.gameObject.tag == "Fire") {
+//			//coll.gameObject.GetComponent<PCWolfInput>().WarmingUp = false;
+//			Debug.Log ("Player in cold area");
+//		}
+//	}
 }

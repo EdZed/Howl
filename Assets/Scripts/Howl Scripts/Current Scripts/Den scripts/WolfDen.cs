@@ -97,6 +97,7 @@ public class WolfDen : MonoBehaviour {
 				//PCwolf or warmthobj int changed to spirit world
 				//WorldManagerScript.WorldTypeSwitch();
 				WorldManagerScript.StartCoroutine ("WorldTypeSwitch");
+				//turn off light in next line
 			
 			}
 		}

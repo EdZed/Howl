@@ -30,25 +30,25 @@ public class PackFormationPos : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		if (doesPackExist) {
-			if(packSize == 1){
-
-
-			} else if(packSize == 2){
-				
-			}
-			else if(packSize == 3){
-				
-			}
-			else if(packSize == 4){
-				
-			}
-			else if(packSize == 5){
-				
-			}
-		}
-	} //end Update
+//	void Update () {
+//		if (doesPackExist) {
+//			if(packSize == 1){
+//
+//
+//			} else if(packSize == 2){
+//				
+//			}
+//			else if(packSize == 3){
+//				
+//			}
+//			else if(packSize == 4){
+//				
+//			}
+//			else if(packSize == 5){
+//				
+//			}
+//		}
+//	} //end Update
 
 	void WelcomePackMember (){
 		packSize += 1;
@@ -65,6 +65,16 @@ public class PackFormationPos : MonoBehaviour {
 		}
 
 	}//end WelcomePackMember
+
+	public void MinusPackMember(){
+		packSize -= 1;
+		if (doesPackExist && packSize == 0) {
+			if(OnPackNotExist != null){
+				OnPackNotExist();
+			}
+			doesPackExist = false;
+		}
+	}
 
 	void OnEnable()
 	{
