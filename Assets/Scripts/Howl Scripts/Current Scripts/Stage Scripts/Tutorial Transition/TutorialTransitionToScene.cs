@@ -17,9 +17,13 @@ public class TutorialTransitionToScene : MonoBehaviour {
 		if (target.gameObject.tag == "Player") {
 			if( target.gameObject.GetComponent<PCWolfInput>().currLevel == "Howl Stage 1"){
 				Application.LoadLevel("Howl Stage 2");
-			}
-			if( target.gameObject.GetComponent<PCWolfInput>().currLevel == "Howl Stage 2"){
+			} else if( target.gameObject.GetComponent<PCWolfInput>().currLevel == "Howl Stage 2"){
 				Application.LoadLevel("Howl Stage 3");
+			} else if( target.gameObject.GetComponent<PCWolfInput>().currLevel == "Howl Stage 3"){
+				Application.LoadLevel("Howl Stage 4");
+			}
+			else if( target.gameObject.GetComponent<PCWolfInput>().currLevel == "Howl Stage 4"){
+				Application.LoadLevel("Howl Title Screen PS Demo");
 			}
 			
 		} 
