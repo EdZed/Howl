@@ -20,11 +20,11 @@ public class WorldManager : MonoBehaviour {
 	//to change camera filter color
 	public bool isWorldCold;
 
-	//Sends to Followplayer script?
+	//Sends to Followplayer script
 	public delegate void LostWolfActive();
 	public static event LostWolfActive OnLostWolfActive;
 	public static event LostWolfActive OnLostWolfNotActive;
-
+	//sends to ??
 	public delegate void WarmActive();
 	public static event WarmActive OnWarmActive;
 	public static event WarmActive OnWarmNotActive;

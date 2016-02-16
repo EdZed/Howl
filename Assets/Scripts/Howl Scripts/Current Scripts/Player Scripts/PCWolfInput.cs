@@ -873,28 +873,8 @@ public class PCWolfInput : MonoBehaviour
 		if (tempVignette <= 1f) {
 			tempVignette = 1f;
 		}
-		//commented out for now since seems to prevent player movement if doens't exist
-		//Camera.main.GetComponent<VignetteAndChromaticAberration> ().intensity = tempVignette;
 	}
-	
-//	void WolfRun()
-//	{
-//		if (Input.GetKey (KeyCode.LeftShift))
-//		{
-//			anim.SetInteger("AnimState", 7);
-//			speed = runSpeed;
-//			running = true;
-//			walking = false;	
-//
-//			if (Input.GetKeyUp (KeyCode.LeftShift))
-//			{
-//				speed = moveSpeed;
-//				running = false;
-//				walking = true;
-//				anim.SetInteger("AnimState", 7);
-//			}
-//		}
-//	}
+
 	
 }//end of whole class***
 
