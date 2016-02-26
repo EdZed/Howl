@@ -1,0 +1,1199 @@
+fileFormatVersion: 2
+guid: bb119e25435354dbd959e52603fde0fe
+timeCreated: 1456525940
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Wolf_WalkSide_1
+    21300002: Wolf_WalkSide_2
+    21300004: Wolf_WalkSide_3
+    21300006: Wolf_WalkSide_4
+    21300008: Wolf_WalkSide_5
+    21300010: Wolf_WalkSide_6
+    21300012: Wolf_RunSide_1
+    21300014: Wolf_RunSide_2
+    21300016: Wolf_RunSide_3
+    21300018: Wolf_RunSide_4
+    21300020: Wolf_RunSide_5
+    21300022: Wolf_RunSide_6
+    21300024: Wolf_RunSide_7
+    21300026: Wolf_RunSide_8
+    21300028: Wolf_RunSide_9
+    21300030: Wolf_RunSide_10
+    21300032: Wolf_RunSide_11
+    21300034: Wolf_RunSide_12
+    21300036: Wolf_IdleSide_1
+    21300038: Wolf_IdleSide_3
+    21300040: Wolf_IdleSide_2
+    21300042: Wolf_HowlSide_1
+    21300044: Wolf_HowlSide_2
+    21300046: Wolf_HowlSide_3
+    21300048: Wolf_HowlSide_4
+    21300050: Wolf_HowlSide_5
+    21300052: Wolf_HowlSide_6
+    21300054: Wolf_WalkUp_1
+    21300056: Wolf_WalkUp_2
+    21300058: Wolf_WalkUp_3
+    21300060: Wolf_WalkUp_4
+    21300062: Wolf_WalkUp_5
+    21300064: Wolf_WalkUp_6
+    21300066: Wolf_WalkUp_7
+    21300068: Wolf_WalkUp_8
+    21300070: Wolf_WalkUpSide_1
+    21300072: Wolf_WalkUpSide_2
+    21300074: Wolf_WalkUpSide_3
+    21300076: Wolf_WalkUpSide_4
+    21300078: Wolf_WalkUpSide_5
+    21300080: Wolf_WalkUpSide_6
+    21300082: Wolf_WalkUpSide_7
+    21300084: Wolf_WalkUpSide_8
+    21300086: Wolf_WalkUpSide_9
+    21300088: Wolf_WalkUpSide_10
+    21300090: Wolf_WalkUpSide_11
+    21300092: Wolf_WalkDown_1
+    21300094: Wolf_RunUp_2
+    21300096: Wolf_WalkDown_3
+    21300098: Wolf_WalkDown_4
+    21300100: Wolf_WalkDown_5
+    21300102: Wolf_WalkDown_6
+    21300104: Wolf_WalkDown_7
+    21300106: Wolf_WalkDown_8
+    21300108: Wolf_WalkDownSide_1
+    21300110: Wolf_WalkDownSide_2
+    21300112: Wolf_WalkDownSide_3
+    21300114: Wolf_WalkDownSide_4
+    21300116: Wolf_WalkDownSide_5
+    21300118: Wolf_WalkDownSide_6
+    21300120: Wolf_WalkDownSide_7
+    21300122: Wolf_WalkDownSide_8
+    21300124: Wolf_WalkDownSide_9
+    21300126: Wolf_RunUp_1
+    21300128: Wolf_Spritesheet1_0
+    21300130: Wolf_RunUp_3
+    21300132: Wolf_RunUp_4
+    21300134: Wolf_RunUp_5
+    21300136: Wolf_RunUp_6
+    21300138: Wolf_RunUp_7
+    21300140: Wolf_RunUp_8
+    21300142: Wolf_RunUp_9
+    21300144: Wolf_RunUp_10
+    21300146: Wolf_RunUpSide_1
+    21300148: Wolf_RunUpSide_2
+    21300150: Wolf_RunUpSide_3
+    21300152: Wolf_RunUpSide_4
+    21300154: Wolf_RunUpSide_5
+    21300156: Wolf_RunUpSide_6
+    21300158: Wolf_RunUpSide_7
+    21300160: Wolf_RunUpSide_8
+    21300162: Wolf_RunUpSide_9
+    21300164: Wolf_RunDown_1
+    21300166: Wolf_RunDown_2
+    21300168: Wolf_RunDown_3
+    21300170: Wolf_RunDown_4
+    21300172: Wolf_RunDown_5
+    21300174: Wolf_RunDown_6
+    21300176: Wolf_RunDown_7
+    21300178: Wolf_RunDown_8
+    21300180: Wolf_RunDown_9
+    21300182: Wolf_RunDown_10
+    21300184: Wolf_RunDown_11
+    21300186: Wolf_RunDownSide_2
+    21300188: Wolf_RunDownSide_1
+    21300190: Wolf_RunDownSide_3
+    21300192: Wolf_RunDownSide_4
+    21300194: Wolf_RunDownSide_5
+    21300196: Wolf_RunDownSide_6
+    21300198: Wolf_RunDownSide_7
+    21300200: Wolf_RunDownSide_8
+    21300202: Wolf_RunDownSide_9
+    21300204: Wolf_RunDownSide_10
+    21300206: Wolf_RunDownSide_11
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 8
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 8192
+  textureSettings:
+    filterMode: 1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: Wolf_WalkSide_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 7758
+        width: 444
+        height: 242
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_WalkSide_2
+      rect:
+        serializedVersion: 2
+        x: 444
+        y: 7758
+        width: 444
+        height: 242
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_WalkSide_3
+      rect:
+        serializedVersion: 2
+        x: 888
+        y: 7758
+        width: 444
+        height: 242
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_WalkSide_4
+      rect:
+        serializedVersion: 2
+        x: 1335
+        y: 7758
+        width: 444
+        height: 242
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_WalkSide_5
+      rect:
+        serializedVersion: 2
+        x: 1783
+        y: 7758
+        width: 444
+        height: 242
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_WalkSide_6
+      rect:
+        serializedVersion: 2
+        x: 2230
+        y: 7758
+        width: 444
+        height: 242
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_RunSide_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 7515
+        width: 444
+        height: 242
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_RunSide_2
+      rect:
+        serializedVersion: 2
+        x: 441
+        y: 7515
+        width: 444
+        height: 242
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_RunSide_3
+      rect:
+        serializedVersion: 2
+        x: 888
+        y: 7516
+        width: 444
+        height: 242
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_RunSide_4
+      rect:
+        serializedVersion: 2
+        x: 1340
+        y: 7516
+        width: 444
+        height: 242
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_RunSide_5
+      rect:
+        serializedVersion: 2
+        x: 1788
+        y: 7516
+        width: 444
+        height: 242
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_RunSide_6
+      rect:
+        serializedVersion: 2
+        x: 2235
+        y: 7516
+        width: 444
+        height: 242
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_RunSide_7
+      rect:
+        serializedVersion: 2
+        x: 2675
+        y: 7516
+        width: 444
+        height: 242
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_RunSide_8
+      rect:
+        serializedVersion: 2
+        x: 3129
+        y: 7516
+        width: 444
+        height: 242
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_RunSide_9
+      rect:
+        serializedVersion: 2
+        x: 3564
+        y: 7516
+        width: 444
+        height: 242
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_RunSide_10
+      rect:
+        serializedVersion: 2
+        x: 3999
+        y: 7516
+        width: 444
+        height: 242
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_RunSide_11
+      rect:
+        serializedVersion: 2
+        x: 4446
+        y: 7516
+        width: 444
+        height: 242
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_RunSide_12
+      rect:
+        serializedVersion: 2
+        x: 4890
+        y: 7516
+        width: 444
+        height: 242
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_IdleSide_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 7273
+        width: 444
+        height: 242
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_IdleSide_3
+      rect:
+        serializedVersion: 2
+        x: 890
+        y: 7273
+        width: 444
+        height: 242
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_IdleSide_2
+      rect:
+        serializedVersion: 2
+        x: 444
+        y: 7273
+        width: 444
+        height: 242
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_HowlSide_1
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 7031
+        width: 444
+        height: 242
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_HowlSide_2
+      rect:
+        serializedVersion: 2
+        x: 454
+        y: 7031
+        width: 444
+        height: 242
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_HowlSide_3
+      rect:
+        serializedVersion: 2
+        x: 892
+        y: 7031
+        width: 444
+        height: 242
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_HowlSide_4
+      rect:
+        serializedVersion: 2
+        x: 1347
+        y: 7031
+        width: 444
+        height: 242
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_HowlSide_5
+      rect:
+        serializedVersion: 2
+        x: 1784
+        y: 7031
+        width: 444
+        height: 242
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_HowlSide_6
+      rect:
+        serializedVersion: 2
+        x: 2240
+        y: 7031
+        width: 444
+        height: 242
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_WalkUp_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 6545
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_WalkUp_2
+      rect:
+        serializedVersion: 2
+        x: 242
+        y: 6545
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_WalkUp_3
+      rect:
+        serializedVersion: 2
+        x: 484
+        y: 6545
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_WalkUp_4
+      rect:
+        serializedVersion: 2
+        x: 726
+        y: 6546
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_WalkUp_5
+      rect:
+        serializedVersion: 2
+        x: 968
+        y: 6545
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_WalkUp_6
+      rect:
+        serializedVersion: 2
+        x: 1211
+        y: 6545
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_WalkUp_7
+      rect:
+        serializedVersion: 2
+        x: 1453
+        y: 6545
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_WalkUp_8
+      rect:
+        serializedVersion: 2
+        x: 1694
+        y: 6545
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_WalkUpSide_1
+      rect:
+        serializedVersion: 2
+        x: 1937
+        y: 6545
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_WalkUpSide_2
+      rect:
+        serializedVersion: 2
+        x: 2181
+        y: 6545
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_WalkUpSide_3
+      rect:
+        serializedVersion: 2
+        x: 2423
+        y: 6545
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_WalkUpSide_4
+      rect:
+        serializedVersion: 2
+        x: 2666
+        y: 6545
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_WalkUpSide_5
+      rect:
+        serializedVersion: 2
+        x: 2911
+        y: 6545
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_WalkUpSide_6
+      rect:
+        serializedVersion: 2
+        x: 3155
+        y: 6545
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_WalkUpSide_7
+      rect:
+        serializedVersion: 2
+        x: 3399
+        y: 6544
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_WalkUpSide_8
+      rect:
+        serializedVersion: 2
+        x: 3642
+        y: 6545
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_WalkUpSide_9
+      rect:
+        serializedVersion: 2
+        x: 3884
+        y: 6545
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_WalkUpSide_10
+      rect:
+        serializedVersion: 2
+        x: 4127
+        y: 6545
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_WalkUpSide_11
+      rect:
+        serializedVersion: 2
+        x: 4370
+        y: 6545
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_WalkDown_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 6101
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_RunUp_2
+      rect:
+        serializedVersion: 2
+        x: 242
+        y: 5657
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_WalkDown_3
+      rect:
+        serializedVersion: 2
+        x: 484
+        y: 6101
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_WalkDown_4
+      rect:
+        serializedVersion: 2
+        x: 726
+        y: 6101
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_WalkDown_5
+      rect:
+        serializedVersion: 2
+        x: 968
+        y: 6101
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_WalkDown_6
+      rect:
+        serializedVersion: 2
+        x: 1211
+        y: 6101
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_WalkDown_7
+      rect:
+        serializedVersion: 2
+        x: 1453
+        y: 6101
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_WalkDown_8
+      rect:
+        serializedVersion: 2
+        x: 1694
+        y: 6101
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_WalkDownSide_1
+      rect:
+        serializedVersion: 2
+        x: 1937
+        y: 6101
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_WalkDownSide_2
+      rect:
+        serializedVersion: 2
+        x: 2177
+        y: 6101
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_WalkDownSide_3
+      rect:
+        serializedVersion: 2
+        x: 2413
+        y: 6102
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_WalkDownSide_4
+      rect:
+        serializedVersion: 2
+        x: 2651
+        y: 6101
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_WalkDownSide_5
+      rect:
+        serializedVersion: 2
+        x: 2888
+        y: 6101
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_WalkDownSide_6
+      rect:
+        serializedVersion: 2
+        x: 3125
+        y: 6101
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_WalkDownSide_7
+      rect:
+        serializedVersion: 2
+        x: 3377
+        y: 6101
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_WalkDownSide_8
+      rect:
+        serializedVersion: 2
+        x: 3615
+        y: 6101
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_WalkDownSide_9
+      rect:
+        serializedVersion: 2
+        x: 3866
+        y: 6101
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_RunUp_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 5657
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_Spritesheet1_0
+      rect:
+        serializedVersion: 2
+        x: 242
+        y: 6101
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_RunUp_3
+      rect:
+        serializedVersion: 2
+        x: 484
+        y: 5657
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_RunUp_4
+      rect:
+        serializedVersion: 2
+        x: 726
+        y: 5657
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_RunUp_5
+      rect:
+        serializedVersion: 2
+        x: 968
+        y: 5657
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_RunUp_6
+      rect:
+        serializedVersion: 2
+        x: 1211
+        y: 5657
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_RunUp_7
+      rect:
+        serializedVersion: 2
+        x: 1453
+        y: 5657
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_RunUp_8
+      rect:
+        serializedVersion: 2
+        x: 1694
+        y: 5657
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_RunUp_9
+      rect:
+        serializedVersion: 2
+        x: 1932
+        y: 5657
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_RunUp_10
+      rect:
+        serializedVersion: 2
+        x: 2171
+        y: 5657
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_RunUpSide_1
+      rect:
+        serializedVersion: 2
+        x: 2413
+        y: 5657
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_RunUpSide_2
+      rect:
+        serializedVersion: 2
+        x: 2653
+        y: 5657
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_RunUpSide_3
+      rect:
+        serializedVersion: 2
+        x: 2896
+        y: 5657
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_RunUpSide_4
+      rect:
+        serializedVersion: 2
+        x: 3137
+        y: 5657
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_RunUpSide_5
+      rect:
+        serializedVersion: 2
+        x: 3380
+        y: 5657
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_RunUpSide_6
+      rect:
+        serializedVersion: 2
+        x: 3623
+        y: 5657
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_RunUpSide_7
+      rect:
+        serializedVersion: 2
+        x: 3866
+        y: 5657
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_RunUpSide_8
+      rect:
+        serializedVersion: 2
+        x: 4109
+        y: 5657
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_RunUpSide_9
+      rect:
+        serializedVersion: 2
+        x: 4352
+        y: 5657
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_RunDown_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 5213
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_RunDown_2
+      rect:
+        serializedVersion: 2
+        x: 242
+        y: 5213
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_RunDown_3
+      rect:
+        serializedVersion: 2
+        x: 484
+        y: 5213
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_RunDown_4
+      rect:
+        serializedVersion: 2
+        x: 727
+        y: 5213
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_RunDown_5
+      rect:
+        serializedVersion: 2
+        x: 969
+        y: 5213
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_RunDown_6
+      rect:
+        serializedVersion: 2
+        x: 1211
+        y: 5213
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_RunDown_7
+      rect:
+        serializedVersion: 2
+        x: 1449
+        y: 5213
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_RunDown_8
+      rect:
+        serializedVersion: 2
+        x: 1690
+        y: 5213
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_RunDown_9
+      rect:
+        serializedVersion: 2
+        x: 1927
+        y: 5213
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_RunDown_10
+      rect:
+        serializedVersion: 2
+        x: 2172
+        y: 5213
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_RunDown_11
+      rect:
+        serializedVersion: 2
+        x: 2409
+        y: 5213
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_RunDownSide_2
+      rect:
+        serializedVersion: 2
+        x: 2896
+        y: 5213
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_RunDownSide_1
+      rect:
+        serializedVersion: 2
+        x: 2653
+        y: 5213
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_RunDownSide_3
+      rect:
+        serializedVersion: 2
+        x: 3138
+        y: 5213
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_RunDownSide_4
+      rect:
+        serializedVersion: 2
+        x: 3380
+        y: 5213
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_RunDownSide_5
+      rect:
+        serializedVersion: 2
+        x: 3623
+        y: 5213
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_RunDownSide_6
+      rect:
+        serializedVersion: 2
+        x: 3865
+        y: 5213
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_RunDownSide_7
+      rect:
+        serializedVersion: 2
+        x: 4107
+        y: 5213
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_RunDownSide_8
+      rect:
+        serializedVersion: 2
+        x: 4349
+        y: 5213
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_RunDownSide_9
+      rect:
+        serializedVersion: 2
+        x: 4592
+        y: 5213
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_RunDownSide_10
+      rect:
+        serializedVersion: 2
+        x: 4835
+        y: 5213
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wolf_RunDownSide_11
+      rect:
+        serializedVersion: 2
+        x: 5077
+        y: 5213
+        width: 242
+        height: 444
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
