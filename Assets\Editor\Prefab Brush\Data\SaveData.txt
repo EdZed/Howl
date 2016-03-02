@@ -1,4 +1,4 @@
-Layer Selection: Nothing
+Layer Selection: Default
 Brush Max Size: 8.77
 Brush Size: 0.36
 Fill Mode: True

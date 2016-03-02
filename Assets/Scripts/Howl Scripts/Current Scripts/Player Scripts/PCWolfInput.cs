@@ -10,6 +10,7 @@ public class PCWolfInput : MonoBehaviour
 {
 	//  Static keyword makes this variable a Member of the class, not of any particular instance.
 	public static float speed = 0f;
+	public static float idleSpeed = 0f;
 	public static float moveSpeed = 6f;
 	public static float runSpeed = 12f;
 	public float tapMaxMovement = 50f;
@@ -55,6 +56,9 @@ public class PCWolfInput : MonoBehaviour
 	public float atkSpeed = 10f;
 	int atkDmg = 0;
 	Color startColor;
+
+	//float input_x = Input.GetAxisRaw("Horizontal");
+	//float input_y = Input.GetAxisRaw("Vertical");
 
 	public int playerHealth = 3;
 
@@ -132,6 +136,8 @@ public class PCWolfInput : MonoBehaviour
 	public float WolfEnterTime; float WolfWarmingTime = 0.075f;
 	public float coolingTime; float coolingRate = 0.1f;
 
+	Vector2 movementDir;
+
 	//public bool inSpiritWorld; bool worldSwitch = false; //False = Real World, True = Spirit world 
 	
 	// Use this for initialization
@@ -147,7 +153,10 @@ public class PCWolfInput : MonoBehaviour
 		anim = GetComponent<Animator> ();
 		playerWolf = GameObject.Find("playerWolf");
 		MainCam = GameObject.Find("Main Camera");
-		anim.SetInteger ("AnimState", 0);
+		//anim.SetFloat ("PlayerAnimState", 0);
+		anim.SetBool("walking", false);
+		anim.SetBool("running", false);
+		anim.SetFloat("Speed", 0f);
 		//This bottom code chunk causes the player running anim to play in the beginning when the scene restarts, and makes player invisible
 //		if (OnIdleAnim != null) {
 //			OnIdleAnim ();
@@ -227,8 +236,8 @@ public class PCWolfInput : MonoBehaviour
 ////				speed = 0;
 ////				//hit = Physics2D.Raycast (Camera.main.ScreenToWorldPoint((Input.GetTouch (0).position)), Vector2.zero);
 ////				targetPos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
-////				anim.SetInteger ("AnimState", 5);
-////				//anim.SetInteger ("AnimState", 3);
+////				anim.SetFloat ("PlayerAnimState", 5);
+////				//anim.SetFloat ("PlayerAnimState", 3);
 ////				print ("player is howling!");
 ////			} else 
 ////			{
@@ -249,7 +258,7 @@ public class PCWolfInput : MonoBehaviour
 //					OnClickLeft();
 //				}
 //			//}
-//			//anim.SetInteger ("AnimState", 0);
+//			//anim.SetFloat ("PlayerAnimState", 0);
 //		}
 //
 //		//Hold right-click to Run
@@ -305,13 +314,42 @@ public class PCWolfInput : MonoBehaviour
 //		}
 //		gettingCold = false;
 
+
+		float input_x = Input.GetAxisRaw("Horizontal");
+		float input_y = Input.GetAxisRaw("Vertical");
+
+		if(input_x != 0 || input_y !=0){
+			movementDir = new Vector2(input_x, input_y);
+
+//			if(running){
+//				speed = runSpeed;
+//			} else{
+//				speed = moveSpeed;
+//			}
+			speed = running ? runSpeed : moveSpeed;
+
+			//might have to use if block for run and walk since gotta move the info from below into here
+		} else{
+			speed = idleSpeed;
+		}
+
+		//Bring input stuff first in update before the logic script
+		anim.SetFloat("x", movementDir.x);
+		anim.SetFloat("y", movementDir.y);
+
+		transform.position += new Vector3(input_x, input_y, 0).normalized * speed * Time.deltaTime;
+		anim.SetFloat("Speed", speed);
+
+
+
 		if (Input.GetKey (KeyCode.G)) {
 			Application.LoadLevel (currLevel);
 		}
 
 		if (running) {
+
+			anim.SetBool("running", true);
 			//running anim left/right
-			anim.SetInteger ("AnimState", 7);
 			RunSFX();
 			if (OnRunAnim != null) {
 				//sends message to ?
@@ -345,7 +383,8 @@ public class PCWolfInput : MonoBehaviour
 				//playerWolf.GetComponent<SpriteRenderer>().color = startColor;
 			}
 		} else if (walking) {
-			anim.SetInteger ("AnimState", 2);
+
+			anim.SetBool("walking", true);
 			WalkSFX();
 			if (OnWalkAnim != null) {
 				OnWalkAnim ();
@@ -358,7 +397,11 @@ public class PCWolfInput : MonoBehaviour
 			}
 		} else {
 			//doesn't work
-			anim.SetInteger ("AnimState", 0);
+			//anim.SetFloat ("PlayerAnimState", 0);
+			speed = idleSpeed;
+			//anim.SetFloat("x", input_x);
+			//anim.SetFloat("y", input_y);
+			//anim.SetFloat("Speed", speed);
 			StopSFX();
 			if(runAtk == true){
 				runAtkCollider.enabled = false;
@@ -373,6 +416,7 @@ public class PCWolfInput : MonoBehaviour
 		}
 
 		if (!running) {
+			anim.SetBool("running", false);
 //			if (playerRunMeter < 30f){
 //				if (RunMeterEmpty){
 //					playerRunMeter +=0.2f;
@@ -388,6 +432,9 @@ public class PCWolfInput : MonoBehaviour
 //			}
 
 		}
+		if(!walking){
+			anim.SetBool("walking", false);
+		}
 
 		//if ((howling && !running) || (howling && !walking)) {
 		if (howling) {
@@ -396,19 +443,19 @@ public class PCWolfInput : MonoBehaviour
 			canMove = false;
 
 			if(running){
-				anim.SetInteger("AnimState", 6);
+				//anim.SetFloat("PlayerAnimState", 6);
 				if (OnHowlAnim != null) {
 					OnHowlAnim ();
 				}
-				//anim.SetInteger("AnimState", 7);
+				//anim.SetFloat("PlayerAnimState", 7);
 			} else if (walking) {
-				anim.SetInteger("AnimState", 6);
+				//anim.SetFloat("PlayerAnimState", 6);
 				if (OnHowlAnim != null) {
 					OnHowlAnim ();
 				}
-				//anim.SetInteger("AnimState", 2);
+				//anim.SetFloat("PlayerAnimState", 2);
 			} else {
-				anim.SetInteger("AnimState", 6);
+				//anim.SetFloat("PlayerAnimState", 6);
 				if (OnHowlAnim != null) {
 					OnHowlAnim ();
 				}
@@ -437,15 +484,15 @@ public class PCWolfInput : MonoBehaviour
 //			canMove = false;
 //		
 //			if(running){
-//				anim.SetInteger("AnimState", 1);
+//				anim.SetFloat("PlayerAnimState", 1);
 //
-//				//anim.SetInteger("AnimState", 7);
+//				//anim.SetFloat("PlayerAnimState", 7);
 //			} else if (walking) {
-//				anim.SetInteger("AnimState", 1);
+//				anim.SetFloat("PlayerAnimState", 1);
 //
-//				//anim.SetInteger("AnimState", 2);
+//				//anim.SetFloat("PlayerAnimState", 2);
 //			} else if(!running && !walking){
-//				anim.SetInteger("AnimState", 1);
+//				anim.SetFloat("PlayerAnimState", 1);
 //			}
 //		}
 
@@ -466,7 +513,7 @@ public class PCWolfInput : MonoBehaviour
 		    leftPressed == false && rightPressed == false &&
 		    upPressed == false && downPressed == false && howling == false){
 			StopSFX();
-			anim.SetInteger("AnimState", 0);
+			anim.SetFloat("PlayerAnimState", 0);
 			if (OnIdleAnim != null) {
 				OnIdleAnim ();
 			}
@@ -477,20 +524,21 @@ public class PCWolfInput : MonoBehaviour
 
 		if(Input.GetKeyUp(KeyCode.Space) || Input.GetButtonUp("Gamepad_Mac_Howl") ) {
 			howling = true;
+			anim.SetBool("howling", true);
 			//StartCoroutine("PlayerHowling");
 			HowlAttractCollider.enabled = true;
 		}
 
 		//Affection
 //		if(Input.GetKey(KeyCode.V) ) {
-//			anim.SetInteger("AnimState", 1);
+//			anim.SetFloat("PlayerAnimState", 1);
 //			Debug.Log ("affection");
 //			affection = true;
 //			//affectionCollider.enabled = true;
 //			//HowlAttractCollider.enabled = true;
 //		}
 //		if(Input.GetKeyUp(KeyCode.V) ) {
-//			//anim.SetInteger("AnimState", 1);
+//			//anim.SetFloat("PlayerAnimState", 1);
 //			//Debug.Log ("affection");
 //			AffectionFalse();
 //			//HowlAttractCollider.enabled = true;
@@ -511,13 +559,13 @@ public class PCWolfInput : MonoBehaviour
 		}
 
 		if (attacking) {
-			anim.SetInteger("AnimState", 5);
+			anim.SetFloat("PlayerAnimState", 5);
 			playerWolf.transform.position = Vector3.MoveTowards(playerWolf.transform.position, targetPos, atkSpeed * Time.deltaTime);
 		}
 		if (playerWolf.transform.position == targetPos) {
 			attacking = false;
 			targetPos = Vector3.zero;
-			anim.SetInteger("AnimState", 0);
+			anim.SetFloat("PlayerAnimState", 0);
 			//Debug.Log("Attack for " + atkDmg + " damage!");
 			atkDmg = 0;
 			playerWolf.GetComponent<SpriteRenderer>().color = startColor;
@@ -552,23 +600,27 @@ public class PCWolfInput : MonoBehaviour
 				Input.GetAxisRaw ("Gamepad_PC_Horizontal") < 0) {
 				WolfMoveToLeft ();
 				leftPressed = true;
+				anim.SetFloat ("PlayerAnimState", 1);
 				if (Input.GetKey (KeyCode.LeftShift)|| Input.GetButton("Gamepad_Mac_Run") ) {
+					//anim.SetFloat ("PlayerAnimState", 6);
 					//if (!RunMeterEmpty){
 					if (WarmthMeterEmpty == false){
 						running = true;
 						walking = false;
 						speed = runSpeed;
+						//anim.SetFloat ("PlayerAnimState", 6);
 					} else {
 						running = false;
 						walking = true;
 						speed = moveSpeed;
+						//anim.SetFloat ("PlayerAnimState", 1);
 					}
-					transform.position += Vector3.left * speed * Time.deltaTime;
+					//transform.position += Vector3.left * speed * Time.deltaTime;
 				} else {
 					running = false;
 					walking = true;
 					speed = moveSpeed;
-					transform.position += Vector3.left * speed * Time.deltaTime;
+					//transform.position += Vector3.left * speed * Time.deltaTime;
 				}
 			} else{
 				leftPressed = false;
@@ -578,23 +630,27 @@ public class PCWolfInput : MonoBehaviour
 			    Input.GetButton("Gamepad_Mac_HorizontalRight") ||
 			    Input.GetAxisRaw ("Gamepad_PC_Horizontal") > 0) {
 				WolfMoveToRight ();
+				//anim.SetFloat ("PlayerAnimState", 1);
 				rightPressed = true;
 				if (Input.GetKey (KeyCode.LeftShift) || Input.GetButton("Gamepad_Mac_Run") ) {
 					if (!WarmthMeterEmpty){
 						running = true;
 						walking = false;
 						speed = runSpeed;
+						//anim.SetFloat ("PlayerAnimState", 6);
 					} else {
 						running = false;
 						walking = true;
 						speed = moveSpeed;
+						//anim.SetFloat ("PlayerAnimState", 1);
 					}
-					transform.position += Vector3.right * speed * Time.deltaTime;
+					//transform.position += Vector3.right * speed * Time.deltaTime;
 				} else {
 					running = false;
 					walking = true;
 					speed = moveSpeed;
-					transform.position += Vector3.right * speed * Time.deltaTime;
+					//anim.SetFloat ("PlayerAnimState", 1);
+					//transform.position += Vector3.right * speed * Time.deltaTime;
 				}
 			} else{
 				rightPressed = false;
@@ -605,22 +661,26 @@ public class PCWolfInput : MonoBehaviour
 			    Input.GetAxisRaw ("Gamepad_PC_Vertical") > 0) {
 
 				upPressed = true;
+				//anim.SetFloat ("PlayerAnimState", 2);
 				if (Input.GetKey (KeyCode.LeftShift) || Input.GetButton("Gamepad_Mac_Run") ) {
 					if (!WarmthMeterEmpty){
 						running = true;
 						walking = false;
 						speed = runSpeed;
+						//anim.SetFloat ("PlayerAnimState", 7);
 					} else {
 						running = false;
 						walking = true;
 						speed = moveSpeed;
+						//anim.SetFloat ("PlayerAnimState", 2);
 					}
-					transform.position += Vector3.up * speed * Time.deltaTime;
+					//transform.position += Vector3.up.normalized * speed * Time.deltaTime;
 				} else {
 					running = false;
 					walking = true;
 					speed = moveSpeed;
-					transform.position += Vector3.up * speed * Time.deltaTime;
+					//anim.SetFloat ("PlayerAnimState", 2);
+					//transform.position += Vector3.up.normalized * speed * Time.deltaTime;
 				}
 			} else{
 				upPressed = false;
@@ -630,22 +690,26 @@ public class PCWolfInput : MonoBehaviour
 			    Input.GetButton("Gamepad_Mac_VerticalDown") ||
 			    Input.GetAxisRaw ("Gamepad_PC_Vertical") < 0) {
 				downPressed = true;
+				//anim.SetFloat ("PlayerAnimState", 3);
 				if (Input.GetKey (KeyCode.LeftShift) || Input.GetButton("Gamepad_Mac_Run") ) {
 					if (!WarmthMeterEmpty){
 						running = true;
 						walking = false;
 						speed = runSpeed;
+						//anim.SetFloat ("PlayerAnimState", 8);
 					} else {
 						running = false;
 						walking = true;
 						speed = moveSpeed;
+						//anim.SetFloat ("PlayerAnimState", 3);
 					}
-					transform.position += Vector3.down * speed * Time.deltaTime;
+					//transform.position += Vector3.down.normalized * speed * Time.deltaTime;
 				} else {
 					running = false;
 					walking = true;
 					speed = moveSpeed;
-					transform.position += Vector3.down * speed * Time.deltaTime;
+					//anim.SetFloat ("PlayerAnimState", 3);
+					//transform.position += Vector3.down.normalized * speed * Time.deltaTime;
 				}
 			} else{
 				downPressed = false;
@@ -780,6 +844,7 @@ public class PCWolfInput : MonoBehaviour
 
 	void HowlFalse() {
 		howling = false;
+		anim.SetBool("howling", false);
 		canMove = true;
 		howlSpriteOnce = false;
 		//HowlAttractCollider.enabled = false;

@@ -76,6 +76,7 @@ public class MultiWolfInput : MonoBehaviour
 				//startRestartTimer = Time.time + 0;
 				restartTimer = restartTimerMax;
 				targetPos = Camera.main.ScreenToWorldPoint (touch.position);
+				//targetpos- transform.position make into vector2 and feed into input x and y and normalize it.
 				//touchStartTime = Time.time + tapTimerMax;
 				if(Input.GetTouch(0).tapCount == 2){
 					running = true;
