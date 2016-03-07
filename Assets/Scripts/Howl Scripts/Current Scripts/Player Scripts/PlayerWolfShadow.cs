@@ -7,8 +7,9 @@ using System.Collections.Generic;
 public class PlayerWolfShadow : MonoBehaviour 
 {
 	float speed;
-	float moveSpeed = 6f;
+	float walkSpeed = 6f;
 	float runSpeed = 12f;
+	float idleSpeed = 0f;
 
 	Vector3 targetPos = Vector3.zero;
 	private Animator anim;
@@ -18,6 +19,7 @@ public class PlayerWolfShadow : MonoBehaviour
 	
 	public bool walking;
 	public bool running;
+	Vector2 movementDir;
 	#if UNITY_EDITOR || UNITY_WEBPLAYER || UNITY_STANDALONE
 	private Vector3 moveDirection;
 	Vector3 targetPoint;
@@ -37,6 +39,18 @@ public class PlayerWolfShadow : MonoBehaviour
 	//Using fixed update instead for rigidbody use
 	void Update () 
 	{
+		float input_x = Input.GetAxisRaw("Horizontal");
+		float input_y = Input.GetAxisRaw("Vertical");
+
+		if(input_x != 0 || input_y !=0){
+			movementDir = new Vector2(input_x, input_y);
+		}
+
+		anim.SetFloat("x", movementDir.x);
+		anim.SetFloat("y", movementDir.y);
+		
+		//transform.position += new Vector3(input_x, input_y, 0).normalized * speed * Time.deltaTime;
+		anim.SetFloat("Speed", speed);
 		#if UNITY_IOS
 
 		//float speed;
@@ -249,18 +263,26 @@ public class PlayerWolfShadow : MonoBehaviour
 
 
 	void Walk() {
-		anim.SetInteger ("AnimState", 2);
+		anim.SetBool("walking", true);
+		anim.SetBool("howling", false);
+		speed = walkSpeed;
 	}
 
 	void Run() {
-		anim.SetInteger ("AnimState", 7);
+		anim.SetBool("running", true);
+		anim.SetBool("howling", false);
+		speed = runSpeed;
 	}
 	void Idle() {
-		anim.SetInteger ("AnimState", 0);
+		anim.SetBool("walking", false);
+		anim.SetBool("running", false);
+		anim.SetBool("howling", false);
+		speed = idleSpeed;
 	}
 
 	void Howl() {
-		anim.SetInteger ("AnimState", 6);
+		anim.SetBool("howling", true);
+		speed = idleSpeed;
 	}
 
 

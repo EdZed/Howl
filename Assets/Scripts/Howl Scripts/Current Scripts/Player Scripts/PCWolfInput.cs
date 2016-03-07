@@ -56,10 +56,6 @@ public class PCWolfInput : MonoBehaviour
 	public float atkSpeed = 10f;
 	int atkDmg = 0;
 	Color startColor;
-
-	//float input_x = Input.GetAxisRaw("Horizontal");
-	//float input_y = Input.GetAxisRaw("Vertical");
-
 	public int playerHealth = 3;
 
 	public GameObject playerWolfShadow;
@@ -326,9 +322,74 @@ public class PCWolfInput : MonoBehaviour
 //			} else{
 //				speed = moveSpeed;
 //			}
-			speed = running ? runSpeed : moveSpeed;
+			//speed = running ? runSpeed : moveSpeed;
 
 			//might have to use if block for run and walk since gotta move the info from below into here
+			if(running) {
+				
+				anim.SetBool("running", true);
+				//running anim left/right
+				RunSFX();
+				if (OnRunAnim != null) {
+					//sends message to ?
+					OnRunAnim ();
+				}
+				//			if (playerRunMeter > 0){
+				//				playerRunMeter--;
+				//			} else {
+				//				playerRunMeter = 0;
+				//			}
+				//
+				//			if (playerRunMeter <= 0){
+				//				//code next line out to deactivate meter
+				//				RunMeterEmpty = true;
+				//			}
+				//if guiding Orange lost wolf, turn on break ability while running
+				//turning on from HowlAttractPowers Script
+				if(runAtk == true){
+					runAtkCollider.enabled = true;
+					Color myOrgColor = playerWolf.GetComponent<SpriteRenderer>().color;
+					
+					//Makes orange color to match wolf and destructible orange objects
+					myOrgColor.r += 1.4f;
+					myOrgColor.b -= 1.4f;
+					
+					playerWolf.GetComponent<SpriteRenderer>().color = myOrgColor;
+					//print("runAttack Collider on");
+					
+				} else{
+					//runAtkCollider.enabled = false;
+					//playerWolf.GetComponent<SpriteRenderer>().color = startColor;
+				}
+			} else if (walking) {
+				
+				anim.SetBool("walking", true);
+				WalkSFX();
+				if (OnWalkAnim != null) {
+					OnWalkAnim ();
+				}
+				if(runAtk == true){
+					runAtkCollider.enabled = false;
+					//player goes from orange to normal color when walking
+					playerWolf.GetComponent<SpriteRenderer>().color = startColor;
+					//print("runAttack Collider off");
+				}
+			} else {
+				//doesn't work
+				speed = idleSpeed;
+				StopSFX();
+				if(runAtk == true){
+					runAtkCollider.enabled = false;
+					//player goes from orange to normal color when standing
+					playerWolf.GetComponent<SpriteRenderer>().color = startColor;
+					//print("runAttack Collider off");
+				}
+				if (OnIdleAnim != null) {
+					//sends message to Playerwolfshadow script
+					OnIdleAnim ();
+				}
+			}
+
 		} else{
 			speed = idleSpeed;
 		}
@@ -345,158 +406,6 @@ public class PCWolfInput : MonoBehaviour
 		if (Input.GetKey (KeyCode.G)) {
 			Application.LoadLevel (currLevel);
 		}
-
-		if (running) {
-
-			anim.SetBool("running", true);
-			//running anim left/right
-			RunSFX();
-			if (OnRunAnim != null) {
-				//sends message to ?
-				OnRunAnim ();
-			}
-//			if (playerRunMeter > 0){
-//				playerRunMeter--;
-//			} else {
-//				playerRunMeter = 0;
-//			}
-//
-//			if (playerRunMeter <= 0){
-//				//code next line out to deactivate meter
-//				RunMeterEmpty = true;
-//			}
-			//if guiding Orange lost wolf, turn on break ability while running
-			//turning on from HowlAttractPowers Script
-			if(runAtk == true){
-				runAtkCollider.enabled = true;
-				Color myOrgColor = playerWolf.GetComponent<SpriteRenderer>().color;
-
-				//Makes orange color to match wolf and destructible orange objects
-				myOrgColor.r += 1.4f;
-				myOrgColor.b -= 1.4f;
-
-				playerWolf.GetComponent<SpriteRenderer>().color = myOrgColor;
-				//print("runAttack Collider on");
-
-			} else{
-				//runAtkCollider.enabled = false;
-				//playerWolf.GetComponent<SpriteRenderer>().color = startColor;
-			}
-		} else if (walking) {
-
-			anim.SetBool("walking", true);
-			WalkSFX();
-			if (OnWalkAnim != null) {
-				OnWalkAnim ();
-			}
-			if(runAtk == true){
-				runAtkCollider.enabled = false;
-				//player goes from orange to normal color when walking
-				playerWolf.GetComponent<SpriteRenderer>().color = startColor;
-				//print("runAttack Collider off");
-			}
-		} else {
-			//doesn't work
-			//anim.SetFloat ("PlayerAnimState", 0);
-			speed = idleSpeed;
-			//anim.SetFloat("x", input_x);
-			//anim.SetFloat("y", input_y);
-			//anim.SetFloat("Speed", speed);
-			StopSFX();
-			if(runAtk == true){
-				runAtkCollider.enabled = false;
-				//player goes from orange to normal color when standing
-				playerWolf.GetComponent<SpriteRenderer>().color = startColor;
-				//print("runAttack Collider off");
-			}
-			if (OnIdleAnim != null) {
-				//sends message to ?
-				OnIdleAnim ();
-			}
-		}
-
-		if (!running) {
-			anim.SetBool("running", false);
-//			if (playerRunMeter < 30f){
-//				if (RunMeterEmpty){
-//					playerRunMeter +=0.2f;
-//					//playerRunMeter +=0.8f;
-//				} else if (!RunMeterEmpty){
-//					playerRunMeter +=0.5f;
-//					//playerRunMeter +=1.0f;
-//				}
-//			}
-//			if (playerRunMeter >= 30f){
-//				playerRunMeter = 30f;
-//				RunMeterEmpty = false;
-//			}
-
-		}
-		if(!walking){
-			anim.SetBool("walking", false);
-		}
-
-		//if ((howling && !running) || (howling && !walking)) {
-		if (howling) {
-			//howl sfx starts
-			HowlSFX();
-			canMove = false;
-
-			if(running){
-				//anim.SetFloat("PlayerAnimState", 6);
-				if (OnHowlAnim != null) {
-					OnHowlAnim ();
-				}
-				//anim.SetFloat("PlayerAnimState", 7);
-			} else if (walking) {
-				//anim.SetFloat("PlayerAnimState", 6);
-				if (OnHowlAnim != null) {
-					OnHowlAnim ();
-				}
-				//anim.SetFloat("PlayerAnimState", 2);
-			} else {
-				//anim.SetFloat("PlayerAnimState", 6);
-				if (OnHowlAnim != null) {
-					OnHowlAnim ();
-				}
-			}
-			if(howlSpriteOnce == false){
-				if (HowlAttractCollider.radius < HowlRadiusMax){
-					HowlAttractCollider.radius += HowlRadiusRate;
-					HowlSprite.transform.localScale += HowlSpriteRate;
-				}
-			}
-			
-			if(HowlAttractCollider.radius >= HowlRadiusMax){
-				HowlAttractCollider.radius = 0f;
-				HowlSprite.transform.localScale = Vector3.zero;
-//				howling = false;
-//				canMove = true;
-				HowlAttractCollider.enabled = false;
-				howlSpriteOnce = true;
-				//HowlFalse();
-				//howling sfx stops
-				//StopHowlSFX();
-			}
-		}
-
-//		if(affection){
-//			canMove = false;
-//		
-//			if(running){
-//				anim.SetFloat("PlayerAnimState", 1);
-//
-//				//anim.SetFloat("PlayerAnimState", 7);
-//			} else if (walking) {
-//				anim.SetFloat("PlayerAnimState", 1);
-//
-//				//anim.SetFloat("PlayerAnimState", 2);
-//			} else if(!running && !walking){
-//				anim.SetFloat("PlayerAnimState", 1);
-//			}
-//		}
-
-		WolfWarmthSystem ();
 
 		if (Input.GetKeyUp (KeyCode.UpArrow)||
 		    Input.GetKeyUp(KeyCode.DownArrow)||
@@ -521,28 +430,28 @@ public class PCWolfInput : MonoBehaviour
 			walking = false;
 			running = false;
 		}
-
+		
 		if(Input.GetKeyUp(KeyCode.Space) || Input.GetButtonUp("Gamepad_Mac_Howl") ) {
 			howling = true;
 			anim.SetBool("howling", true);
 			//StartCoroutine("PlayerHowling");
 			HowlAttractCollider.enabled = true;
 		}
-
+		
 		//Affection
-//		if(Input.GetKey(KeyCode.V) ) {
-//			anim.SetFloat("PlayerAnimState", 1);
-//			Debug.Log ("affection");
-//			affection = true;
-//			//affectionCollider.enabled = true;
-//			//HowlAttractCollider.enabled = true;
-//		}
-//		if(Input.GetKeyUp(KeyCode.V) ) {
-//			//anim.SetFloat("PlayerAnimState", 1);
-//			//Debug.Log ("affection");
-//			AffectionFalse();
-//			//HowlAttractCollider.enabled = true;
-//		}
+		//		if(Input.GetKey(KeyCode.V) ) {
+		//			anim.SetFloat("PlayerAnimState", 1);
+		//			Debug.Log ("affection");
+		//			affection = true;
+		//			//affectionCollider.enabled = true;
+		//			//HowlAttractCollider.enabled = true;
+		//		}
+		//		if(Input.GetKeyUp(KeyCode.V) ) {
+		//			//anim.SetFloat("PlayerAnimState", 1);
+		//			//Debug.Log ("affection");
+		//			AffectionFalse();
+		//			//HowlAttractCollider.enabled = true;
+		//		}
 		if (Input.GetKeyUp (KeyCode.LeftAlt)) {
 			if (prepAttack){
 				attacking = true;
@@ -557,7 +466,7 @@ public class PCWolfInput : MonoBehaviour
 				}
 			}
 		}
-
+		
 		if (attacking) {
 			anim.SetFloat("PlayerAnimState", 5);
 			playerWolf.transform.position = Vector3.MoveTowards(playerWolf.transform.position, targetPos, atkSpeed * Time.deltaTime);
@@ -587,17 +496,17 @@ public class PCWolfInput : MonoBehaviour
 				currTime = Time.time;
 			}
 		}
-
+		
 		if (canMove) {
-//			if (howling == true){
-//				canMove = false;
-//			} else if (howling == false){
-//				canMove = true;
-//			}
+			//			if (howling == true){
+			//				canMove = false;
+			//			} else if (howling == false){
+			//				canMove = true;
+			//			}
 			if (Input.GetKey (KeyCode.LeftArrow) || 
 			    Input.GetKey (KeyCode.A) || 
 			    Input.GetButton("Gamepad_Mac_HorizontalLeft") || 
-				Input.GetAxisRaw ("Gamepad_PC_Horizontal") < 0) {
+			    Input.GetAxisRaw ("Gamepad_PC_Horizontal") < 0) {
 				WolfMoveToLeft ();
 				leftPressed = true;
 				anim.SetFloat ("PlayerAnimState", 1);
@@ -659,7 +568,7 @@ public class PCWolfInput : MonoBehaviour
 			    Input.GetKey (KeyCode.W) || 
 			    Input.GetButton("Gamepad_Mac_VerticalUp") ||
 			    Input.GetAxisRaw ("Gamepad_PC_Vertical") > 0) {
-
+				
 				upPressed = true;
 				//anim.SetFloat ("PlayerAnimState", 2);
 				if (Input.GetKey (KeyCode.LeftShift) || Input.GetButton("Gamepad_Mac_Run") ) {
@@ -715,7 +624,7 @@ public class PCWolfInput : MonoBehaviour
 				downPressed = false;
 			}
 		}
-
+		
 		if (damaged) {
 			//Debug.Log ("player health:" + playerHealth);
 			invincible = true;
@@ -726,22 +635,83 @@ public class PCWolfInput : MonoBehaviour
 				damaged = false;
 			}
 		}
-
+		
 		if (playerHealth == 0) {
 			Application.LoadLevel (currLevel);
 		}
 
 
 
+		if (!running) {
+			anim.SetBool("running", false);
+//			if (playerRunMeter < 30f){
+//				if (RunMeterEmpty){
+//					playerRunMeter +=0.2f;
+//					//playerRunMeter +=0.8f;
+//				} else if (!RunMeterEmpty){
+//					playerRunMeter +=0.5f;
+//					//playerRunMeter +=1.0f;
+//				}
+//			}
+//			if (playerRunMeter >= 30f){
+//				playerRunMeter = 30f;
+//				RunMeterEmpty = false;
+//			}
+
+		}
+		if(!walking){
+			anim.SetBool("walking", false);
+		}
+
+		//if ((howling && !running) || (howling && !walking)) {
+		if (howling) {
+			//howl sfx starts
+			HowlSFX();
+			canMove = false;
+
+			if(running){
+				if (OnHowlAnim != null) {
+					OnHowlAnim ();
+				}
+			} else if (walking) {
+				if (OnHowlAnim != null) {
+					OnHowlAnim ();
+				}
+			} else {
+				if (OnHowlAnim != null) {
+					OnHowlAnim ();
+				}
+			}
+			if(howlSpriteOnce == false){
+				if (HowlAttractCollider.radius < HowlRadiusMax){
+					HowlAttractCollider.radius += HowlRadiusRate;
+					HowlSprite.transform.localScale += HowlSpriteRate;
+				}
+			}
+			
+			if(HowlAttractCollider.radius >= HowlRadiusMax){
+				HowlAttractCollider.radius = 0f;
+				HowlSprite.transform.localScale = Vector3.zero;
+//				howling = false;
+//				canMove = true;
+				HowlAttractCollider.enabled = false;
+				howlSpriteOnce = true;
+				//HowlFalse();
+				//howling sfx stops
+				//StopHowlSFX();
+			}
+		}
+
+		WolfWarmthSystem ();
+
 		//Debug.Log ("player hit equals:" + damaged);
 		//Debug.Log (playerRunMeter);
+
 	}//end of update. Now fixedUpdate
 	//Vector3 target = moveDirection * speed + currentPosition;
 	//transform.position = Vector3.Lerp( currentPosition, target, Time.deltaTime );
 	
 	//#endif
-
-//}//end of update. Now fixedUpdate	
 
 //	IEnumerator OutinCold(){
 //		

@@ -25,9 +25,11 @@ public class FollowPlayer : MonoBehaviour
 
 	//public GameObject lostWolf2Pos;
 	float speed;
-	float moveSpeed = 9f;
-	float runSpeed = 14f;
-	float staySpeed = 0f;
+//	float walkSpeed = 9f;
+//	float runSpeed = 14f;
+	float walkSpeed = 6f;
+	float runSpeed = 12f;
+	float idleSpeed = 0f;
 
 	bool isFollowing = false;
 	bool isInDen = false;
@@ -68,6 +70,8 @@ public class FollowPlayer : MonoBehaviour
 	public AudioSource lostWolfHowl;
 	public ParticleSystem lostWolfParticleSystem;
 
+	Vector2 movementDir;
+
 	//find script
 //	GameObject WorldManagerGO;
 //	public WorldManager WorldManagerScript;
@@ -101,7 +105,7 @@ public class FollowPlayer : MonoBehaviour
 		followPosLeftMid = GameObject.Find("Pos Left Mid");
 		followPosRightMid = GameObject.Find("Pos Right Mid");
 		
-		speed = moveSpeed;
+		speed = walkSpeed;
 		rb2DLostWolf = GetComponent<Rigidbody2D> ();
 		//LostWolfAnim = GetComponent<Animator> ();
 		//Wolf Idle
@@ -164,12 +168,13 @@ public class FollowPlayer : MonoBehaviour
 	
 	// Update is called once per frame
 	void Update () {
+		LostWolfAnim.SetFloat("x", movementDir.x);
+		LostWolfAnim.SetFloat("y", movementDir.y);
+		LostWolfAnim.SetFloat("Speed", speed);
 		if (isTriggeringDen) {
-			speed = staySpeed;
+			speed = idleSpeed;
 			//WolfSpirit disappears
-			LostWolfAnim.SetInteger ("LostWolfAnimState", 5);
-			//print ("Beam up Update!");
-			//}
+			//LostWolfAnim.SetInteger ("LostWolfAnimState", 5);
 		}
 		//causes error that registers 143 times
 //		if (isInDen) {
@@ -303,8 +308,51 @@ public class FollowPlayer : MonoBehaviour
 		//rb2DLostWolf.transform.position = Vector3.MoveTowards (rb2DLostWolf.transform.position, followPlayerWolfGO.transform.position, speed * Time.deltaTime);
 		//Debug.Log ("a wolf should be following");
 		rb2DLostWolf.transform.position = Vector3.MoveTowards (rb2DLostWolf.transform.position, placeHolderGO.transform.position, speed * Time.deltaTime);
+
+		//8 directions
+		if(placeHolderGO.transform.position.x > rb2DLostWolf.transform.position.x){
+			//if target pos is to the right of lost wolf
+			movementDir = new Vector2(1, 0);
+
+		}
+		if(placeHolderGO.transform.position.x < rb2DLostWolf.transform.position.x){
+			//if target pos is to the left of lost wolf
+			movementDir = new Vector2(-1, 0);
+		}
+		if(placeHolderGO.transform.position.y > rb2DLostWolf.transform.position.y &&
+		   placeHolderGO.transform.position.x < rb2DLostWolf.transform.position.x +10.0f){
+			//if target pos is to the up of lost wolf
+			movementDir = new Vector2(0, 1);
+		}
+		if(placeHolderGO.transform.position.y < rb2DLostWolf.transform.position.y){
+			//if target pos is to the down of lost wolf
+			movementDir = new Vector2(0, -1);
+		}
+		if(placeHolderGO.transform.position.x >rb2DLostWolf.transform.position.x &&
+		   placeHolderGO.transform.position.y >rb2DLostWolf.transform.position.y){
+			//if target pos is to the UpRight of lost wolf
+			movementDir = new Vector2(1, 1);
+		}
+		if(placeHolderGO.transform.position.x < rb2DLostWolf.transform.position.x &&
+		   placeHolderGO.transform.position.y < rb2DLostWolf.transform.position.y){
+			//if target pos is to the DownLeft of lost wolf
+			movementDir = new Vector2(-1, -1);
+		}
+		if(placeHolderGO.transform.position.x < rb2DLostWolf.transform.position.x &&
+		   placeHolderGO.transform.position.y > rb2DLostWolf.transform.position.y){
+			//if target pos is to the UpLeft of lost wolf
+			movementDir = new Vector2(-1, 1);
+		}
+		if(placeHolderGO.transform.position.x > rb2DLostWolf.transform.position.x &&
+		   placeHolderGO.transform.position.y < rb2DLostWolf.transform.position.y){
+			//if target pos is to the DownRight of lost wolf
+			movementDir = new Vector2(1, -1);
+		}
+
+		//idle
 		if (rb2DLostWolf.transform.position == placeHolderGO.transform.position) {
 			rb2DLostWolf.transform.position = placeHolderGO.transform.position;
+			speed = idleSpeed;
 		}
 		
 		float LoneWolfDist = Vector3.Distance (rb2DLostWolf.transform.position, placeHolderGO.transform.position);
@@ -315,13 +363,16 @@ public class FollowPlayer : MonoBehaviour
 			WolfSpiritFaceLeft ();
 		}
 		
-		if (PlayerWolfGO.GetComponent<PCWolfInput> ().walking || (LoneWolfDist > 0f && LoneWolfDist < 9f)) {
-			LostWolfAnim.SetInteger ("LostWolfAnimState", 1);
+		if (PlayerWolfGO.GetComponent<PCWolfInput> ().walking || (LoneWolfDist > 1f && LoneWolfDist < 9f)) {
+			//LostWolfAnim.SetInteger ("LostWolfAnimState", 1);
+			speed = walkSpeed;
 		} else if (PlayerWolfGO.GetComponent<PCWolfInput> ().running || LoneWolfDist > 9f) {
-			LostWolfAnim.SetInteger ("LostWolfAnimState", 7);
+			//LostWolfAnim.SetInteger ("LostWolfAnimState", 7);
+			speed = runSpeed;
 		} else if (!PlayerWolfGO.GetComponent<PCWolfInput> ().walking || !PlayerWolfGO.GetComponent<PCWolfInput> ().running) {
 			//idle
-			LostWolfAnim.SetInteger ("LostWolfAnimState", 0);
+			//LostWolfAnim.SetInteger ("LostWolfAnimState", 0);
+			speed = idleSpeed;
 		}
 
 	}
@@ -429,7 +480,7 @@ public class FollowPlayer : MonoBehaviour
 		isFollowing = false;
 		LostWolfSpriteRend.enabled = false;
 		PackFormationPosScript.MinusPackMember ();
-		LostWolfAnim.SetInteger ("LostWolfAnimState", 0);
+		//LostWolfAnim.SetInteger ("LostWolfAnimState", 0);
 		Debug.Log ("lost wolf not active/ not following");
 
 		LostWolfCollider.enabled = false;
